@@ -435,6 +435,23 @@
           "featuredOnHome": true
         },
         {
+          "id": "reportql",
+          "featuredOnHome": true,
+          "name": "Reportql",
+          "tagline": "SQL Tabanlı Low-Code Raporlama, Pivot ve Pano (Dashboard) Platformu",
+          "description": "Kendi veritabanı yapısına hakim ekiplerin, doğrudan kendi SQL sorgularını kullanarak dakikalar içinde dinamik tablolar, çapraz pivot matrisler, grafikler ve interaktif yönetim panoları (Dashboard) hazırlamasını sağlayan low-code raporlama platformudur.",
+          "features": [
+            "Low-Code SQL Editörü: Kendi Veritabanı Bağlantınızla Doğrudan SQL Sorgulama",
+            "Pano Tasarlayıcı (Dashboard): KPI Kartları, Sütun Boyutlandırma ve Yetki Yönetimi",
+            "Çoklu Görselleştirme: Tek Sorguyla Dinamik Tablo, Pivot Matris ve Grafik Çıktıları",
+            "Yerel ve Bulut Veritabanlarıyla Uyumlu, Parametrik ve Paylaşılabilir Raporlar"
+          ],
+          "visual": "reportql-suite",
+          "url": "https://www.reportql.com/",
+          "ctaLabel": "Detaylı Bilgi",
+          "statusBadge": "Low-Code SQL & Dashboard"
+        },
+        {
           "id": "tork",
           "featuredOnHome": true,
           "name": "TORK",
@@ -450,23 +467,6 @@
           "url": "https://torkapp.com",
           "ctaLabel": "Detaylı Bilgi",
           "statusBadge": "Bulut SaaS Ürün"
-        },
-        {
-          "id": "reportql",
-          "featuredOnHome": true,
-          "name": "Reportql",
-          "tagline": "Veriye Her Yerden Erişin",
-          "description": "İşletmelerin yerel ve bulut ortamında yer alan veriye her an erişimine imkan sağlayan kolay kullanımlı rapor uygulamasıdır.",
-          "features": [
-            "Veriye Her Yerden Erişim",
-            "Online Raporlar",
-            "Farklı Çözümlerle Uyumlu",
-            "4 Adımda Kolay Rapor Oluşturma"
-          ],
-          "image": "/uploads/prj-reportql.jpg",
-          "url": "https://www.reportql.com/",
-          "ctaLabel": "Detaylı Bilgi",
-          "statusBadge": "Veri Hazırlama & BI"
         }
       ],
       "testimonials": [
@@ -723,32 +723,32 @@
       },
       "digitalTransformation": {
         "metaTitle": "Dijital Dönüşüm ve YZ Danışmanlığı | Kuadron Bilişim Teknolojileri",
-        "metaDescription": "Şirketiniz için uçtan uca dijital dönüşüm yol haritası ve kurumsal yapay zeka (YZ) mimarisi kurguluyor; ERP/SQL verilerinizi karar destek ajanlarına dönüştürüyoruz.",
+        "metaDescription": "İş yazılımları ve sağlık teknolojileri alanında uçtan uca dijital dönüşüm yol haritası ve yapay zeka (YZ) karar destek çözümleri sunuyoruz.",
         "eyebrow": "Hizmetlerimiz",
         "title": "Dijital Dönüşüm ve YZ Danışmanlığı",
-        "lead": "Dijitalleşme ve yapay zeka (YZ) entegrasyonu, şirketler için bir seçim olmaktan çıkıp rekabetin temel şartı haline geldi. İş süreçlerinizi uçtan uca dijitalleştirirken, kurumsal verilerinizi konuşan yapay zeka ajanları, tahminleme modelleri ve güvenli karar destek sistemleriyle buluşturuyoruz.",
+        "lead": "Kurumsal iş yazılımlarından sağlık teknolojilerine kadar tüm operasyonel süreçlerinizi uçtan uca dijitalleştiriyor; verilerinizi anlamlandıran, tahminleme yapan ve karar süreçlerini hızlandıran yapay zeka uygulamalarıyla buluşturuyoruz.",
         "workflowTitle": "Adım Adım Dijital Dönüşüm ve YZ Yol Haritası",
-        "workflowSubtitle": "Mevcut altyapınızın analizinden KVKK uyumlu kurumsal yapay zeka (LLM & Agent) entegrasyonuna kadar tüm dönüşüm sürecinizi titizlikle dizayn ediyoruz.",
+        "workflowSubtitle": "Mevcut işleyişinizin analizinden güvenli yapay zeka uygulamalarının devreye alınmasına kadar tüm dönüşüm sürecinizi birlikte planlıyoruz.",
         "steps": [
           {
             "number": "01",
-            "title": "Veri ve Süreç Olgunluk Analizi",
-            "description": "Mevcut iş süreçlerinizi, ERP/CRM altyapınızı ve veri kalitenizi analiz ederek dijital dönüşüm ve YZ yol haritasını çıkarıyoruz."
+            "title": "Süreç ve İhtiyaç Analizi",
+            "description": "Kurumunuzun mevcut iş akışlarını, yazılım altyapısını ve veri yapısını inceleyerek en yüksek faydayı sağlayacak dönüşüm yol haritasını çıkarıyoruz."
           },
           {
             "number": "02",
-            "title": "Dijital Kültür ve Mimari Tasarım",
-            "description": "Departmanlar arası veri silolarını ortadan kaldırıyor, bulut veya hibrit mikroservis mimarisiyle bütünsel verimlilik sağlıyoruz."
+            "title": "Bütünsel Dijital Mimari",
+            "description": "Birimler arasındaki kopuklukları gideriyor; iş yazılımları ve sağlık yönetim sistemlerinin birbiriyle uyumlu, tek merkezden çalışmasını sağlıyoruz."
           },
           {
             "number": "03",
-            "title": "Kurumsal YZ & Agent Entegrasyonu",
-            "description": "ERP/SQL veritabanlarınıza doğal dilde sorgulama (Text-to-SQL), RAG tabanlı kurumsal hafıza ve otonom karar destek ajanları entegre ediyoruz."
+            "title": "Yapay Zeka Uygulamaları",
+            "description": "Kurumsal yönetim, finans, operasyon ve sağlık süreçlerinize doğal dilde sorgulama, akıllı özetleme ve karar destek asistanları entegre ediyoruz."
           },
           {
             "number": "04",
-            "title": "KVKK Uyumlu Güvenlik ve Sürekli Optimizasyon",
-            "description": "Yerel (On-Prem) veya izole bulut LLM kurulumları, sıfır veri sızıntısı politikası ve banka seviyesi güvenlik protokolleriyle sistemi ölçekliyoruz."
+            "title": "Veri Güvenliği ve Süreklilik",
+            "description": "KVKK ve sektörel regülasyonlara tam uyumlu, güvenli kurulum modelleriyle sistemlerinizi devreye alıyor ve sürekli iyileştiriyoruz."
           }
         ]
       },
@@ -1216,6 +1216,23 @@
           "featuredOnHome": true
         },
         {
+          "id": "reportql",
+          "featuredOnHome": true,
+          "name": "Reportql",
+          "tagline": "SQL-Driven Low-Code Reporting, Pivot & Dashboard Platform",
+          "description": "A low-code business intelligence and reporting platform built for teams who know their database—write your own SQL queries to effortlessly build dynamic tables, cross-tab pivot matrices, charts, and interactive dashboards in minutes.",
+          "features": [
+            "Low-Code SQL Studio: Connect Your Databases & Write Custom SQL Queries",
+            "Dashboard Designer: KPI Widgets, Grid Layout Sizing & Role-Based Access",
+            "Multi-Format Output: Turn SQL Results into Tables, Pivot Matrices & Charts",
+            "Parametric, Shareable Reports Across On-Premise & Cloud Databases"
+          ],
+          "visual": "reportql-suite",
+          "url": "https://www.reportql.com/",
+          "ctaLabel": "More Info",
+          "statusBadge": "Low-Code SQL & Dashboard"
+        },
+        {
           "id": "tork",
           "featuredOnHome": true,
           "name": "TORK",
@@ -1231,23 +1248,6 @@
           "url": "https://torkapp.com",
           "ctaLabel": "More Info",
           "statusBadge": "Cloud SaaS Product"
-        },
-        {
-          "id": "reportql",
-          "featuredOnHome": true,
-          "name": "Reportql",
-          "tagline": "Access Data Anywhere",
-          "description": "It is an easy-to-use report application that allows businesses to access data in local and cloud at any time.",
-          "features": [
-            "Access to Data Anywhere",
-            "Online Reports",
-            "Compatible with Different Solutions",
-            "Easy Report Generation in 4 Steps"
-          ],
-          "image": "/uploads/prj-reportql.jpg",
-          "url": "https://www.reportql.com/",
-          "ctaLabel": "More Info",
-          "statusBadge": "Data Preparation & BI"
         }
       ],
       "testimonials": [
@@ -1504,32 +1504,32 @@
       },
       "digitalTransformation": {
         "metaTitle": "Digital Transformation & AI Consultancy | Kuadron Information Technologies Inc.",
-        "metaDescription": "We design end-to-end digital transformation roadmaps and enterprise AI architectures, turning your ERP and SQL data into intelligent decision-support agents.",
+        "metaDescription": "We design end-to-end digital transformation roadmaps and practical AI applications across enterprise business software and healthcare systems.",
         "eyebrow": "Our Services",
         "title": "Digital Transformation & AI Consultancy",
-        "lead": "Digitalization and Enterprise AI integration have become essential drivers of competitiveness. While modernizing your core workflows end to end, we empower your organization with conversational AI agents, predictive forecasting models, and privacy-first decision-support architectures.",
+        "lead": "From enterprise business software to healthcare technologies, we digitize your core workflows end to end—combining operational data with intelligent assistants, predictive analytics, and secure decision-support applications.",
         "workflowTitle": "Step-by-Step Digital & AI Transformation Roadmap",
-        "workflowSubtitle": "From legacy process discovery to privacy-first on-premise and hybrid LLM/Agent deployments, we engineer your transformation meticulously.",
+        "workflowSubtitle": "From initial process assessment to secure AI application deployment, we plan and execute every stage of your transformation.",
         "steps": [
           {
             "number": "01",
-            "title": "Data & Process Maturity Assessment",
-            "description": "We audit your existing business workflows, ERP/CRM infrastructure, and data quality to craft a clear digital and AI roadmap."
+            "title": "Process & Needs Assessment",
+            "description": "We evaluate your existing workflows, software systems, and data structure to build a clear, high-impact transformation roadmap."
           },
           {
             "number": "02",
-            "title": "Digital Culture & Architecture Design",
-            "description": "We eliminate departmental data silos and establish cloud or hybrid microservice architectures for holistic operational efficiency."
+            "title": "Unified Digital Architecture",
+            "description": "We connect fragmented departments so your business software and healthcare management platforms operate seamlessly together."
           },
           {
             "number": "03",
-            "title": "Enterprise AI & Agent Integration",
-            "description": "We integrate natural-language SQL analytics (Text-to-SQL), RAG knowledge bases, and autonomous decision-support agents into your stack."
+            "title": "Practical AI Applications",
+            "description": "We embed natural-language querying, intelligent summarization, and decision-support assistants into your business and clinical workflows."
           },
           {
             "number": "04",
-            "title": "Privacy-First Security & Optimization",
-            "description": "We scale your deployment with on-premise or isolated cloud LLMs, zero data-leakage governance, and bank-grade cybersecurity protocols."
+            "title": "Data Privacy & Continuity",
+            "description": "We deploy your solutions with regulation-compliant, privacy-first security models and support continuous operational improvement."
           }
         ]
       },

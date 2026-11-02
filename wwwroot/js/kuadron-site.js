@@ -275,6 +275,86 @@
         });
     });
 
+    // 4c. Reportql Low-Code SQL, Pivot & Dashboard Tasarlayıcı İnteraktif Konsolu
+    document.querySelectorAll('[data-rql-console]').forEach(function (root) {
+        var sqlCodeEl = root.querySelector('[data-rql-sql-code]');
+        var activeLabelEl = root.querySelector('[data-rql-active-label]');
+        var colWidthEl = root.querySelector('[data-rql-colwidth]');
+        var statusBadgeEl = root.querySelector('[data-rql-status-badge]');
+        var kpiWidgets = root.querySelectorAll('[data-rql-widget]');
+        var formatBtns = root.querySelectorAll('[data-rql-format-btn]');
+        var formatViews = root.querySelectorAll('[data-rql-format-view]');
+        var wireframeToggle = root.querySelector('[data-rql-wireframe-toggle]');
+        var generateBtn = root.querySelector('[data-rql-generate-btn]');
+        var runBtn = root.querySelector('[data-rql-run-trigger]');
+        var isEnglish = document.documentElement.lang === 'en';
+        var isWireframe = false;
+
+        function setWireframeMode(wireframe) {
+            isWireframe = wireframe;
+            root.querySelectorAll('[data-rql-live-val]').forEach(function (el) { el.hidden = wireframe; });
+            root.querySelectorAll('[data-rql-dots-val]').forEach(function (el) { el.hidden = !wireframe; });
+            if (wireframeToggle) {
+                wireframeToggle.setAttribute('aria-pressed', wireframe ? 'true' : 'false');
+            }
+            if (statusBadgeEl) {
+                statusBadgeEl.textContent = wireframe
+                    ? (isEnglish ? 'Designer mode (...) · Click "Generate Report" to run SQL' : 'Tasarım modu (...) · SQL çalıştırmak için "Rapor Üret"e tıklayın')
+                    : (isEnglish ? '✓ SQL queries executed (14 ms) · Live data active' : '✓ SQL sorguları çalıştırıldı (14 ms) · Canlı veri aktif');
+            }
+        }
+
+        kpiWidgets.forEach(function (widget) {
+            widget.addEventListener('click', function () {
+                kpiWidgets.forEach(function (w) {
+                    var selected = w === widget;
+                    w.classList.toggle('is-selected', selected);
+                    w.setAttribute('aria-pressed', selected ? 'true' : 'false');
+                    var corner = w.querySelector('.rql-widget-corner');
+                    if (corner) {
+                        corner.classList.toggle('is-active', selected);
+                        corner.textContent = selected ? '✕' : '✎';
+                    }
+                });
+                if (sqlCodeEl) sqlCodeEl.textContent = widget.getAttribute('data-widget-sql') || '';
+                if (activeLabelEl) activeLabelEl.textContent = widget.getAttribute('data-widget-title') || '';
+                if (colWidthEl) colWidthEl.textContent = widget.getAttribute('data-widget-col') || '25%';
+            });
+        });
+
+        formatBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var fmt = btn.getAttribute('data-rql-format-btn');
+                formatBtns.forEach(function (b) {
+                    var active = b === btn;
+                    b.classList.toggle('is-active', active);
+                    b.setAttribute('aria-selected', active ? 'true' : 'false');
+                });
+                formatViews.forEach(function (v) {
+                    v.hidden = v.getAttribute('data-rql-format-view') !== fmt;
+                });
+                if (sqlCodeEl && btn.getAttribute('data-format-sql')) {
+                    sqlCodeEl.textContent = btn.getAttribute('data-format-sql');
+                }
+                if (activeLabelEl) activeLabelEl.textContent = 'Product Sales (' + fmt.toUpperCase() + ')';
+                if (colWidthEl) colWidthEl.textContent = '100%';
+            });
+        });
+
+        if (wireframeToggle) {
+            wireframeToggle.addEventListener('click', function () {
+                setWireframeMode(!isWireframe);
+            });
+        }
+
+        function triggerRunSql() {
+            setWireframeMode(false);
+        }
+
+        if (generateBtn) generateBtn.addEventListener('click', triggerRunSql);
+        if (runBtn) runBtn.addEventListener('click', triggerRunSql);
+    });
+
     // 5. Müşteri Deneyimleri Karuseli
     var track = document.querySelector('[data-testimonial-track]');
     var prev = document.querySelector('[data-testimonial-prev]');

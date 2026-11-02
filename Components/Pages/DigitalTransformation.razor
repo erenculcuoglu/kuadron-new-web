@@ -7,27 +7,27 @@
 
 <PageHero Lang="@Lang" Eyebrow="@D.Eyebrow" Title="@D.Title" Lead="@D.Lead" />
 
-<!-- 1. Görsel & İnteraktif Kurumsal Dönüşüm Stüdyosu (Öncesi / Sonrası Simülatörü) -->
+<!-- 1. Görsel & İnteraktif Dönüşüm Özeti: İş Yazılımları ve Sağlıkta Yapay Zeka -->
 <section class="py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
-            <!-- Sol: Görsel Kompozisyon & Mimari Kazanım Telemetrisi -->
+            <!-- Sol: Görsel Kart & Temel Odak Başlıkları -->
             <div class="lg:col-span-5">
                 <div class="dt-studio-visual shadow-xl">
                     <img src="/uploads/site/kuadron-ekip-ruhu.jpg"
-                         alt="@(IsTr ? "Kuadron OSTİM Teknopark Dijital Dönüşüm ve YZ Mühendislik Ekibi" : "Kuadron Digital Transformation and AI Engineering Team")"
+                         alt="@(IsTr ? "Kuadron Dijital Dönüşüm ve Yapay Zeka Danışmanlığı" : "Kuadron Digital Transformation and AI Consultancy")"
                          width="680"
                          height="425"
                          decoding="async"
                          class="dt-studio-photo" />
                     <div class="p-5 sm:p-6">
                         <p class="font-mono text-xs font-semibold uppercase tracking-wider text-[#FBB040]">
-                            @(IsTr ? "OSTİM TEKNOPARK AR-GE & DANIŞMANLIK ETKİSİ" : "OSTIM TECHNOPARK R&D & CONSULTANCY IMPACT")
+                            @(IsTr ? "İŞ YAZILIMLARI & SAĞLIK TEKNOLOJİLERİ" : "BUSINESS SOFTWARE & HEALTHCARE AI")
                         </p>
                         <h2 class="mt-2 text-lg font-bold text-white sm:text-xl">
                             @(IsTr
-                                ? "Mevcut ERP ve Veri Altyapınızı Bozmadan Yapay Zeka Katmanı Ekliyoruz"
-                                : "Adding an Enterprise AI Layer Without Disrupting Your Existing ERP Stack")
+                                ? "Kurumsal Yönetimden Klinik Süreçlere Uçtan Uca Yapay Zeka Çözümleri"
+                                : "End-to-End AI Solutions from Enterprise Operations to Healthcare")
                         </h2>
                         <div class="dt-kpi-grid mt-4">
                             @foreach (var kpi in StudioKpis)
@@ -42,23 +42,23 @@
                 </div>
             </div>
 
-            <!-- Sağ: İnteraktif Departman Dönüşüm Simülatörü (Öncesi vs. Sonrası) -->
+            <!-- Sağ: Yalın 3 Sekmeli Uygulama Alanları (İş Yazılımları, Sağlık, Süreç Otomasyonu) -->
             <div class="lg:col-span-7" data-ai-studio>
                 <p class="section-label">
-                    <span></span>@(IsTr ? "İnteraktif Dönüşüm Simülatörü" : "Interactive Transformation Simulator")
+                    <span></span>@(IsTr ? "Uygulama Alanlarımız" : "Application Domains")
                 </p>
                 <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
                     @(IsTr
-                        ? "Departmanlarda Geleneksel Süreçten YZ Mimarisine Geçiş"
-                        : "From Legacy Departmental Workflows to Autonomous AI")
+                        ? "İş Yazılımları ve Sağlıkta Yapay Zeka ile Nasıl Değer Üretiyoruz?"
+                        : "How We Deliver Value Across Business Software & Healthcare AI")
                 </h2>
                 <p class="mt-3 text-base leading-relaxed text-[var(--text-secondary)]">
                     @(IsTr
-                        ? "Bir departman seçerek geleneksel işleyiş ile Kuadron’un kurguladığı yapay zeka & Agent mimarisi arasındaki farkı inceleyin:"
-                        : "Select a department below to compare legacy manual processes against Kuadron’s AI & Agent architecture:")
+                        ? "Kurumların günlük operasyonlarını hızlandıran, karmaşık verileri sadeleştiren ve karar almayı kolaylaştıran temel çalışma alanlarımız:"
+                        : "Explore how our consultancy and AI applications simplify complex data and accelerate decision-making:")
                 </p>
 
-                <div class="dt-studio-tabs mt-6" role="tablist" aria-label="@(IsTr ? "Dönüşüm departmanları" : "Transformation departments")">
+                <div class="dt-studio-tabs mt-6" role="tablist" aria-label="@(IsTr ? "Çalışma alanları" : "Focus areas")">
                     @for (int i = 0; i < UseCases.Length; i++)
                     {
                         var uc = UseCases[i];
@@ -99,16 +99,16 @@
 
                         <div class="dt-compare-grid">
                             <div class="dt-compare-box dt-compare-before">
-                                <span class="dt-compare-tag">@(IsTr ? "Geleneksel Süreç (Öncesi)" : "Legacy Process (Before)")</span>
+                                <span class="dt-compare-tag">@(IsTr ? "Geleneksel İşleyiş" : "Traditional Approach")</span>
                                 <p class="text-sm leading-relaxed text-[var(--text-secondary)]">@uc.BeforeText</p>
                             </div>
                             <div class="dt-compare-box dt-compare-after">
-                                <span class="dt-compare-tag">@(IsTr ? "Kuadron YZ Mimarisi (Sonrası)" : "Kuadron AI Architecture (After)")</span>
+                                <span class="dt-compare-tag">@(IsTr ? "Yapay Zeka Destekli Çözüm" : "AI-Powered Solution")</span>
                                 <p class="text-sm font-medium leading-relaxed text-[var(--text-primary)]">@uc.AfterText</p>
                             </div>
                         </div>
 
-                        <div class="mt-5 flex flex-wrap items-center gap-2 pt-3 border-t border-[var(--border-subtle)]">
+                        <div class="mt-5 flex flex-wrap items-center gap-2 border-t border-[var(--border-subtle)] pt-3">
                             @foreach (var tag in uc.Deliverables)
                             {
                                 <span class="inline-flex items-center gap-1.5 rounded-md bg-[var(--bg-subtle)] px-2.5 py-1 font-mono text-xs font-semibold text-[var(--text-primary)]">
@@ -127,31 +127,31 @@
 <!-- 2. Adım Adım Yol Haritası -->
 <WorkflowSteps Title="@D.WorkflowTitle" Subtitle="@D.WorkflowSubtitle" Steps="@D.Steps" />
 
-<!-- 3. Kurumsal YZ Danışmanlığı Uzmanlık Alanları (6 Kart) -->
+<!-- 3. Temel Danışmanlık Başlıklarımız (4 Yalın Kart) & Görsel Kültür/Uygulama Vitrini -->
 <section class="editorial-section">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mb-12">
             <p class="section-label">
-                <span></span>@(IsTr ? "Kurumsal Yapay Zeka (YZ) Danışmanlığı" : "Enterprise AI Consultancy")
+                <span></span>@(IsTr ? "Danışmanlık Kapsamımız" : "Consultancy Scope")
             </p>
             <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
                 @(IsTr
-                    ? "Verinizi Konuşan ve Karar Alan Yapay Zeka Mimarisine Dönüştürüyoruz"
-                    : "Turning Enterprise Data into Conversational & Autonomous AI Systems")
+                    ? "İş Dünyası ve Sağlık Sektörü İçin Akıllı Yazılım Çözümleri"
+                    : "Intelligent Software Solutions for Business & Healthcare")
             </h2>
             <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
                 @(IsTr
-                    ? "Standart sohbet botlarının ötesine geçin. OSTİM Teknopark’taki Ar-Ge ekibimizle, mevcut ERP/SQL altyapınızı bozmadan kurumunuza özel Agent Modu, RAG kurumsal hafıza ve açıklanabilir karar destek sistemleri inşa ediyoruz."
-                    : "Go beyond generic chatbots. Our R&D engineering team builds domain-specific Agent Mode analytics, RAG enterprise memory, and explainable decision-support systems on top of your existing ERP/SQL stack.")
+                    ? "Kurumsal iş yazılımlarınızın ve sağlık yönetim sistemlerinizin mevcut yapısını koruyarak, günlük iş yükünü azaltan ve karar süreçlerini destekleyen yapay zeka çözümleri geliştiriyoruz."
+                    : "Preserving your existing software investments while adding practical AI capabilities that reduce manual workload and strengthen executive and clinical decisions.")
             </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
             @foreach (var pillar in AiPillars)
             {
                 <article class="k-card k-card-hover flex flex-col justify-between border-t-2 border-t-[var(--brand-amber)] p-6 sm:p-7">
                     <div>
-                        <div class="mb-5 flex items-center justify-between gap-3">
+                        <div class="mb-4 flex items-center justify-between gap-3">
                             <span class="inline-flex items-center rounded-full bg-[var(--brand-amber-bg)] px-3 py-1 font-mono text-xs font-semibold text-[var(--brand-amber-text)]">
                                 @pillar.Badge
                             </span>
@@ -160,152 +160,21 @@
                             </span>
                         </div>
 
-                        <h3 class="mb-3 text-lg font-bold leading-snug text-[var(--text-primary)] sm:text-xl">
+                        <h3 class="mb-2.5 text-lg font-bold leading-snug text-[var(--text-primary)] sm:text-xl">
                             @pillar.Title
                         </h3>
-                        <p class="mb-6 text-sm leading-relaxed text-[var(--text-secondary)]">
+                        <p class="mb-5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
                             @pillar.Desc
                         </p>
                     </div>
 
-                    <ul class="space-y-2 border-t border-[var(--border-subtle)] pt-4">
+                    <ul class="flex flex-wrap gap-2 border-t border-[var(--border-subtle)] pt-4">
                         @foreach (var metric in pillar.Metrics)
                         {
-                            <li class="flex items-center gap-2 text-xs font-semibold text-[var(--text-primary)]">
+                            <li class="inline-flex items-center gap-1.5 rounded bg-[var(--bg-subtle)] px-2.5 py-1 text-xs font-semibold text-[var(--text-primary)]">
                                 <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand-amber)]"></span>
                                 <span>@metric</span>
                             </li>
-                        }
-                    </ul>
-                </article>
-            }
-        </div>
-    </div>
-</section>
-
-<!-- 4. Kuadron 4 Katmanlı YZ Referans Mimarisi & Canlı Ürün Simülasyonları -->
-<section class="border-y border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
-            <div class="lg:col-span-5">
-                <p class="section-label">
-                    <span></span>@(IsTr ? "Kuadron YZ Referans Mimarisi" : "Kuadron AI Reference Architecture")
-                </p>
-                <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-3xl">
-                    @(IsTr
-                        ? "4 Katmanlı Güvenli Kurumsal YZ Entegrasyonu"
-                        : "4-Layer Secure Enterprise AI Integration")
-                </h2>
-                <p class="mt-3 mb-6 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-                    @(IsTr
-                        ? "Danışmanlık projelerimizde ve lokomotif ürünlerimiz OzBI ile Klinitra’da uyguladığımız mimari; ham veriyi güvenlik katmanlarından geçirerek doğrudan yönetim kurulu seviyesinde karar özetlerine dönüştürür."
-                        : "Proven across our consultancy engagements and flagship products OzBI and Klinitra, our 4-layer architecture transforms raw operational data into board-ready executive decisions.")
-                </p>
-
-                <div>
-                    @for (int i = 0; i < ArchitectureLayers.Length; i++)
-                    {
-                        var item = ArchitectureLayers[i];
-                        <div class="dt-arch-step">
-                            <div class="font-mono text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)]">
-                                @item.Step
-                            </div>
-                            <div class="mt-1 text-sm font-bold text-[var(--text-primary)]">
-                                @item.Title
-                            </div>
-                            <p class="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">
-                                @item.Detail
-                            </p>
-                        </div>
-                        @if (i < ArchitectureLayers.Length - 1)
-                        {
-                            <div class="dt-arch-connector" aria-hidden="true"></div>
-                        }
-                    }
-                </div>
-            </div>
-
-            <!-- Sağ: Canlı Ürün Simülasyonu Seçici (OzBI Agent Modu & Klinitra Ekosistemi) -->
-            <div class="lg:col-span-7" data-ai-studio>
-                <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                        <span class="font-mono text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)]">
-                            @(IsTr ? "Canlı Mimari Vitrin (Tıklayarak Deneyin)" : "Live Architecture Showcase (Interactive)")
-                        </span>
-                        <h3 class="mt-1 text-lg font-bold text-[var(--text-primary)] sm:text-xl">
-                            @(IsTr
-                                ? "Referans Mimarimizin Canlı Ürünlerimizdeki Uygulaması"
-                                : "Our Reference Architecture in Action Across Flagship Products")
-                        </h3>
-                    </div>
-
-                    <div class="dt-studio-tabs !mb-0" role="tablist" aria-label="@(IsTr ? "Canlı ürün demoları" : "Live product demos")">
-                        <button type="button"
-                                role="tab"
-                                id="@($"arch-demo-tab-{Lang}-ozbi")"
-                                aria-selected="true"
-                                aria-controls="@($"arch-demo-panel-{Lang}-ozbi")"
-                                tabindex="0"
-                                class="dt-studio-tab is-active">
-                            <span>OzBI Agent Modu</span>
-                        </button>
-                        <button type="button"
-                                role="tab"
-                                id="@($"arch-demo-tab-{Lang}-klinitra")"
-                                aria-selected="false"
-                                aria-controls="@($"arch-demo-panel-{Lang}-klinitra")"
-                                tabindex="-1"
-                                class="dt-studio-tab">
-                            <span>Klinitra AI Suite</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div role="tabpanel"
-                     id="@($"arch-demo-panel-{Lang}-ozbi")"
-                     aria-labelledby="@($"arch-demo-tab-{Lang}-ozbi")"
-                     class="product-visual product-visual-ozbi">
-                    <OzbiFlow Lang="@Lang" />
-                </div>
-
-                <div role="tabpanel"
-                     id="@($"arch-demo-panel-{Lang}-klinitra")"
-                     aria-labelledby="@($"arch-demo-tab-{Lang}-klinitra")"
-                     hidden
-                     class="product-visual product-visual-klinitra">
-                    <KlinitraPreview Lang="@Lang" />
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 5. Saha Dijital Dönüşüm Başarı Örnekleri (Görselli Referans Projeler) -->
-<section class="editorial-section">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeading Eyebrow="@(IsTr ? "Saha Uygulamaları" : "Field Implementations")"
-                        Title="@(IsTr ? "Kurumsal Dijital Dönüşüm Referanslarımızdan Seçmeler" : "Selected Enterprise Digital Transformation Case Studies")"
-                        Description="@(IsTr ? "Kamu kurumları, enerji dağıtım şirketleri ve Türkiye çapında bayi ağına sahip kuruluşlarda uçtan uca dijitalleştirdiğimiz kritik operasyonlar." : "Mission-critical operations digitized end-to-end across public institutions, energy utilities, and nationwide dealer networks.")"
-                        Href="@(IsTr ? "/yazilim-gelistirme" : "/en/software-development")"
-                        LinkLabel="@(IsTr ? "Tüm Projeleri İnceleyin" : "Explore All Projects")" />
-
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-            @foreach (var prj in HighlightProjects)
-            {
-                <article class="editorial-story">
-                    <img src="@prj.Image"
-                         alt="@($"{prj.Client} — {prj.Title}")"
-                         width="640"
-                         height="400"
-                         decoding="async"
-                         class="story-image rounded-lg border border-[var(--border-subtle)]" />
-                    <p class="section-label"><span></span>@prj.Client</p>
-                    <h3>@prj.Title</h3>
-                    <p class="section-description">@prj.Description</p>
-                    <ul class="story-tags" role="list">
-                        @foreach (var f in prj.Features)
-                        {
-                            <li>@f</li>
                         }
                     </ul>
                 </article>
@@ -323,174 +192,118 @@
     private bool IsTr => Lang == "tr";
     private LocaleSiteContent Content => SiteData.GetLocale(Lang);
     private DigitalTransformationContent D => Content.DigitalTransformation;
-    private IEnumerable<ProjectItem> HighlightProjects => Content.Projects.Take(3);
 
     private sealed record KpiItem(string Value, string Label);
     private sealed record UseCaseItem(string Id, string TabLabel, string Icon, string Badge, string Title, string ImpactMetric, string BeforeText, string AfterText, string[] Deliverables);
     private sealed record AiPillarItem(string Badge, string Title, string Desc, string[] Metrics, string Icon);
-    private sealed record ArchitectureLayerItem(string Step, string Title, string Detail);
 
     private KpiItem[] StudioKpis => IsTr
         ? [
-            new("4x Hızlı", "Yönetici Karar & Raporlama Süreci"),
-            new("< 2.4 sn", "Çapraz SQL & Kök Neden Analizi"),
-            new("%100 KVKK", "On-Premise / İzole Bulut LLM"),
-            new("7/24 Aktif", "Otonom Anomali & Risk Takibi")
+            new("İş Yazılımları", "Finans, Satış ve Operasyon Analitiği"),
+            new("Sağlık & Klinik", "Hekim, Kurum ve Sigorta Çözümleri"),
+            new("Hızlı Karar", "Doğal Dilde Sorgulama ve Özet Rapor"),
+            new("Tam Güvenlik", "KVKK ve Regülasyonlara Uyumlu Yapı")
         ]
         : [
-            new("4x Faster", "Executive Decision & Reporting Cycle"),
-            new("< 2.4 sec", "Cross-SQL & Root-Cause Analysis"),
-            new("100% GDPR", "On-Premise / Isolated Cloud LLM"),
-            new("24/7 Live", "Autonomous Anomaly & Risk Monitoring")
+            new("Business Apps", "Finance, Sales & Operations Analytics"),
+            new("Healthcare AI", "Clinical, Provider & Insurance Solutions"),
+            new("Faster Decisions", "Natural-Language Q&A & Summaries"),
+            new("Full Privacy", "Regulation-Compliant Architecture")
         ];
 
     private UseCaseItem[] UseCases => IsTr
         ? [
             new(
-                "finans-erp",
-                "Finans & ERP",
+                "is-yazilimlari",
+                "İş Yazılımları & Yönetim",
                 "chart",
-                "FİNANSAL ANALİTİK & AGENT MODU",
-                "Logo, Mikro ve SQL Verisinde Saniyeler İçinde Kök Neden Analizi",
-                "4 Gün → 8 Saniye Raporlama",
-                "Farklı ERP tablolarından alınan verilerin Excel’de manuel birleştirilmesi, geciken ay sonu FAVÖK raporları ve ciro artışının ardındaki kârlılık erimesinin geç fark edilmesi.",
-                "Doğal dilde sorulan tek bir soruyla birden fazla SQL sorgusunu otonom çalıştıran, fiyat/hacim sapmasını ve tahsilat vade riskini saniyeler içinde hesaplayan OzBI Agent mimarisi.",
-                ["Çoklu SQL Agent Modu", "FAVÖK & Nakit Akışı Projeksiyonu", "Şube Katkı Marjı Denetimi"]),
+                "KURUMSAL İŞ YAZILIMLARI",
+                "Şirket Verilerinizi Konuşan ve Yorumlayan Karar Destek Sistemleri",
+                "Saniyeler İçinde Yönetici Özeti",
+                "Farklı iş yazılımlarında biriken satış, finans ve stok verilerinin manuel tablolarla birleştirilmesi; raporların hazırlanmasının günler sürmesi.",
+                "Mevcut iş yazılımlarınızla doğrudan konuşarak doğal dilde soru sorma, gelir/maliyet eğilimlerini görme ve anlık yönetici özetleri alma imkanı.",
+                ["Doğal Dilde Veri Sorgulama", "Gelir ve Maliyet Tahminleme", "Otomatik Yönetici Raporları"]),
             new(
-                "tedarik-stok",
-                "Tedarik & Stok",
-                "layers",
-                "ENVANTER & TEDARİK ZEKASI",
-                "Atıl Stok ve Kritik Tedarikçi Gecikmelerine Karşı Erken Uyarı",
-                "%32 İşletme Sermayesi Koruması",
-                "180+ gün hareketsiz kalan yedek parçaların işletme sermayesini kilitlemesi ve kritik hammaddelerde uzayan tedarik sürelerinin (lead-time) üretimi durdurma noktasına getirmesi.",
-                "Stok yaşlandırma ve tedarikçi teslim sürelerini canlı izleyen, emniyet stoku sınırına inen kalemler için satınalma birimine otomatik sipariş taslağı hazırlayan karar destek sistemi.",
-                ["6 Aylık Envanter Değerleme", "Tedarikçi Lead-Time Analizi", "Otomatik Sipariş (RFQ) Taslağı"]),
-            new(
-                "saglik-sigorta",
-                "Sağlık & Sigorta",
+                "saglik-yz",
+                "Sağlıkta Yapay Zeka",
                 "award",
-                "KLİNİK ÖZET & RİSK SKORLAMA",
-                "Hekimler, Hastaneler ve Sigorta Şirketleri İçin Açıklanabilir YZ",
-                "0–100 Açıklanabilir Risk Skoru",
-                "Hekimlerin yıllara yayılmış tahlil ve e-Nabız geçmişini incelerken zaman kaybetmesi; sigorta provizyon süreçlerinde standart dışı ve uzun süren manuel dosya incelemeleri.",
-                "Klinitra ekosistemi ile 36 aylık laboratuvar ve klinik geçmişi saniyeler içinde özetleyen hekim asistanı, otomatik SYS gönderimli MBYS ve gerekçeli sigorta risk skorlama motoru.",
-                ["Klinitra AI Hekim Asistanı", "e-Nabız & SYS Uyumlu MBYS", "Sigorta Provizyon & Risk API"]),
+                "SAĞLIK & KLİNİK UYGULAMALARI",
+                "Hekimler, Sağlık Kurumları ve Sigorta Süreçleri İçin Akıllı Asistanlar",
+                "Hızlı Klinik Özet & Risk Analizi",
+                "Yıllara yayılmış hasta geçmişinin ve tetkik sonuçlarının manuel incelenmesi; sağlık kurumları ve sigorta değerlendirme süreçlerinde yaşanan zaman kaybı.",
+                "Hasta geçmişini saniyeler içinde özetleyen klinik karar destek asistanları, muayenehane/kurum süreç otomasyonu ve gerekçeli risk değerlendirme çözümleri.",
+                ["Klinik Hasta Özeti & Sesli Sorgu", "Sağlık Kurumu Süreç Yönetimi", "Açıklanabilir Risk Değerlendirmesi"]),
             new(
-                "kurumsal-hafiza",
-                "Kurumsal Hafıza (RAG)",
-                "compass",
-                "DOKÜMAN ZEKASI & MEVZUAT",
-                "Sözleşme, Şartname ve Prosedürlerde Kaynak Gösterimli Sorgulama",
-                "%0 Halüsinasyon / Tam İzlenebilirlik",
-                "Binlerce sayfalık ihale şartnamesi, tedarikçi sözleşmesi, kalite (KYS) prosedürü ve regülasyon dokümanı içinde aranan kritik maddelerin saatlerce manuel taranması.",
-                "Kurum içi dokümanları vektör veritabanında indeksleyen, yalnızca yetkili kullanıcılara madde ve sayfa numarası referansıyla yanıt veren güvenli yerel (On-Prem) RAG asistanı.",
-                ["Sayfa & Madde Referanslı Yanıt", "Rol Bazlı Erişim Yetkilendirme", "İzole On-Premise Kurulum"])
+                "surec-otomasyon",
+                "Süreç & Doküman Zekası",
+                "layers",
+                "KURUMSAL HAFIZA & OTOMASYON",
+                "Kurum İçi Dokümanların ve İş Akışlarının Dijitalleştirilmesi",
+                "Uçtan Uca Süreç Verimliliği",
+                "Sözleşmeler, prosedürler ve mevzuat dokümanları içinde aranan bilgilerin manuel taranması ve birimler arası onay süreçlerinin yavaş ilerlemesi.",
+                "Kurum içi bilgi birikimini saniyeler içinde kaynak göstererek yanıtlayan akıllı asistanlar ve departmanlar arası kesintisiz dijital iş akışları.",
+                ["Akıllı Doküman Arama", "Birimler Arası Süreç Otomasyonu", "Yetki Bazlı Bilgi Erişimi"])
         ]
         : [
             new(
-                "finance-erp",
-                "Finance & ERP",
+                "business-software",
+                "Business Software",
                 "chart",
-                "FINANCIAL ANALYTICS & AGENT MODE",
-                "Instant Root-Cause Audits Across Logo, Mikro & SQL Databases",
-                "4 Days → 8 Seconds Reporting",
-                "Manual Excel consolidation across fragmented ERP tables, delayed month-end EBITDA reports, and late discovery of margin erosion hidden behind nominal revenue growth.",
-                "Autonomous multi-SQL Agent Mode that answers plain-language executive prompts in seconds—quantifying price vs. volume variance and receivable collection lag.",
-                ["Multi-SQL Agent Mode", "EBITDA & Cash-Flow Forecasting", "Branch Margin Contribution"]),
+                "ENTERPRISE BUSINESS SOFTWARE",
+                "Conversational Decision Support Across Your Company Data",
+                "Instant Executive Summaries",
+                "Consolidating sales, finance, and inventory records manually across separate business applications and waiting days for management reports.",
+                "Query your existing business software in plain language to uncover revenue trends, cost drivers, and instant executive summaries.",
+                ["Natural-Language Data Queries", "Revenue & Cost Forecasting", "Automated Management Reports"]),
             new(
-                "supply-stock",
-                "Supply & Inventory",
-                "layers",
-                "INVENTORY & PROCUREMENT INTELLIGENCE",
-                "Early Warning Against Dormant Stock & Supplier Lead-Time Risks",
-                "32% Working Capital Protection",
-                "Working capital locked in spare parts dormant for 180+ days while lengthening supplier lead-times unexpectedly push fast-moving production items below safety thresholds.",
-                "Continuous inventory aging and supplier lead-time telemetry that flags critical stockouts early and drafts automated purchase requisitions for procurement teams.",
-                ["6-Month Inventory Projection", "Supplier Lead-Time Telemetry", "Automated RFQ Drafting"]),
-            new(
-                "healthcare-insurance",
-                "Healthcare & Insurance",
+                "healthcare-ai",
+                "Healthcare AI",
                 "award",
-                "CLINICAL SUMMARY & RISK SCORING",
-                "Explainable AI for Physicians, Hospitals & Health Insurers",
-                "0–100 Explainable Risk Score",
-                "Physicians spending valuable consultation minutes parsing multi-year lab histories, and insurers facing slow, inconsistent manual underwriting reviews.",
-                "The Klinitra AI suite summarizes 36-month longitudinal patient records in seconds, automates Ministry EHR sync, and generates transparent 0–100 underwriting risk scores.",
-                ["Klinitra AI Clinical Assistant", "Ministry-Synced Practice MBYS", "Explainable Underwriting API"]),
+                "HEALTHCARE & CLINICAL APPLICATIONS",
+                "Intelligent Assistants for Physicians, Providers & Insurers",
+                "Fast Clinical Summary & Risk Insights",
+                "Manually reviewing multi-year patient histories and lab results, leading to time-consuming clinical workflows and slow insurance assessments.",
+                "Clinical assistants that summarize longitudinal patient data in seconds, streamline practice operations, and provide transparent risk assessments.",
+                ["Clinical Summary & Voice Q&A", "Healthcare Practice Management", "Explainable Risk Assessment"]),
             new(
-                "enterprise-rag",
-                "Enterprise Memory (RAG)",
-                "compass",
-                "DOCUMENT INTELLIGENCE & COMPLIANCE",
-                "Citation-Backed Q&A Over Contracts, Tenders & Quality SOPs",
-                "100% Citation Traceability",
-                "Hours lost manually searching through thousands of pages of tender specifications, supplier contracts, ISO quality procedures, and regulatory filings.",
-                "On-premise vector RAG architecture that indexes internal documents and answers queries with exact clause and page citations under strict role-based access control.",
-                ["Clause & Page Citations", "Role-Based Access Control", "Isolated On-Premise Deployment"])
+                "process-automation",
+                "Process & Document AI",
+                "layers",
+                "ENTERPRISE MEMORY & AUTOMATION",
+                "Digitizing Institutional Knowledge and Cross-Department Workflows",
+                "End-to-End Operational Efficiency",
+                "Searching manually through contracts, procedures, and compliance documents while cross-department approvals move slowly.",
+                "Intelligent knowledge assistants that answer questions with clear source references alongside streamlined digital workflows across teams.",
+                ["Smart Document Search", "Cross-Department Automation", "Role-Based Access Control"])
         ];
 
     private AiPillarItem[] AiPillars => IsTr
         ? [
-            new("Strateji & Yol Haritası", "Kurumsal YZ Olgunluk Analizi ve ROI Planlama",
-                "Departmanlarınızın veri yapısını ve iş akışlarını inceleyerek yapay zekanın en hızlı ve ölçülebilir katma değer üreteceği senaryoları önceliklendiriyoruz.",
-                ["Veri Kalitesi & Silo Analizi", "Senaryo Bazlı ROI Hesaplaması", "Fazlandırılmış Geçiş Planı"], "compass"),
-            new("Text-to-SQL & Agent Modu", "Doğal Dil ile ERP, CRM ve SQL Analitiği",
-                "Logo, Mikro ve kurumsal SQL veritabanlarınızla doğal dilde konuşun. Çoklu SQL sorguları yürüten Agent mimarisiyle ciro, stok riski ve FAVÖK kök neden raporlarını saniyeler içinde alın.",
-                ["Çoklu Tablo & Çapraz SQL", "Otomatik Kök Neden Analizi", "Yönetici Karar Özetleri"], "chart"),
-            new("RAG & Kurumsal Hafıza", "Doküman Zekası ve Kurumsal Bilgi Asistanı",
-                "Sözleşmeler, teknik şartnameler, kalite prosedürleri ve mevzuat dokümanlarınızı vektör tabanlı RAG (Retrieval-Augmented Generation) mimarisiyle sorgulanabilir kurumsal hafızaya dönüştürüyoruz.",
-                ["Kaynak Gösterimli Yanıtlar", "Halüsinasyon Önleyici Doğrulama", "Rol Bazlı Doküman Yetkilendirme"], "layers"),
-            new("Otonom Süreçler", "İş Süreçlerinde Çoklu YZ Ajanları (Multi-Agent)",
-                "Finans, satınalma, satış ve operasyon süreçlerinde veriyi sürekli izleyen, vade/fiyat/marj anomalilerini yakalayan ve ilgili yöneticilere aksiyon öneren ajan iş akışları kurguluyoruz.",
-                ["Erken Uyarı & Anomali Tespiti", "ERP / CRM API Entegrasyonu", "Onay Mekanizmalı Otomasyon"], "network"),
-            new("Tahminleme & Karar Destek", "Açıklanabilir Tahminleme ve Risk Skorlama",
-                "Geçmiş satış, maliyet, klinik veya operasyonel verilerinizden hareketle gelecek dönem talep/ciro projeksiyonları ve 0–100 ölçeğinde açıklanabilir risk skorları üretiyoruz.",
-                ["Çeyreklik Ciro & Nakit Tahmini", "Stok Yaşlandırma & Devir Hızı", "Açıklanabilir (XAI) Karar Motoru"], "award"),
-            new("KVKK & Veri Güvenliği", "Yerel (On-Premise) ve Hibrit LLM Mimarisi",
-                "Finansal ve ticari sırlarınızın kurum dışına çıkmasını engelleyen, KVKK ve regülasyonlara tam uyumlu yerel (On-Prem) veya izole bulut büyük dil modeli (LLM) altyapıları kuruyoruz.",
-                ["Sıfır Veri Sızıntısı Garantisi", "Maskeleme & Erişim Denetimi", "On-Prem / Private Cloud Kurulum"], "code")
+            new("İş Yazılımlarında Yapay Zeka", "Kurumsal Veri Analitiği ve Karar Destek",
+                "Finans, satış, satınalma ve stok yönetimi yazılımlarınızdaki verileri doğal dilde sorgulanabilir hale getiriyor; yöneticiler için anlaşılır tahminleme ve kök neden özetleri üretiyoruz.",
+                ["Doğal Dilde Raporlama", "Finans ve Stok Öngörüleri", "Yönetici Karar Kokpiti"], "chart"),
+            new("Sağlıkta Yapay Zeka Uygulamaları", "Klinik Özet, Kurum Yönetimi ve Risk Analizi",
+                "Hekimler için hasta geçmişini hızla özetleyen klinik asistanlar, sağlık kurumları için dijital iş akışı çözümleri ve sağlık sigortacılığı için açıklanabilir risk değerlendirme modelleri sunuyoruz.",
+                ["Hekim Karar Destek Asistanı", "Muayenehane & Kurum Yönetimi", "Sağlık Sigortası Risk Analizi"], "award"),
+            new("Dijital Süreç Dönüşümü", "Uçtan Uca Süreç Otomasyonu ve Entegrasyon",
+                "Kurum içindeki dağınık yazılımları ve manuel takip edilen işleri tek bir dijital çatı altında birleştiriyor; departmanlar arası veri akışını hızlandırıyoruz.",
+                ["Mevcut Sistemlerle Uyum", "Süreç ve Onay Otomasyonu", "Kurumsal Doküman Hafızası"], "layers"),
+            new("Güvenli ve Uyumlu Mimari", "Veri Gizliliği ve Kuruma Özel Kurulum",
+                "Hem ticari iş verilerinizin hem de hassas sağlık verilerinin gizliliğini koruyan, KVKK ve sektörel standartlara tam uyumlu bulut veya kurum içi kurulum modelleri sağlıyoruz.",
+                ["KVKK ve Mevzuat Uyumu", "Kurum İçi veya Bulut Kurulum", "Yetki ve Erişim Güvenliği"], "compass")
         ]
         : [
-            new("Strategy & Roadmap", "Enterprise AI Maturity & ROI Assessment",
-                "We audit your departmental data pipelines and workflows to prioritize high-impact AI use cases that deliver measurable operational ROI.",
-                ["Data Readiness & Silo Audit", "Use-Case ROI Modeling", "Phased Implementation Plan"], "compass"),
-            new("Text-to-SQL & Agent Mode", "Conversational ERP, CRM & SQL Analytics",
-                "Query Logo, Mikro, and enterprise SQL databases in plain language. Multi-SQL Agent architectures generate revenue forecasts, inventory risk audits, and EBITDA root-cause reports in seconds.",
-                ["Cross-Table Multi-SQL Execution", "Automated Root-Cause Analysis", "Executive Action Summaries"], "chart"),
-            new("RAG & Enterprise Memory", "Document Intelligence & Knowledge Assistants",
-                "Transform contracts, technical specifications, SOPs, and regulatory documents into a citation-backed enterprise knowledge base powered by Retrieval-Augmented Generation (RAG).",
-                ["Citation-Backed Answers", "Hallucination Guardrails", "Role-Based Access Control"], "layers"),
-            new("Autonomous Workflows", "Multi-Agent Process Automation",
-                "Deploy AI agents across finance, procurement, sales, and operations to continuously monitor KPIs, detect margin/collection anomalies, and trigger human-in-the-loop actions.",
-                ["Early Warning & Anomaly Detection", "Native ERP / CRM API Hooks", "Human-in-the-Loop Governance"], "network"),
-            new("Predictive Analytics", "Explainable Forecasting & Risk Scoring",
-                "Build explainable machine-learning and LLM decision engines for quarterly revenue projections, inventory aging risk, and 0–100 underwriting/clinical risk scores.",
-                ["Quarterly Revenue & Cash Forecasts", "Inventory Aging & Turnover", "Explainable AI (XAI) Scoring"], "award"),
-            new("Privacy & Governance", "On-Premise & Hybrid LLM Architecture",
-                "Keep sensitive financial and proprietary records inside your perimeter with GDPR/KVKK-compliant on-premise or isolated private-cloud LLM deployments.",
-                ["Zero Data-Leakage Architecture", "PII Masking & Audit Logs", "On-Prem / Private Cloud Setup"], "code")
-        ];
-
-    private ArchitectureLayerItem[] ArchitectureLayers => IsTr
-        ? [
-            new("Katman 01", "Veri Kaynakları & ERP Entegrasyonu",
-                "Logo, Mikro, SAP, İK, CRM, HIS/MBYS ve kurumsal SQL veritabanları ile güvenli, salt-okunur veya API tabanlı canlı bağlantı."),
-            new("Katman 02", "Anlamsal Veri Katmanı & Güvenlik (Guardrails)",
-                "Şirketinize özel muhasebe, stok ve operasyon şemasının LLM tarafından hatasız anlaşılmasını sağlayan semantik sözlük ve KVKK maskeleme katmanı."),
-            new("Katman 03", "Çoklu Ajan (Agent Modu) & Karar Motoru",
-                "Tek bir soruda birden fazla hipotezi test eden, çapraz SQL sorguları çalıştıran ve sonuçları doğrulayan otonom analist ajanlar."),
-            new("Katman 04", "Yönetici Kokpiti & Aksiyon Önerileri",
-                "Sadece tablo göstermekle kalmayıp kök nedenleri açıklayan, nakit ve marj etkisini hesaplayan, somut yönetici aksiyonu üreten arayüz.")
-        ]
-        : [
-            new("Layer 01", "Data Sources & ERP Connectors",
-                "Secure read-only or API-driven live connections to Logo, Mikro, SAP, CRM, HIS/MBYS, and enterprise SQL databases."),
-            new("Layer 02", "Semantic Layer & Privacy Guardrails",
-                "Domain-specific semantic dictionary and PII masking so LLMs interpret your chart of accounts, inventory, and KPIs with zero ambiguity."),
-            new("Layer 03", "Multi-Agent Reasoning & SQL Engine",
-                "Autonomous analyst agents that test multiple hypotheses, execute cross-table SQL queries, and validate numbers before responding."),
-            new("Layer 04", "Executive Cockpit & Actionable Insights",
-                "Executive reports that go beyond static charts—explaining root causes, quantifying cash/margin impact, and recommending concrete actions.")
+            new("AI in Business Software", "Enterprise Data Analytics & Decision Support",
+                "Turn finance, sales, procurement, and inventory software data into plain-language insights with clear forecasting and root-cause summaries for executives.",
+                ["Plain-Language Reporting", "Finance & Inventory Forecasts", "Executive Decision Cockpit"], "chart"),
+            new("AI in Healthcare", "Clinical Summaries, Practice Management & Risk Analytics",
+                "Deliver clinical assistants that summarize patient histories for physicians, digital workflow tools for healthcare providers, and explainable risk models for insurers.",
+                ["Physician Clinical Assistant", "Practice & Provider Workflows", "Health Insurance Risk Analytics"], "award"),
+            new("Digital Process Transformation", "End-to-End Workflow Automation & Integration",
+                "Unify disconnected software tools and manual operations under a cohesive digital architecture to accelerate cross-departmental collaboration.",
+                ["Seamless System Integration", "Workflow & Approval Automation", "Institutional Knowledge Base"], "layers"),
+            new("Secure & Compliant Architecture", "Data Privacy & Flexible Deployment",
+                "Protect both commercial business records and sensitive health data with regulation-compliant cloud or on-premise deployment models.",
+                ["Regulatory & Privacy Compliance", "On-Premise or Cloud Setup", "Role-Based Security"], "compass")
         ];
 }

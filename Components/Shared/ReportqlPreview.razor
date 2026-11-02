@@ -1,0 +1,371 @@
+<figure class="rql-suite-card" aria-label="@FigureLabel" data-rql-console>
+    <!-- Top Application Bar (modeled after Reportql Screenshot) -->
+    <div class="rql-topbar">
+        <div class="rql-topbar-left">
+            <span class="rql-brand-logo" aria-hidden="true">rql</span>
+            <span class="rql-btn-green">
+                <span aria-hidden="true">⊕</span>
+                <span>@(Lang == "tr" ? "Yeni Ekle ▾" : "Add New ▾")</span>
+            </span>
+            <span class="rql-btn-outline">@(Lang == "tr" ? "12= Sıralama ▾" : "12= Order ▾")</span>
+            <span class="rql-btn-outline">@(Lang == "tr" ? "↑ İçe Aktar" : "↑ Import")</span>
+        </div>
+        <div class="rql-topbar-title">
+            @(Lang == "tr" ? "Pano Tasarlayıcı" : "Dashboard Designer")
+        </div>
+        <div class="rql-topbar-right">
+            <span class="rql-user-chip">
+                <span class="rql-user-dot" aria-hidden="true"></span>
+                <span>eren@reportql.com</span>
+            </span>
+            <span class="rql-btn-save">✓ @(Lang == "tr" ? "Kaydet ▾" : "Save ▾")</span>
+        </div>
+    </div>
+
+    <!-- Workspace Grid: Left SQL/Properties Inspector + Right Dashboard Canvas -->
+    <div class="rql-workspace">
+        <!-- LEFT PANEL: Özellikler & Low-Code SQL Editor -->
+        <aside class="rql-sidebar" aria-label="@(Lang == "tr" ? "Bileşen Özellikleri ve SQL Editörü" : "Widget Properties and SQL Editor")">
+            <div class="rql-sidebar-head">
+                <strong>@(Lang == "tr" ? "Özellikler" : "Properties")</strong>
+                <span class="rql-swap-icon" aria-hidden="true">⇄</span>
+            </div>
+
+            <div class="rql-prop-check">
+                <span class="rql-checkbox-box" aria-hidden="true">✓</span>
+                <span>@(Lang == "tr" ? "Başlığı göster" : "Show title")</span>
+            </div>
+
+            <div class="rql-field">
+                <label>@(Lang == "tr" ? "Bağlantı" : "Connection") <span>*</span></label>
+                <div class="rql-select-mock">
+                    <span data-rql-conn>Sample Northwind</span>
+                    <span aria-hidden="true">▾</span>
+                </div>
+            </div>
+
+            <div class="rql-field-row">
+                <div class="rql-field">
+                    <label>@(Lang == "tr" ? "Sütun" : "Column") <span>*</span></label>
+                    <div class="rql-select-mock">
+                        <span data-rql-colwidth>25%</span>
+                        <span aria-hidden="true">▾</span>
+                    </div>
+                </div>
+                <div class="rql-field">
+                    <label>@(Lang == "tr" ? "Bölge" : "Locale")</label>
+                    <div class="rql-select-mock">
+                        <span>TR</span>
+                        <span aria-hidden="true">▾</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rql-field">
+                <label>@(Lang == "tr" ? "Ayraç karakteri" : "Separator")</label>
+                <div class="rql-radio-row" aria-hidden="true">
+                    <span class="rql-radio">○ ,</span>
+                    <span class="rql-radio">○ -</span>
+                    <span class="rql-radio is-checked">◉ +</span>
+                </div>
+            </div>
+
+            <div class="rql-field rql-sql-field">
+                <div class="rql-sql-label-row">
+                    <label>@(Lang == "tr" ? "Sorgu (SQL)" : "Query (SQL)") <span>*</span></label>
+                    <span class="rql-active-widget-tag" data-rql-active-label>Employee With The Most Sales</span>
+                </div>
+                <div class="rql-sql-editor">
+                    <div class="rql-sql-toolbar">
+                        <span class="rql-sql-db-badge">PostgreSQL / MSSQL</span>
+                        <div class="rql-sql-tools">
+                            <span title="Format SQL">☰</span>
+                            <span title="Inspect">🔍</span>
+                            <button type="button"
+                                    class="rql-sql-run-btn"
+                                    data-rql-run-trigger
+                                    title="@(Lang == "tr" ? "SQL Sorgusunu Çalıştır" : "Execute SQL Query")">
+                                ▷ @(Lang == "tr" ? "Çalıştır" : "Run")
+                            </button>
+                        </div>
+                    </div>
+                    <pre class="rql-sql-code"><code data-rql-sql-code>@KpiWidgets[0].Sql</code></pre>
+                </div>
+            </div>
+        </aside>
+
+        <!-- RIGHT PANEL: Dashboard Canvas & Multi-Format SQL Output (Table / Pivot / Chart) -->
+        <div class="rql-canvas">
+            <!-- Sample Dashboard Metadata Table (exact match to screenshot) -->
+            <div class="rql-meta-card">
+                <div class="rql-meta-titlebar">
+                    <span>Sample Dashboard</span>
+                    <span class="rql-edit-badge" aria-hidden="true">✎</span>
+                </div>
+                <div class="rql-meta-row">
+                    <strong>@(Lang == "tr" ? "Parametreler" : "Parameters")</strong>
+                    <span>
+                        @(Lang == "tr" ? "Yayında mı:" : "Published:") <b>true</b>,
+                        @(Lang == "tr" ? "Öne çıkan rapor mu:" : "Featured:") <b>false</b>,
+                        @(Lang == "tr" ? "Etiketler:" : "Tags:")
+                        <em class="rql-tag-green">Dashboard</em>
+                    </span>
+                </div>
+                <div class="rql-meta-row">
+                    <strong>@(Lang == "tr" ? "Yetkili Kullanıcılar" : "Authorized Users")</strong>
+                    <span>@(Lang == "tr" ? "Tüm kullanıcılar yetkili" : "All users authorized")</span>
+                </div>
+            </div>
+
+            <!-- "Rapor Üret" Action Bar -->
+            <div class="rql-generate-bar">
+                <div class="rql-generate-left">
+                    <button type="button" class="rql-generate-btn" data-rql-generate-btn aria-pressed="true">
+                        <span>@(Lang == "tr" ? "Rapor Üret" : "Generate Report")</span>
+                    </button>
+                    <span class="rql-exec-status" data-rql-status-badge>
+                        @(Lang == "tr"
+                            ? "✓ SQL sorguları çalıştırıldı · Bir karta tıklayarak SQL sorgusunu inceleyin"
+                            : "✓ SQL queries executed · Click any widget to inspect its SQL query")
+                    </span>
+                </div>
+                <button type="button" class="rql-mode-toggle" data-rql-wireframe-toggle aria-pressed="false">
+                    @(Lang == "tr" ? "Tasarım (...) / Canlı Veri" : "Wireframe (...) / Live Data")
+                </button>
+            </div>
+
+            <!-- 4 Interactive KPI Widgets (from screenshot) -->
+            <div class="rql-kpi-row" role="group" aria-label="@(Lang == "tr" ? "Pano KPI Kartları" : "Dashboard KPI Widgets")">
+                @for (int i = 0; i < KpiWidgets.Length; i++)
+                {
+                    var w = KpiWidgets[i];
+                    var isSelected = i == 0;
+                    <button type="button"
+                            class="@($"rql-kpi-widget{(isSelected ? " is-selected" : "")}")"
+                            data-rql-widget="@i"
+                            data-widget-title="@w.Title"
+                            data-widget-col="25%"
+                            data-widget-sql="@w.Sql"
+                            aria-pressed="@(isSelected ? "true" : "false")">
+                        <div class="rql-kpi-widget-head">
+                            <span>@w.Title</span>
+                            <span class="@($"rql-widget-corner{(isSelected ? " is-active" : "")}")" aria-hidden="true">
+                                @(isSelected ? "✕" : "✎")
+                            </span>
+                        </div>
+                        <div class="rql-kpi-widget-body">
+                            <div class="rql-kpi-live" data-rql-live-val>
+                                <strong>@w.Value</strong>
+                                <span>@w.Subtext</span>
+                            </div>
+                            <div class="rql-kpi-dots" data-rql-dots-val hidden>...</div>
+                        </div>
+                    </button>
+                }
+            </div>
+
+            <!-- Description Block (from screenshot) -->
+            <div class="rql-desc-card">
+                <div class="rql-desc-head">
+                    <span>Description</span>
+                    <span class="rql-edit-badge" aria-hidden="true">✎</span>
+                </div>
+                <p>
+                    @(Lang == "tr"
+                        ? "Reportql ile kendi veritabanınıza bağlanarak yazdığınız SQL sorgularını tek tıkla Tablo, Pivot Matris veya Grafik bileşenlerine dönüştürebilirsiniz."
+                        : "This sample dashboard created in Reportql connects directly to Northwind SQL queries—render any query as a Table, Pivot Matrix, or Chart.")
+                </p>
+            </div>
+
+            <!-- Product Sales Multi-Format SQL Output (Table / Pivot / Chart) -->
+            <div class="rql-sales-card">
+                <div class="rql-sales-header">
+                    <div class="rql-sales-title-group">
+                        <strong>Product Sales</strong>
+                        <span class="rql-sales-subtitle">
+                            @(Lang == "tr" ? "Aynı SQL sorgusunun farklı görselleştirme formatları:" : "Switch visualization format for the Product Sales SQL query:")
+                        </span>
+                    </div>
+                    <div class="rql-format-tabs" role="tablist" aria-label="@(Lang == "tr" ? "Rapor Formatı" : "Report Format")">
+                        <button type="button"
+                                role="tab"
+                                aria-selected="true"
+                                class="rql-format-tab is-active"
+                                data-rql-format-btn="table"
+                                data-format-sql="@TableSql">
+                            @(Lang == "tr" ? "01 Tablo" : "01 Table")
+                        </button>
+                        <button type="button"
+                                role="tab"
+                                aria-selected="false"
+                                class="rql-format-tab"
+                                data-rql-format-btn="pivot"
+                                data-format-sql="@PivotSql">
+                            @(Lang == "tr" ? "02 Pivot Matris" : "02 Pivot Matrix")
+                        </button>
+                        <button type="button"
+                                role="tab"
+                                aria-selected="false"
+                                class="rql-format-tab"
+                                data-rql-format-btn="chart"
+                                data-format-sql="@ChartSql">
+                            @(Lang == "tr" ? "03 Grafik" : "03 Chart")
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FORMAT 1: SQL DATA TABLE -->
+                <div class="rql-format-view" data-rql-format-view="table">
+                    <div class="rql-table-scroll" tabindex="0" role="region" aria-label="Product Sales SQL Table">
+                        <table class="rql-data-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">@(Lang == "tr" ? "Kategori" : "Category")</th>
+                                    <th scope="col">@(Lang == "tr" ? "En Çok Satan Ürün" : "Top Product")</th>
+                                    <th scope="col">@(Lang == "tr" ? "Sipariş" : "Orders")</th>
+                                    <th scope="col">@(Lang == "tr" ? "Toplam Ciro" : "Total Sales")</th>
+                                    <th scope="col">@(Lang == "tr" ? "Pay" : "Share")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var row in SalesRows)
+                                {
+                                    <tr>
+                                        <th scope="row">@row.Category</th>
+                                        <td>@row.Product</td>
+                                        <td>@row.OrderCount</td>
+                                        <td class="rql-num-strong">@row.Revenue</td>
+                                        <td><span class="rql-share-pill">@row.Share</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- FORMAT 2: PIVOT MATRIX -->
+                <div class="rql-format-view" data-rql-format-view="pivot" hidden>
+                    <div class="rql-table-scroll" tabindex="0" role="region" aria-label="Product Sales Pivot Matrix">
+                        <table class="rql-data-table rql-pivot-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">@(Lang == "tr" ? "Kategori \\ Çeyrek" : "Category \\ Quarter")</th>
+                                    <th scope="col">Q1</th>
+                                    <th scope="col">Q2</th>
+                                    <th scope="col">Q3</th>
+                                    <th scope="col">Q4</th>
+                                    <th scope="col" class="rql-pivot-total-col">@(Lang == "tr" ? "Toplam" : "Row Total")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var p in PivotRows)
+                                {
+                                    <tr>
+                                        <th scope="row">@p.Category</th>
+                                        <td>@p.Q1</td>
+                                        <td>@p.Q2</td>
+                                        <td>@p.Q3</td>
+                                        <td>@p.Q4</td>
+                                        <td class="rql-pivot-total-col">@p.Total</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th scope="row">@(Lang == "tr" ? "Genel Toplam" : "Grand Total")</th>
+                                    <td>$198,420</td>
+                                    <td>$231,890</td>
+                                    <td>$249,110</td>
+                                    <td>$284,480</td>
+                                    <td class="rql-pivot-total-col">$963,900</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- FORMAT 3: CHART VISUALIZATION -->
+                <div class="rql-format-view" data-rql-format-view="chart" hidden>
+                    <div class="rql-chart-bars">
+                        @foreach (var row in SalesRows)
+                        {
+                            <div class="rql-chart-row">
+                                <div class="rql-chart-label">
+                                    <strong>@row.Category</strong>
+                                    <span>@row.Revenue (@row.Share)</span>
+                                </div>
+                                <div class="rql-chart-track">
+                                    <div class="rql-chart-fill" style="width:@row.BarWidth;background:@row.Color"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</figure>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+
+    private sealed record KpiWidgetItem(string Title, string Value, string Subtext, string Sql);
+    private sealed record SalesRowItem(string Category, string Product, int OrderCount, string Revenue, string Share, string BarWidth, string Color);
+    private sealed record PivotRowItem(string Category, string Q1, string Q2, string Q3, string Q4, string Total);
+
+    private string FigureLabel => Lang == "tr"
+        ? "Reportql low-code SQL raporlama, pivot tablo ve pano tasarlayıcı (dashboard) önizlemesi"
+        : "Reportql low-code SQL reporting, pivot matrix, and dashboard designer preview";
+
+    private static readonly KpiWidgetItem[] KpiWidgets =
+    [
+        new(
+            "Employee With The Most Sales",
+            "Margaret Peacock",
+            "$250,187.45 · 156 Orders",
+            "select\n  Employee\nfrom (\n  select\n    (e.FirstName || ' ' || e.LastName) as Employee,\n    SUM(od.Quantity * od.UnitPrice) as TotalSales\n  from Employees e\n  inner join Orders o on e.EmployeeID = o.EmployeeID\n  inner join [OrderDetails] od on o.OrderID = od.OrderID\n  group by e.FirstName, e.LastName\n  order by TotalSales desc\n  limit 1\n) tmp"),
+        new(
+            "Turnover",
+            "$1,354,458.59",
+            "+18.4% YoY · 830 Orders",
+            "select\n  ROUND(SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)), 2) as Turnover\nfrom [OrderDetails] od\ninner join Orders o on o.OrderID = od.OrderID\nwhere o.OrderDate >= '1997-01-01'"),
+        new(
+            "Top Sales Country",
+            "USA ($263,566)",
+            "122 Orders · 13 Customers",
+            "select\n  o.ShipCountry as Country,\n  SUM(od.Quantity * od.UnitPrice) as CountryTotal\nfrom Orders o\ninner join [OrderDetails] od on o.OrderID = od.OrderID\ngroup by o.ShipCountry\norder by CountryTotal desc\nlimit 1"),
+        new(
+            "Most Valuable Customer",
+            "QUICK-Stop",
+            "$117,483.39 · 28 Orders",
+            "select\n  c.CompanyName as Customer,\n  SUM(od.Quantity * od.UnitPrice) as LifetimeValue\nfrom Customers c\ninner join Orders o on c.CustomerID = o.CustomerID\ninner join [OrderDetails] od on o.OrderID = od.OrderID\ngroup by c.CompanyName\norder by LifetimeValue desc\nlimit 1")
+    ];
+
+    private const string TableSql =
+        "select\n  c.CategoryName,\n  COUNT(distinct o.OrderID) as Orders,\n  SUM(od.Quantity * od.UnitPrice) as TotalSales\nfrom Categories c\ninner join Products p on c.CategoryID = p.CategoryID\ninner join [OrderDetails] od on p.ProductID = od.ProductID\ninner join Orders o on o.OrderID = od.OrderID\ngroup by c.CategoryName\norder by TotalSales desc";
+
+    private const string PivotSql =
+        "select\n  c.CategoryName,\n  STRFTIME('%Y-Q', o.OrderDate) as Quarter,\n  SUM(od.Quantity * od.UnitPrice) as Revenue\nfrom Categories c\ninner join Products p on c.CategoryID = p.CategoryID\ninner join [OrderDetails] od on p.ProductID = od.ProductID\ninner join Orders o on o.OrderID = od.OrderID\ngroup by c.CategoryName, Quarter\n/* Reportql Pivot: Rows=CategoryName, Cols=Quarter */";
+
+    private const string ChartSql =
+        "select\n  c.CategoryName as Series,\n  ROUND(SUM(od.Quantity * od.UnitPrice), 0) as Value\nfrom Categories c\ninner join Products p on c.CategoryID = p.CategoryID\ninner join [OrderDetails] od on p.ProductID = od.ProductID\ngroup by c.CategoryName\norder by Value desc\n/* Reportql Chart: Bar / Column Series */";
+
+    private static readonly SalesRowItem[] SalesRows =
+    [
+        new("Beverages", "Côte de Blaye", 404, "$267,868", "27.8%", "100%", "#0284c7"),
+        new("Dairy Products", "Raclette Courdavault", 366, "$234,507", "24.3%", "88%", "#10b981"),
+        new("Confections", "Sir Rodney's Marmalade", 334, "$167,357", "17.4%", "63%", "#8b5cf6"),
+        new("Meat / Poultry", "Thüringer Rostbratwurst", 173, "$163,022", "16.9%", "61%", "#f59e0b"),
+        new("Seafood", "Carnarvon Tigers", 330, "$131,146", "13.6%", "49%", "#ec4899")
+    ];
+
+    private static readonly PivotRowItem[] PivotRows =
+    [
+        new("Beverages", "$54,120", "$63,450", "$71,200", "$79,098", "$267,868"),
+        new("Dairy Products", "$48,900", "$58,110", "$60,340", "$67,157", "$234,507"),
+        new("Confections", "$36,240", "$41,800", "$42,910", "$46,407", "$167,357"),
+        new("Meat / Poultry", "$33,510", "$37,920", "$41,600", "$49,992", "$163,022"),
+        new("Seafood", "$25,650", "$30,610", "$33,060", "$41,826", "$131,146")
+    ];
+}
+

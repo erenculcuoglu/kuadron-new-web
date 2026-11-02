@@ -11,6 +11,10 @@
     {
         <StrifePreview Lang="@Lang" />
     }
+    else if (Product.Visual == "reportql-suite")
+    {
+        <ReportqlPreview Lang="@Lang" />
+    }
     else
     {
         <img src="@Product.Image"
@@ -30,6 +34,7 @@
         "ozbi-flow" => "product-visual product-visual-ozbi",
         "klinitra-suite" => "product-visual product-visual-klinitra",
         "strife-suite" => "product-visual product-visual-strife",
+        "reportql-suite" => "product-visual product-visual-reportql",
         _ => "product-visual"
     };
 }

@@ -32,26 +32,29 @@ public sealed record ContactSendResult(bool Success, string DeliveryMode, string
 
 public sealed class ContactMailService
 {
-    private readonly SmtpOptions _options;
+    private readonly IOptionsMonitor<SmtpOptions> _optionsMonitor;
     private readonly IWebHostEnvironment _env;
     private readonly ILogger<ContactMailService> _logger;
     private readonly SemaphoreSlim _fileLock = new(1, 1);
 
     public ContactMailService(
-        IOptions<SmtpOptions> options,
+        IOptionsMonitor<SmtpOptions> optionsMonitor,
         IWebHostEnvironment env,
         ILogger<ContactMailService> logger)
     {
-        _options = options.Value;
+        _optionsMonitor = optionsMonitor;
         _env = env;
         _logger = logger;
     }
 
     public async Task<ContactSendResult> SendAsync(ContactSubmission submission, CancellationToken cancellationToken = default)
     {
-        var recipient = string.IsNullOrWhiteSpace(_options.ToEmail) ? "info@kuadron.com" : _options.ToEmail.Trim();
-        var senderEmail = string.IsNullOrWhiteSpace(_options.FromEmail) ? recipient : _options.FromEmail.Trim();
-        var senderName = string.IsNullOrWhiteSpace(_options.FromName) ? "Kuadron Web İletişim" : _options.FromName.Trim();
+        var options = _optionsMonitor.CurrentValue;
+        var recipient = string.IsNullOrWhiteSpace(options.ToEmail) ? "info@kuadron.com" : options.ToEmail.Trim();
+        var senderEmail = !string.IsNullOrWhiteSpace(options.FromEmail)
+            ? options.FromEmail.Trim()
+            : (!string.IsNullOrWhiteSpace(options.Username) ? options.Username.Trim() : recipient);
+        var senderName = string.IsNullOrWhiteSpace(options.FromName) ? "Kuadron Web İletişim" : options.FromName.Trim();
 
         var cleanName = SanitizeHeader(submission.Name);
         var cleanEmail = SanitizeHeader(submission.Email);
@@ -85,21 +88,21 @@ public sealed class ContactMailService
         string deliveryMode;
         string? error = null;
 
-        if (!string.IsNullOrWhiteSpace(_options.Host))
+        if (!string.IsNullOrWhiteSpace(options.Host) && !string.IsNullOrWhiteSpace(options.Password))
         {
             try
             {
-                using var client = new SmtpClient(_options.Host.Trim(), _options.Port)
+                using var client = new SmtpClient(options.Host.Trim(), options.Port)
                 {
-                    EnableSsl = _options.EnableSsl,
+                    EnableSsl = options.EnableSsl,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     Timeout = 15000
                 };
 
-                if (!string.IsNullOrWhiteSpace(_options.Username))
+                if (!string.IsNullOrWhiteSpace(options.Username))
                 {
                     client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential(_options.Username.Trim(), _options.Password);
+                    client.Credentials = new NetworkCredential(options.Username.Trim(), options.Password);
                 }
 
                 await client.SendMailAsync(mail, cancellationToken);
@@ -114,11 +117,11 @@ public sealed class ContactMailService
                 await SaveToPickupDirectoryAsync(mail);
             }
         }
-        else if (_options.SaveToPickupWhenUnconfigured)
+        else if (options.SaveToPickupWhenUnconfigured)
         {
             await SaveToPickupDirectoryAsync(mail);
             deliveryMode = "pickup";
-            _logger.LogInformation("SMTP sunucusu henüz tanımlanmadığı için e-posta App_Data/mail-pickup klasörüne kaydedildi (Alıcı: {Recipient}).", recipient);
+            _logger.LogInformation("SMTP sunucusu veya parolası henüz tanımlanmadığı için e-posta App_Data/mail-pickup klasörüne kaydedildi (Alıcı: {Recipient}).", recipient);
         }
         else
         {
@@ -128,7 +131,7 @@ public sealed class ContactMailService
 
         await AppendAuditLogAsync(submission, recipient, deliveryMode, error, cancellationToken);
 
-        var success = deliveryMode == "smtp" || (deliveryMode == "pickup" && _options.SaveToPickupWhenUnconfigured);
+        var success = deliveryMode == "smtp" || (deliveryMode == "pickup" && options.SaveToPickupWhenUnconfigured);
         return new ContactSendResult(success, deliveryMode, error);
     }
 
