@@ -455,18 +455,18 @@
           "id": "tork",
           "featuredOnHome": true,
           "name": "TORK",
-          "tagline": "Müşteri Odaklı Satış ve İş Yönetimi Yazılımı",
-          "description": "TORK satış, finans ve iş takibi özellikleri ile KOBİ’lerin günlük işlerini rahatlıkla yönetmesine imkan sağlayan, müşteri odaklı bir satış ve iş yönetimi yazılımıdır.",
+          "tagline": "İş Takibi, Satış (CRM), Teklif/Sipariş ve Ön Muhasebe Yönetim Platformu",
+          "description": "İşletmelerin günlük operasyonlarını tek merkezden yönetmesini sağlayan bulut tabanlı iş yazılımıdır. İş Takibi (Akış, Aktivite ve Görevler, Takvim, Onay Süreçleri, Formlar), Satış & CRM (Kuşbakışı Teklifler, Müşteri/Tedarik Siparişleri, Müşteri/Tedarikçi ve Ürün/Hizmet Yönetimi), Finans (Faturalar, Borç/Masraf ve Ödemeler, Çek/Senet, Kasa ve Banka Hesapları) ve Raporlar modüllerini bir arada sunar.",
           "features": [
-            "CRM",
-            "Finans",
-            "İş Takibi",
-            "Rapor"
+            "Satış & CRM: Kuşbakışı Teklif Pipeline, Müşteri/Tedarik Siparişleri, Cari ve Ürün/Hizmet Yönetimi",
+            "İş Takibi: Kurum İçi Akış, Aktivite ve Görevler, Takvim, Onay Süreçlerim ve Dinamik Formlar",
+            "Finans & Ön Muhasebe: Faturalar, Borç/Masraf ve Ödemeler, Çek/Senetler, Kasa ve Banka Hesapları",
+            "Güncel Pano & Raporlar: Anlık Ciro, Gider ve Açık Satış Fırsatları Performans Analitiği"
           ],
-          "image": "/uploads/prj-torkapp.jpg",
+          "visual": "tork-suite",
           "url": "https://torkapp.com",
           "ctaLabel": "Detaylı Bilgi",
-          "statusBadge": "Bulut SaaS Ürün"
+          "statusBadge": "CRM, İş Takibi & Ön Muhasebe"
         }
       ],
       "testimonials": [
@@ -655,7 +655,7 @@
         "ctaBannerTitle": "OzBI ve Klinitra İş Ortağımız Olun!",
         "ctaBannerSubtitle": "Aşağıda yer alan butonu kullanarak OzBI ve Klinitra bayilik başvurunuzu hemen iletebilirsiniz.",
         "ctaButtonLabel": "Bayilik Başvuru Formu",
-        "bannerImage": "/assets/img/bayi-iletisim1.jpg"
+        "bannerImage": "/uploads/site/kuadron-takim-gorev.jpg"
       },
       "softwareDev": {
         "metaTitle": "Yazılım Geliştirme | Kuadron Bilişim Teknolojileri",
@@ -1236,18 +1236,18 @@
           "id": "tork",
           "featuredOnHome": true,
           "name": "TORK",
-          "tagline": "Business Management Software",
-          "description": "TORK is a business management software that allows SMEs to easily manage their daily works with its CRM, finance, advanced report tool and to do features.",
+          "tagline": "Work Tracking, Sales (CRM), Quote/Order & Pre-Accounting Platform",
+          "description": "A cloud business management platform uniting Work Tracking (Activity Feed, Tasks, Calendar, Approval Workflows, Forms), Sales & CRM (Kanban Quotes, Customer/Supplier Orders, Accounts, Products & Services), Finance (Invoices, Payables/Expenses, Checks/Notes, Cash/Bank Accounts), and Live Reporting.",
           "features": [
-            "CRM",
-            "Finance",
-            "Work Follow",
-            "Report"
+            "Sales & CRM: Kanban Quote Pipeline, Customer/Supplier Orders, Account & Product Catalog",
+            "Work Tracking: Activity Stream, Tasks, Calendar, Approval Workflows & Custom Forms",
+            "Finance & Pre-Accounting: Invoices, Payables/Expenses, Checks/Notes & Cash/Bank Accounts",
+            "Live Dashboard & Reports: Real-Time Revenue, Expense & Open Sales Opportunity Analytics"
           ],
-          "image": "/uploads/prj-torkapp.jpg",
+          "visual": "tork-suite",
           "url": "https://torkapp.com",
           "ctaLabel": "More Info",
-          "statusBadge": "Cloud SaaS Product"
+          "statusBadge": "CRM, Work Tracking & Finance"
         }
       ],
       "testimonials": [
@@ -1436,7 +1436,7 @@
         "ctaBannerTitle": "Become an OzBI & Klinitra Partner!",
         "ctaBannerSubtitle": "Submit your OzBI and Klinitra partnership application right away using the button below.",
         "ctaButtonLabel": "Franchise Application Form",
-        "bannerImage": "/assets/img/bayi-iletisim1.jpg"
+        "bannerImage": "/uploads/site/kuadron-takim-gorev.jpg"
       },
       "softwareDev": {
         "metaTitle": "Software Development | Kuadron Information Technologies Inc.",

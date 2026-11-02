@@ -1,0 +1,275 @@
+<figure class="tork-suite-card" aria-label="@FigureLabel" data-tork-console>
+    <!-- TORK Top Application Bar (modeled after TORK's 4 main navigation pillars) -->
+    <div class="tork-topbar">
+        <div class="tork-topbar-left">
+            <span class="tork-brand-badge">
+                <span class="tork-brand-dot" aria-hidden="true"></span>
+                <span>T O R K</span>
+            </span>
+            <span class="tork-sub-pill">
+                @(Lang == "tr" ? "Güncel Pano · CRM & Ön Muhasebe" : "Live Dashboard · CRM & Finance")
+            </span>
+        </div>
+        <div class="tork-topbar-right">
+            <span class="tork-user-greeting">@(Lang == "tr" ? "Merhaba Eren" : "Hello Eren")</span>
+            <span class="tork-add-btn">+ @(Lang == "tr" ? "Ekle" : "Add")</span>
+        </div>
+    </div>
+
+    <!-- TORK "Güncel Pano" Signature KPI Strip: CİRO (Blue) / GİDER (Red) / AÇIK SATIŞ FIRSATLARI (Amber) -->
+    <div class="tork-summary-strip" aria-label="@(Lang == "tr" ? "Güncel Pano Özeti" : "Dashboard Summary")">
+        <div class="tork-summary-item">
+            <span>@(Lang == "tr" ? "CİRO (FATURALANAN)" : "REVENUE (INVOICED)")</span>
+            <strong class="is-blue">1.845.200 ₺</strong>
+        </div>
+        <div class="tork-summary-item">
+            <span>@(Lang == "tr" ? "GİDER (BORÇ & MASRAF)" : "EXPENSES & PAYABLES")</span>
+            <strong class="is-red">412.650 ₺</strong>
+        </div>
+        <div class="tork-summary-item">
+            <span>@(Lang == "tr" ? "AÇIK SATIŞ FIRSATLARI" : "OPEN SALES OPPORTUNITIES")</span>
+            <strong class="is-amber">1.422.540 ₺</strong>
+        </div>
+    </div>
+
+    <!-- 3 Interactive Main Module Tabs (Satış / İş Takibi / Finans) -->
+    <div class="tork-tabs" role="tablist" aria-label="@(Lang == "tr" ? "TORK Ana Modülleri" : "TORK Core Modules")">
+        <button type="button"
+                role="tab"
+                aria-selected="true"
+                class="tork-tab is-active"
+                data-tork-tab-btn="sales">
+            <span class="tork-tab-code">01</span>
+            <span>@(Lang == "tr" ? "Satış & Teklif Pipeline" : "Sales & Quote Pipeline")</span>
+        </button>
+        <button type="button"
+                role="tab"
+                aria-selected="false"
+                class="tork-tab"
+                data-tork-tab-btn="work">
+            <span class="tork-tab-code">02</span>
+            <span>@(Lang == "tr" ? "İş Takibi & Onay Süreçleri" : "Work Tracking & Approvals")</span>
+        </button>
+        <button type="button"
+                role="tab"
+                aria-selected="false"
+                class="tork-tab"
+                data-tork-tab-btn="finance">
+            <span class="tork-tab-code">03</span>
+            <span>@(Lang == "tr" ? "Finans & Ön Muhasebe" : "Finance & Pre-Accounting")</span>
+        </button>
+    </div>
+
+    <!-- PANEL 1: SATIŞ (Teklifler, Müşteri Siparişleri, Tedarik Siparişleri, Müşteri ve Tedarikçiler, Ürün ve Hizmetler) -->
+    <div class="tork-panel" data-tork-panel="sales">
+        <div class="tork-submodule-bar">
+            @foreach (var sub in SalesSubmodules)
+            {
+                <span class="@($"tork-submodule-chip{(sub.Active ? " is-active" : "")}")">@sub.Label</span>
+            }
+        </div>
+
+        <div class="tork-kanban-grid">
+            @foreach (var col in PipelineColumns)
+            {
+                <div class="tork-kanban-col">
+                    <div class="tork-col-header" style="border-top-color:@col.Color">
+                        <span class="tork-col-title">
+                            <span class="tork-col-dot" style="background:@col.Color" aria-hidden="true"></span>
+                            <strong>@col.Stage</strong>
+                        </span>
+                        <span class="tork-col-count">@col.Cards.Length</span>
+                    </div>
+                    <div class="tork-col-cards">
+                        @foreach (var card in col.Cards)
+                        {
+                            <div class="tork-deal-card">
+                                <div class="tork-deal-top">
+                                    <span class="tork-deal-code">@card.Code</span>
+                                    <span class="tork-deal-owner">@card.Owner</span>
+                                </div>
+                                <strong class="tork-deal-title">@card.Title</strong>
+                                <div class="tork-deal-bottom">
+                                    <span class="tork-client-pill">@card.Client</span>
+                                    <span class="tork-deal-amount">@card.Amount</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- PANEL 2: İŞ TAKİBİ (Akış, Aktivite ve Görevler, Takvim, Onay Süreçlerim, Formlar) -->
+    <div class="tork-panel" data-tork-panel="work" hidden>
+        <div class="tork-submodule-bar">
+            @foreach (var sub in WorkSubmodules)
+            {
+                <span class="@($"tork-submodule-chip{(sub.Active ? " is-active" : "")}")">@sub.Label</span>
+            }
+        </div>
+
+        <div class="tork-task-list">
+            @foreach (var item in WorkItems)
+            {
+                <div class="tork-task-row">
+                    <div class="tork-task-main">
+                        <span class="tork-task-status" style="background:@item.Color"></span>
+                        <div>
+                            <div class="tork-task-head-line">
+                                <span class="tork-work-type">@item.Category</span>
+                                <strong>@item.Title</strong>
+                            </div>
+                            <span>@item.Detail</span>
+                        </div>
+                    </div>
+                    <div class="tork-task-meta">
+                        <span class="tork-task-badge">@item.Status</span>
+                        <span class="tork-deal-owner">@item.Owner</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- PANEL 3: FİNANS (Faturalar, Borç, Masraf ve Ödemeler, Çek ve Senetler, Kasa ve Banka Hesapları) -->
+    <div class="tork-panel" data-tork-panel="finance" hidden>
+        <div class="tork-submodule-bar">
+            @foreach (var sub in FinanceSubmodules)
+            {
+                <span class="@($"tork-submodule-chip{(sub.Active ? " is-active" : "")}")">@sub.Label</span>
+            }
+        </div>
+
+        <div class="tork-finance-grid">
+            @foreach (var mod in FinanceModules)
+            {
+                <div class="tork-finance-card">
+                    <div class="tork-finance-head">
+                        <strong>@mod.Title</strong>
+                        <span class="tork-finance-badge">@mod.Badge</span>
+                    </div>
+                    <p>@mod.Desc</p>
+                    <div class="tork-finance-metric">@mod.Metric</div>
+                </div>
+            }
+        </div>
+    </div>
+</figure>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+
+    private sealed record SubmoduleChip(string Label, bool Active = false);
+    private sealed record DealCard(string Code, string Title, string Client, string Amount, string Owner);
+    private sealed record PipelineColumn(string Stage, string Color, DealCard[] Cards);
+    private sealed record WorkStreamItem(string Category, string Title, string Detail, string Status, string Owner, string Color);
+    private sealed record FinanceModuleItem(string Title, string Badge, string Desc, string Metric);
+
+    private string FigureLabel => Lang == "tr"
+        ? "TORK İş Takibi, Satış (CRM), Teklif/Sipariş ve Finans ön muhasebe platformu önizlemesi"
+        : "TORK Work Tracking, Sales (CRM), Quote/Order and Finance pre-accounting platform preview";
+
+    private SubmoduleChip[] SalesSubmodules => Lang == "tr"
+        ? [
+            new("Teklifler (Kuşbakışı)", true),
+            new("Müşteri Siparişleri"),
+            new("Tedarik Siparişleri"),
+            new("Müşteri ve Tedarikçiler"),
+            new("Ürün ve Hizmetler")
+        ]
+        : [
+            new("Quotes (Kanban)", true),
+            new("Customer Orders"),
+            new("Supplier Orders"),
+            new("Customers & Suppliers"),
+            new("Products & Services")
+        ];
+
+    private SubmoduleChip[] WorkSubmodules => Lang == "tr"
+        ? [
+            new("Akış"),
+            new("Aktivite ve Görevler", true),
+            new("Takvim"),
+            new("Onay Süreçlerim", true),
+            new("Formlar")
+        ]
+        : [
+            new("Activity Feed"),
+            new("Activities & Tasks", true),
+            new("Calendar"),
+            new("Approval Workflows", true),
+            new("Forms")
+        ];
+
+    private SubmoduleChip[] FinanceSubmodules => Lang == "tr"
+        ? [
+            new("Faturalar", true),
+            new("Borç, Masraf ve Ödemeler"),
+            new("Çek ve Senetler"),
+            new("Kasa ve Banka Hesapları")
+        ]
+        : [
+            new("Invoices", true),
+            new("Payables, Expenses & Payments"),
+            new("Checks & Notes"),
+            new("Cash & Bank Accounts")
+        ];
+
+    private PipelineColumn[] PipelineColumns => Lang == "tr"
+        ? [
+            new("Tanışma & Görüşülüyor", "#0284c7", [
+                new("KUA260721", "OzBI Yıllık Lisans Teklifi", "Antik Aerosol", "543.514 ₺", "ER"),
+                new("KUA260804", "Kurumsal Lisans Teklifi", "Mevlana Petrol", "342.360 ₺", "ER")
+            ]),
+            new("Pazarlık", "#f59e0b", [
+                new("KUA260720", "OzBI Yıllık Lisans", "Rena Tasarım", "288.742 ₺", "ER"),
+                new("RQ250423", "Reportql Lisans Teklifi", "Özrize Gıda", "247.925 ₺", "ER")
+            ]),
+            new("Kazanıldı → Sipariş", "#10b981", [
+                new("RQ250313", "Reportql Yıllık Lisans", "TİGEM", "352.800 ₺", "ER"),
+                new("KUA240516", "On-Prem Satınalma", "Infinity Teknoloji", "$4,860", "ER")
+            ])
+        ]
+        : [
+            new("Discovery & Discussion", "#0284c7", [
+                new("KUA260721", "OzBI Annual License Quote", "Antik Aerosol", "₺543,514", "ER"),
+                new("KUA260804", "Enterprise License Quote", "Mevlana Petrol", "₺342,360", "ER")
+            ]),
+            new("Negotiation", "#f59e0b", [
+                new("KUA260720", "OzBI Annual License", "Rena Design", "₺288,742", "ER"),
+                new("RQ250423", "Reportql License Quote", "Özrize Food", "₺247,925", "ER")
+            ]),
+            new("Won → Customer Order", "#10b981", [
+                new("RQ250313", "Reportql Annual License", "TİGEM", "₺352,800", "ER"),
+                new("KUA240516", "On-Prem Purchase Order", "Infinity Tech", "$4,860", "ER")
+            ])
+        ];
+
+    private WorkStreamItem[] WorkItems => Lang == "tr"
+        ? [
+            new("ONAY SÜRECİ", "Tedarik Siparişi & Özel İskonto Onayı", "Rena Tasarım · Teklif #KUA260720 (288.742 ₺)", "Onay Bekliyor", "ER", "#f59e0b"),
+            new("AKTİVİTE & GÖREV", "Müşteri Demo Sunumu ve İhtiyaç Formu", "Antik Aerosol · Takvim: Bugün 14:30", "Planlandı", "ER", "#0284c7"),
+            new("AKIŞ & FORMLAR", "Sipariş Teslim Formu & Kurulum Görevi", "TİGEM · Müşteri Siparişi #RQ250313", "Tamamlandı", "ER", "#10b981")
+        ]
+        : [
+            new("APPROVAL", "Supplier Order & Custom Discount Approval", "Rena Design · Quote #KUA260720 (₺288,742)", "Pending Approval", "ER", "#f59e0b"),
+            new("TASK & CALENDAR", "Customer Demo & Discovery Form", "Antik Aerosol · Calendar: Today 14:30", "Scheduled", "ER", "#0284c7"),
+            new("FEED & FORMS", "Order Delivery Form & Onboarding Task", "TİGEM · Customer Order #RQ250313", "Completed", "ER", "#10b981")
+        ];
+
+    private FinanceModuleItem[] FinanceModules => Lang == "tr"
+        ? [
+            new("Faturalar", "Satış & Alış", "Müşteri siparişlerini tek tıkla faturaya dönüştürün; alış/satış faturalarını ve tahsilatları izleyin.", "Bu Ay: 28 Fatura · 1.845.200 ₺ Ciro"),
+            new("Borç, Masraf ve Ödemeler", "Cari & Gider", "Tedarikçi borçlarını, şirket/personel masraflarını ve ödeme planlarını vade bazlı yönetin.", "412.650 ₺ Gider · 0 Gecikmiş Ödeme"),
+            new("Çek ve Senetler", "Portföy Takibi", "Alınan ve verilen çek/senetlerin vade, tahsilat ve ciro durumlarını tek ekrandan kontrol edin.", "Portföyde 6 Müşteri Çeki Aktif"),
+            new("Kasa ve Banka Hesapları", "Nakit Akışı", "TL ve döviz kasa/banka bakiyelerini, tahsilat ve tediye hareketlerini anlık takip edin.", "3 Banka + 2 Kasa Hesabı Senkronize")
+        ]
+        : [
+            new("Invoices", "Billing", "Convert customer orders into invoices in one click and monitor sales/purchase billing.", "This Month: 28 Invoices · ₺1.84M Revenue"),
+            new("Payables, Expenses & Payments", "Payables", "Manage supplier balances, operational expenses, and scheduled outgoing payments.", "₺412.6K Expenses · 0 Overdue"),
+            new("Checks & Promissory Notes", "Portfolio", "Track incoming and outgoing checks/notes, endorsements, and maturity dates.", "6 Active Customer Checks in Portfolio"),
+            new("Cash & Bank Accounts", "Cash Flow", "Monitor TRY and multi-currency cash and bank balances and daily transactions.", "3 Bank + 2 Cash Accounts Synced")
+        ];
+}

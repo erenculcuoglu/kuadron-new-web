@@ -6,7 +6,12 @@
 
 <PageMeta Title="@F.MetaTitle" Description="@F.MetaDescription" JsonLd="@FaqJsonLd" />
 
-<PageHero Lang="@Lang" Eyebrow="@F.Eyebrow" Title="@F.Title" Lead="@F.IntroDescription" />
+<PageHero Lang="@Lang"
+          Eyebrow="@F.Eyebrow"
+          Title="@F.Title"
+          Lead="@(Lang == "tr"
+              ? "Kuadron’un lokomotif yapay zeka ürünleri OzBI ve Klinitra için yetkili satış ve çözüm ortağı olun."
+              : "Become an authorized sales and solution partner for Kuadron’s flagship AI platforms OzBI and Klinitra.")" />
 
 <!-- Intro & Native <details name="franchise-faq"> Searchable Accordion -->
 <section class="py-16 sm:py-24">

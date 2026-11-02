@@ -1,63 +1,253 @@
-<figure class="klinitra-suite-card" aria-label="@FigureLabel">
+<figure class="klinitra-suite-card" aria-label="@FigureLabel" data-klinitra-console>
+    <!-- Top Header Bar -->
     <div class="klinitra-top-bar">
-        <span class="klinitra-badge">@HeaderBadge</span>
-        <span class="klinitra-subtitle">@HeaderSubtitle</span>
+        <span class="klinitra-badge">
+            @(Lang == "tr" ? "KLINITRA · SAĞLIKTA YAPAY ZEKA EKOSİSTEMİ" : "KLINITRA · HEALTHCARE AI ECOSYSTEM")
+        </span>
+        <span class="klinitra-subtitle">
+            @(Lang == "tr" ? "e-Nabız · HBYS · Medula Uyumlu" : "EHR · HIS · Claims Ready")
+        </span>
     </div>
 
-    <div class="klinitra-clinical-box">
-        <div class="klinitra-clinical-head">
-            <span class="klinitra-clinical-tag">@SummaryLabel</span>
-            <span class="klinitra-clinical-meta">@PatientMeta</span>
-        </div>
-        <p class="klinitra-clinical-text">@SummaryText</p>
+    <!-- Unified Product Feature Tabs -->
+    <div class="klinitra-tabs" role="tablist" aria-label="@(Lang == "tr" ? "Klinitra Ürün Ailesi" : "Klinitra Product Suite")">
+        <button type="button"
+                role="tab"
+                aria-selected="true"
+                class="klinitra-tab is-active"
+                data-klinitra-tab-btn="ai">
+            <span class="klinitra-tab-code">01</span>
+            <span>Klinitra AI</span>
+        </button>
+        <button type="button"
+                role="tab"
+                aria-selected="false"
+                class="klinitra-tab"
+                data-klinitra-tab-btn="sigorta">
+            <span class="klinitra-tab-code">02</span>
+            <span>@(Lang == "tr" ? "Klinitra Sigorta AI" : "Klinitra Insurance AI")</span>
+        </button>
+        <button type="button"
+                role="tab"
+                aria-selected="false"
+                class="klinitra-tab"
+                data-klinitra-tab-btn="bi">
+            <span class="klinitra-tab-code">03</span>
+            <span>Klinitra BI</span>
+        </button>
+        <button type="button"
+                role="tab"
+                aria-selected="false"
+                class="klinitra-tab"
+                data-klinitra-tab-btn="mbys">
+            <span class="klinitra-tab-code">04</span>
+            <span>Klinitra MBYS</span>
+        </button>
     </div>
 
-    <p class="klinitra-modules-label">@ModulesLabel</p>
-    <div class="klinitra-modules-grid">
-        @foreach (var mod in Modules)
-        {
-            <div class="klinitra-module-item">
-                <div class="klinitra-module-head">
-                    <span class="klinitra-module-code">@mod.Code</span>
-                    <strong>@mod.Name</strong>
-                </div>
-                <span class="klinitra-module-role">@mod.Role</span>
-                <span class="klinitra-module-metric">@mod.Metric</span>
+    <!-- PANEL 1: KLINITRA AI -->
+    <div class="klinitra-window" data-klinitra-panel="ai">
+        <div class="klinitra-win-header">
+            <div class="klinitra-win-title">
+                <span class="klinitra-win-dot is-blue" aria-hidden="true"></span>
+                <strong>Klinitra AI</strong>
+                <span class="klinitra-win-sub">@(Lang == "tr" ? "Hasta paneli" : "Patient panel")</span>
             </div>
-        }
+            <span class="klinitra-win-chip">
+                @(Lang == "tr" ? "E · 58 yaş · TC 1•••••••••42" : "M · 58 yrs · ID 1•••••••••42")
+            </span>
+        </div>
+
+        <div class="klinitra-ai-grid">
+            <!-- Left: AI Klinik Özet & Şu An Dikkat -->
+            <div class="klinitra-ai-main">
+                <span class="klinitra-eyebrow-blue">@(Lang == "tr" ? "AI KLİNİK ÖZET" : "AI CLINICAL SUMMARY")</span>
+                <p class="klinitra-summary-p">
+                    @if (Lang == "tr")
+                    {
+                        @:Son 12 ayda HbA1c %5,9’dan %7,4’e yükselmiş; diyabet tanısı 06.2026’da konmuş. Aynı dönemde 6 kg kilo kaybı ve ALP/GGT artışı kayıtlı. Son abdomen görüntülemesi 26 ay önce.
+                    }
+                    else
+                    {
+                        @:Over 12 months HbA1c rose from 5.9% to 7.4%; diabetes diagnosed in 06.2026. Concurrent 6 kg weight loss and elevated ALP/GGT recorded. Last abdominal imaging 26 months ago.
+                    }
+                    <span class="klinitra-refs">[1] [2] [3]</span>
+                </p>
+
+                <span class="klinitra-section-cap">@(Lang == "tr" ? "ŞU AN DİKKAT" : "ATTENTION NOW")</span>
+                <div class="klinitra-alert-list">
+                    <div class="klinitra-alert-row">
+                        <span class="klinitra-badge-high">@(Lang == "tr" ? "YÜKSEK" : "HIGH")</span>
+                        <span>@(Lang == "tr" ? "Yeni başlangıçlı diyabet + kilo kaybı" : "New-onset diabetes + weight loss")</span>
+                    </div>
+                    <div class="klinitra-alert-row">
+                        <span class="klinitra-badge-med">@(Lang == "tr" ? "ORTA" : "MEDIUM")</span>
+                        <span>@(Lang == "tr" ? "ALP 168 U/L, GGT 94 U/L; artışta" : "ALP 168 U/L, GGT 94 U/L; rising")</span>
+                    </div>
+                    <div class="klinitra-alert-row">
+                        <span class="klinitra-badge-info">@(Lang == "tr" ? "BİLGİ" : "INFO")</span>
+                        <span>@(Lang == "tr" ? "Abdomen görüntülemesi 26 ay önce" : "Abdominal imaging 26 months ago")</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Laboratuvar Son 12 Ay Sparklines -->
+            <div class="klinitra-ai-side">
+                <span class="klinitra-section-cap">@(Lang == "tr" ? "LABORATUVAR (SON 12 AY)" : "LAB TRENDS (12M)")</span>
+                <div class="klinitra-lab-item">
+                    <div class="klinitra-lab-head"><strong>HbA1c</strong><span class="is-up">%7,4 ↑</span></div>
+                    <svg viewBox="0 0 120 26" class="klinitra-sparkline" aria-hidden="true">
+                        <path d="M4 21 L42 18 L82 12 L116 5" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="klinitra-lab-item">
+                    <div class="klinitra-lab-head"><strong>ALP</strong><span class="is-up">168 U/L ↑</span></div>
+                    <svg viewBox="0 0 120 26" class="klinitra-sparkline" aria-hidden="true">
+                        <path d="M4 20 L45 16 L85 11 L116 6" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="klinitra-lab-item">
+                    <div class="klinitra-lab-head"><strong>@(Lang == "tr" ? "Kreatinin" : "Creatinine")</strong><span class="is-normal">0,92 mg/dL</span></div>
+                    <svg viewBox="0 0 120 26" class="klinitra-sparkline" aria-hidden="true">
+                        <path d="M4 14 L45 13 L85 15 L116 14" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL 2: KLINITRA SİGORTA AI -->
+    <div class="klinitra-window" data-klinitra-panel="sigorta" hidden>
+        <div class="klinitra-win-header">
+            <div class="klinitra-win-title">
+                <span class="klinitra-win-dot is-purple" aria-hidden="true"></span>
+                <strong>@(Lang == "tr" ? "Klinitra Sigorta AI" : "Klinitra Insurance AI")</strong>
+            </div>
+            <div class="klinitra-seg-pills">
+                <span class="is-active">@(Lang == "tr" ? "Yeni poliçe" : "New policy")</span>
+                <span>@(Lang == "tr" ? "Yenileme" : "Renewal")</span>
+                <span>@(Lang == "tr" ? "Provizyon" : "Claims")</span>
+            </div>
+        </div>
+
+        <div class="klinitra-ai-grid">
+            <div class="klinitra-ai-main">
+                <span class="klinitra-section-cap">@(Lang == "tr" ? "RİSK SKORU" : "RISK SCORE")</span>
+                <div class="klinitra-score-row">
+                    <strong class="klinitra-score-num">62</strong>
+                    <span class="klinitra-score-sub">/ 100 · @(Lang == "tr" ? "Orta-Yüksek Risk" : "Moderate-High Risk")</span>
+                </div>
+                <div class="klinitra-score-bars" aria-hidden="true">
+                    <span class="is-filled"></span>
+                    <span class="is-filled"></span>
+                    <span class="is-filled"></span>
+                    <span class="is-filled-strong"></span>
+                    <span></span>
+                </div>
+                <div class="klinitra-score-scale" aria-hidden="true">
+                    <span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span>
+                </div>
+
+                <span class="klinitra-section-cap" style="margin-top:1rem;display:block">@(Lang == "tr" ? "ÖNERİLEN AKSİYON" : "RECOMMENDED ACTION")</span>
+                <div class="klinitra-action-pills">
+                    <span>@(Lang == "tr" ? "Standart" : "Standard")</span>
+                    <span class="is-active">@(Lang == "tr" ? "Ek prim / İstisna" : "Loading / Exclusion")</span>
+                    <span>@(Lang == "tr" ? "Ertele" : "Defer")</span>
+                </div>
+            </div>
+
+            <div class="klinitra-ai-side">
+                <span class="klinitra-section-cap">@(Lang == "tr" ? "KARARI BELİRLEYEN BULGULAR" : "KEY RISK DRIVERS")</span>
+                <div class="klinitra-alert-list">
+                    <div class="klinitra-alert-row">
+                        <span class="klinitra-badge-high">+24p</span>
+                        <span>@(Lang == "tr" ? "Son 12 ayda HbA1c artışı (%5,9 → %7,4)" : "HbA1c progression (5.9% → 7.4%)")</span>
+                    </div>
+                    <div class="klinitra-alert-row">
+                        <span class="klinitra-badge-med">+18p</span>
+                        <span>@(Lang == "tr" ? "ALP/GGT yüksekliği · Hepatobiliyer takip" : "Elevated ALP/GGT · Hepatobiliary follow-up")</span>
+                    </div>
+                    <div class="klinitra-alert-row">
+                        <span class="klinitra-badge-info">Not</span>
+                        <span>@(Lang == "tr" ? "Metabolik hastalık ek primi önerilir" : "Metabolic rider / loading advised")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL 3: KLINITRA BI -->
+    <div class="klinitra-window" data-klinitra-panel="bi" hidden>
+        <div class="klinitra-win-header">
+            <div class="klinitra-win-title">
+                <span class="klinitra-win-dot is-rose" aria-hidden="true"></span>
+                <strong>Klinitra BI</strong>
+            </div>
+            <span class="klinitra-win-chip">
+                @(Lang == "tr" ? "Asistan: Hastane yönetimi" : "Assistant: Hospital management")
+            </span>
+        </div>
+
+        <div class="klinitra-bi-body">
+            <div class="klinitra-bi-bubble">
+                @(Lang == "tr"
+                    ? "Kardiyoloji ve Dahiliye polikliniklerinin son çeyrek başvuru, bekleme süresi ve gelir değişimi"
+                    : "Cardiology & Internal Medicine Q3 patient volume, wait time, and revenue trend")
+            </div>
+
+            <div class="klinitra-bi-agent-line">
+                <strong>@(Lang == "tr" ? "Agent modu" : "Agent mode")</strong> · @(Lang == "tr" ? "3 sorgu çalıştırıldı" : "3 queries executed")
+            </div>
+
+            <div class="klinitra-bi-kpis">
+                <div class="klinitra-bi-kpi">
+                    <span>@(Lang == "tr" ? "Başvuru Hacmi" : "Patient Volume")</span>
+                    <strong>+%8,4</strong>
+                </div>
+                <div class="klinitra-bi-kpi">
+                    <span>@(Lang == "tr" ? "Ort. Bekleme Süresi" : "Avg. Wait Time")</span>
+                    <strong class="is-emerald">-14 dk</strong>
+                </div>
+                <div class="klinitra-bi-kpi">
+                    <span>@(Lang == "tr" ? "Tetkik / İşlem Dönüşümü" : "Procedure Conversion")</span>
+                    <strong>+%19,2</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL 4: KLINITRA MBYS -->
+    <div class="klinitra-window" data-klinitra-panel="mbys" hidden>
+        <div class="klinitra-win-header">
+            <div class="klinitra-win-title">
+                <span class="klinitra-win-dot is-teal" aria-hidden="true"></span>
+                <strong>Klinitra MBYS</strong>
+            </div>
+            <span class="klinitra-win-chip">
+                @(Lang == "tr" ? "Sağlık Bakanlığı USS / SYS Senkronize" : "Ministry EHR / SYS Synced")
+            </span>
+        </div>
+
+        <div class="klinitra-bi-body">
+            <div class="klinitra-alert-list">
+                <div class="klinitra-alert-row">
+                    <span class="klinitra-badge-info">USS</span>
+                    <span>@(Lang == "tr" ? "Muayene & ICD-10 tanı paketi Sağlık Bakanlığı SYS'ye iletildi (#SYS-9482)" : "Encounter & ICD-10 packet transmitted to Ministry EHR (#SYS-9482)")</span>
+                </div>
+                <div class="klinitra-alert-row">
+                    <span class="klinitra-badge-med">e-Reçete</span>
+                    <span>@(Lang == "tr" ? "Medula e-Reçete ve ilaç etkileşim kontrolü tamamlandı" : "e-Prescription and drug interaction check completed")</span>
+                </div>
+                <div class="klinitra-alert-row">
+                    <span class="klinitra-badge-high">Cari</span>
+                    <span>@(Lang == "tr" ? "Hasta cari, paket işlem ve e-SMM tahsilat kaydı kapatıldı" : "Patient billing, package procedure, and receipt settled")</span>
+                </div>
+            </div>
+        </div>
     </div>
 </figure>
 
 @code {
     [Parameter] public string Lang { get; set; } = "tr";
-
-    private sealed record ModuleInfo(string Code, string Name, string Role, string Metric);
-
-    private string FigureLabel => Lang == "tr"
-        ? "Klinitra sağlık için yapay zeka ürün ailesi önizlemesi"
-        : "Klinitra healthcare AI product suite preview";
-
-    private string HeaderBadge => Lang == "tr" ? "KLİNİTRA EKOSİSTEMİ" : "KLINITRA SUITE";
-    private string HeaderSubtitle => Lang == "tr" ? "Hekim · Sağlık Kurumu · Sigorta" : "Physicians · Providers · Insurers";
-    private string SummaryLabel => Lang == "tr" ? "KLİNİTRA AI · HASTA ÖZETİ & TREND" : "KLINITRA AI · CLINICAL SUMMARY & LAB TRENDS";
-    private string PatientMeta => Lang == "tr" ? "Dahiliye Polikliniği · e-Nabız Senkronize · 36 Ay Kayıt" : "Internal Medicine · Ministry EHR Synced · 36M History";
-    private string SummaryText => Lang == "tr"
-        ? "Son 3 yılda HbA1c %6,1 → %7,4 yükseldi; eGFR 88 → 64 mL/dk geriledi. Mevcut ACEi tedavisinde potasyum sınırda (5,1 mmol/L)."
-        : "Over 36 months HbA1c rose 6.1% → 7.4%; eGFR declined 88 → 64 mL/min. Borderline potassium (5.1 mmol/L) under active ACEi therapy.";
-    private string ModulesLabel => Lang == "tr" ? "ÜRÜN AİLESİ MODÜLLERİ" : "PRODUCT SUITE MODULES";
-
-    private ModuleInfo[] Modules => Lang == "tr"
-        ? [
-            new("01", "Klinitra AI", "Hekimler İçin Klinik Asistan", "Saniyeler içinde e-Nabız özeti & sesli sorgu"),
-            new("02", "Klinitra MBYS", "Muayenehane Bilgi Yönetim Sistemi", "Randevu, e-Reçete & otomatik SYS paket gönderimi"),
-            new("03", "Klinitra Sigorta AI", "Gerekçeli Risk Değerlendirmesi", "0–100 açıklanabilir risk skoru & provizyon"),
-            new("04", "Tanı Öngörü & BI", "Erken Risk Sinyali API & HBYS Analitiği", "Rutin tetkiklerden erken uyarı & hastane BI")
-        ]
-        : [
-            new("01", "Klinitra AI", "Clinical Assistant for Physicians", "Instant longitudinal summary & voice Q&A"),
-            new("02", "Klinitra MBYS", "Practice Management System", "Scheduling, e-Prescription & Ministry sync"),
-            new("03", "Klinitra Insurance AI", "Explainable Underwriting & Claims", "0–100 transparent risk score & rationale"),
-            new("04", "Diagnostic API & BI", "Early Risk Signals & Hospital BI", "Lab-driven early warning & conversational BI")
-        ];
+    [Parameter] public string FigureLabel { get; set; } = "";
 }
-

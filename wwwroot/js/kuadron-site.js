@@ -17,7 +17,7 @@
                 (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             var next = current === 'dark' ? 'light' : 'dark';
             applyTheme(next);
-            try { localStorage.setItem('color-scheme', next); } catch (e) {}
+            try { localStorage.setItem('color-scheme', next); } catch (e) { }
         });
     });
 
@@ -279,48 +279,8 @@
     document.querySelectorAll('[data-rql-console]').forEach(function (root) {
         var sqlCodeEl = root.querySelector('[data-rql-sql-code]');
         var activeLabelEl = root.querySelector('[data-rql-active-label]');
-        var colWidthEl = root.querySelector('[data-rql-colwidth]');
-        var statusBadgeEl = root.querySelector('[data-rql-status-badge]');
-        var kpiWidgets = root.querySelectorAll('[data-rql-widget]');
         var formatBtns = root.querySelectorAll('[data-rql-format-btn]');
         var formatViews = root.querySelectorAll('[data-rql-format-view]');
-        var wireframeToggle = root.querySelector('[data-rql-wireframe-toggle]');
-        var generateBtn = root.querySelector('[data-rql-generate-btn]');
-        var runBtn = root.querySelector('[data-rql-run-trigger]');
-        var isEnglish = document.documentElement.lang === 'en';
-        var isWireframe = false;
-
-        function setWireframeMode(wireframe) {
-            isWireframe = wireframe;
-            root.querySelectorAll('[data-rql-live-val]').forEach(function (el) { el.hidden = wireframe; });
-            root.querySelectorAll('[data-rql-dots-val]').forEach(function (el) { el.hidden = !wireframe; });
-            if (wireframeToggle) {
-                wireframeToggle.setAttribute('aria-pressed', wireframe ? 'true' : 'false');
-            }
-            if (statusBadgeEl) {
-                statusBadgeEl.textContent = wireframe
-                    ? (isEnglish ? 'Designer mode (...) · Click "Generate Report" to run SQL' : 'Tasarım modu (...) · SQL çalıştırmak için "Rapor Üret"e tıklayın')
-                    : (isEnglish ? '✓ SQL queries executed (14 ms) · Live data active' : '✓ SQL sorguları çalıştırıldı (14 ms) · Canlı veri aktif');
-            }
-        }
-
-        kpiWidgets.forEach(function (widget) {
-            widget.addEventListener('click', function () {
-                kpiWidgets.forEach(function (w) {
-                    var selected = w === widget;
-                    w.classList.toggle('is-selected', selected);
-                    w.setAttribute('aria-pressed', selected ? 'true' : 'false');
-                    var corner = w.querySelector('.rql-widget-corner');
-                    if (corner) {
-                        corner.classList.toggle('is-active', selected);
-                        corner.textContent = selected ? '✕' : '✎';
-                    }
-                });
-                if (sqlCodeEl) sqlCodeEl.textContent = widget.getAttribute('data-widget-sql') || '';
-                if (activeLabelEl) activeLabelEl.textContent = widget.getAttribute('data-widget-title') || '';
-                if (colWidthEl) colWidthEl.textContent = widget.getAttribute('data-widget-col') || '25%';
-            });
-        });
 
         formatBtns.forEach(function (btn) {
             btn.addEventListener('click', function () {
@@ -336,23 +296,51 @@
                 if (sqlCodeEl && btn.getAttribute('data-format-sql')) {
                     sqlCodeEl.textContent = btn.getAttribute('data-format-sql');
                 }
-                if (activeLabelEl) activeLabelEl.textContent = 'Product Sales (' + fmt.toUpperCase() + ')';
-                if (colWidthEl) colWidthEl.textContent = '100%';
+                if (activeLabelEl && btn.getAttribute('data-format-badge')) {
+                    activeLabelEl.textContent = btn.getAttribute('data-format-badge');
+                }
             });
         });
+    });
 
-        if (wireframeToggle) {
-            wireframeToggle.addEventListener('click', function () {
-                setWireframeMode(!isWireframe);
+    // 4d. TORK CRM, Pipeline & Ön Muhasebe İnteraktif Konsolu
+    document.querySelectorAll('[data-tork-console]').forEach(function (root) {
+        var tabBtns = root.querySelectorAll('[data-tork-tab-btn]');
+        var panels = root.querySelectorAll('[data-tork-panel]');
+
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var target = btn.getAttribute('data-tork-tab-btn');
+                tabBtns.forEach(function (b) {
+                    var active = b === btn;
+                    b.classList.toggle('is-active', active);
+                    b.setAttribute('aria-selected', active ? 'true' : 'false');
+                });
+                panels.forEach(function (p) {
+                    p.hidden = p.getAttribute('data-tork-panel') !== target;
+                });
             });
-        }
+        });
+    });
 
-        function triggerRunSql() {
-            setWireframeMode(false);
-        }
+    // 4e. Klinitra Sağlık Yapay Zeka Modülleri İnteraktif Konsolu
+    document.querySelectorAll('[data-klinitra-console]').forEach(function (root) {
+        var tabBtns = root.querySelectorAll('[data-klinitra-tab-btn]');
+        var panels = root.querySelectorAll('[data-klinitra-panel]');
 
-        if (generateBtn) generateBtn.addEventListener('click', triggerRunSql);
-        if (runBtn) runBtn.addEventListener('click', triggerRunSql);
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var target = btn.getAttribute('data-klinitra-tab-btn');
+                tabBtns.forEach(function (b) {
+                    var active = b === btn;
+                    b.classList.toggle('is-active', active);
+                    b.setAttribute('aria-selected', active ? 'true' : 'false');
+                });
+                panels.forEach(function (p) {
+                    p.hidden = p.getAttribute('data-klinitra-panel') !== target;
+                });
+            });
+        });
     });
 
     // 5. Müşteri Deneyimleri Karuseli
@@ -562,7 +550,7 @@
     }
 
     function selectConsent(accepted) {
-        try { localStorage.setItem(consentKey, accepted ? 'accepted' : 'rejected'); } catch (e) {}
+        try { localStorage.setItem(consentKey, accepted ? 'accepted' : 'rejected'); } catch (e) { }
         if (banner) banner.classList.add('hidden');
         if (accepted) loadAnalytics();
         else {
@@ -572,7 +560,7 @@
     }
 
     var savedConsent = null;
-    try { savedConsent = localStorage.getItem(consentKey); } catch (e) {}
+    try { savedConsent = localStorage.getItem(consentKey); } catch (e) { }
     if (savedConsent === 'accepted') loadAnalytics();
     else if (savedConsent !== 'rejected' && validId && banner) banner.classList.remove('hidden');
 

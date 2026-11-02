@@ -5,11 +5,9 @@
 
 <PageMeta Title="@P.MetaTitle" Description="@P.MetaDescription" />
 
-<PageHero Lang="@Lang" Eyebrow="@P.Eyebrow" Title="@P.Title" Lead="@P.Lead" />
+<PageHero Lang="@Lang" Eyebrow="@P.Eyebrow" Title="@P.Title" Lead="@P.Lead" Steps="@P.Steps" />
 
-<WorkflowSteps Title="@P.WorkflowTitle" Subtitle="@P.WorkflowSubtitle" Steps="@P.Steps" />
-
-<section id="urunler" class="editorial-section">
+<section id="urunler" class="py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading Eyebrow="SaaS & Cloud" Title="@P.ProductsTitle" />
         <ProductShowcase Products="@Content.Products" Lang="@Lang" />

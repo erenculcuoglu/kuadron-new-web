@@ -1,4 +1,4 @@
-<section class="page-hero py-14 sm:py-20">
+<section class="page-hero border-b border-[var(--border-subtle)] py-14 sm:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" class="mb-5">
             <ol class="flex items-center gap-2 text-xs font-medium text-[var(--text-muted)]">
@@ -27,6 +27,29 @@
                 @Lead
             </p>
         }
+
+        @if (Steps is { Count: > 0 })
+        {
+            <div class="mt-10 border-t border-[var(--border-subtle)] pt-8 sm:mt-12 sm:pt-10">
+                <ol class="workflow-list" style="margin-top:0" role="list">
+                    @for (var i = 0; i < Steps.Count; i++)
+                    {
+                        var step = Steps[i];
+                        <li class="workflow-step">
+                            <div class="workflow-node">
+                                <span class="workflow-number">@step.Number</span>
+                                @if (i < Steps.Count - 1)
+                                {
+                                    <Icon Name="arrow-right" Class="workflow-arrow h-5 w-5" />
+                                }
+                            </div>
+                            <h3>@step.Title</h3>
+                            <p>@step.Description</p>
+                        </li>
+                    }
+                </ol>
+            </div>
+        }
     </div>
 </section>
 
@@ -35,5 +58,6 @@
     [Parameter, EditorRequired] public string Eyebrow { get; set; } = "";
     [Parameter, EditorRequired] public string Title { get; set; } = "";
     [Parameter] public string? Lead { get; set; }
+    [Parameter] public IReadOnlyList<WorkflowStep>? Steps { get; set; }
 }
 

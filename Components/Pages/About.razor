@@ -5,7 +5,12 @@
 
 <PageMeta Title="@A.MetaTitle" Description="@A.MetaDescription" />
 
-<PageHero Lang="@Lang" Eyebrow="@A.Eyebrow" Title="@A.Title" Lead="@A.ValuesDescription" />
+<PageHero Lang="@Lang"
+          Eyebrow="@A.Eyebrow"
+          Title="@A.Title"
+          Lead="@(Lang == "tr"
+              ? "OSTİM Teknopark Ar-Ge merkezimizde 20 yılı aşkın tecrübemizle işletmelere değer katan yazılım ve yapay zeka çözümleri geliştiriyoruz."
+              : "At our OSTİM Technopark R&D center, we build enterprise software and AI solutions backed by over 20 years of industry experience.")" />
 
 <!-- Core Values & Principles -->
 <section class="py-16 sm:py-24">
