@@ -7,13 +7,17 @@
     {
         <KlinitraPreview Lang="@Lang" />
     }
+    else if (Product.Visual == "strife-suite")
+    {
+        <StrifePreview Lang="@Lang" />
+    }
     else
     {
         <img src="@Product.Image"
              alt="@($"{Product.Name} — {Product.Tagline}")"
              width="@(Product.ImageWidth ?? 640)"
              height="@(Product.ImageHeight ?? 360)"
-             loading="lazy" />
+             decoding="async" />
     }
 </div>
 
@@ -25,6 +29,7 @@
     {
         "ozbi-flow" => "product-visual product-visual-ozbi",
         "klinitra-suite" => "product-visual product-visual-klinitra",
+        "strife-suite" => "product-visual product-visual-strife",
         _ => "product-visual"
     };
 }

@@ -13,7 +13,7 @@
                 <h1 id="home-title"><span class="hero-title-main">@H.HeroTitleLine1</span> <span>@H.HeroTitleHighlight</span></h1>
                 <p class="hero-lead">@H.HeroSubtitle</p>
                 <div class="hero-actions">
-                    <a href="@Nav.CtaHref" class="k-btn-primary">@Nav.CtaButton<Icon Name="arrow-right" Class="h-4 w-4" /></a>
+                    <a href="@Nav.CtaHref" class="k-btn-amber">@Nav.CtaButton<Icon Name="arrow-right" Class="h-4 w-4" /></a>
                     <a href="#urunler" class="hero-text-link">@H.ProductsEyebrow<Icon Name="chevron-down" Class="h-4 w-4" /></a>
                 </div>
             </div>
@@ -134,7 +134,7 @@
                          alt="@($"{project.Client} — {project.Title}")"
                          width="720"
                          height="460"
-                         loading="lazy"
+                         decoding="async"
                          class="story-image" />
                     <p class="section-label">@project.Client</p>
                     <h3>@project.Title</h3>
@@ -167,31 +167,6 @@
 <!-- FeaturedNewsSection -->
 <FeaturedNewsSection Lang="@Lang" />
 
-<!-- HomeArticles (TR only) -->
-@if (Lang == "tr" && LatestBlogPosts.Count > 0)
-{
-    <section class="editorial-section">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <SectionHeading Eyebrow="Kuadron Blog" Title="Son Blog Yazılarımız" Href="/blog" LinkLabel="Tüm Yazıları Oku" />
-            <div class="article-grid">
-                @foreach (var post in LatestBlogPosts)
-                {
-                    <article class="editorial-story">
-                        <img src="@post.CoverImage" alt="" width="480" height="300" loading="lazy" class="story-image" />
-                        <p class="story-meta">
-                            <time datetime="@post.PubDate">@post.DisplayDate</time>
-                            <span>@post.ReadingTime dk okuma</span>
-                        </p>
-                        <h3><a href="@($"/blog/{post.Id}")">@post.Title</a></h3>
-                        <p class="section-description">@post.Description</p>
-                        <a href="@($"/blog/{post.Id}")" class="editorial-link">Yazıyı Oku<Icon Name="arrow-right" Class="h-4 w-4" /></a>
-                    </article>
-                }
-            </div>
-        </div>
-    </section>
-}
-
 <ContactSection Lang="@Lang" />
 
 @code {
@@ -201,7 +176,6 @@
     private HomeContent H => Content.Home;
     private NavContent Nav => Content.Nav;
     private List<ProductItem> Portfolio => Content.Products.Where(p => p.FeaturedOnHome).ToList();
-    private List<BlogPostEntry> LatestBlogPosts => SiteData.BlogPosts.Take(3).ToList();
 
     private sealed record CapabilityGroup(string Title, List<ServiceCapabilityItem> Items);
 

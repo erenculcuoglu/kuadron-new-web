@@ -64,10 +64,10 @@
                 <div class="contact-form">
                     <h3 class="text-xl font-bold text-[var(--text-primary)]">@Contact.FormTitle</h3>
 
-                    <form action="@($"mailto:{Company.Email}")"
+                    <form action="/api/contact"
                           method="POST"
                           data-kuadron-form
-                          data-endpoint=""
+                          data-endpoint="/api/contact"
                           data-fallback-email="@Company.Email"
                           data-submitting-text="@Contact.SubmittingLabel"
                           data-submit-text="@Contact.SubmitLabel"

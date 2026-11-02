@@ -7,54 +7,172 @@
 
 <PageHero Lang="@Lang" Eyebrow="@D.Eyebrow" Title="@D.Title" Lead="@D.Lead" />
 
+<!-- 1. Görsel & İnteraktif Kurumsal Dönüşüm Stüdyosu (Öncesi / Sonrası Simülatörü) -->
+<section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
+            <!-- Sol: Görsel Kompozisyon & Mimari Kazanım Telemetrisi -->
+            <div class="lg:col-span-5">
+                <div class="dt-studio-visual shadow-xl">
+                    <img src="/uploads/site/kuadron-ekip-ruhu.jpg"
+                         alt="@(IsTr ? "Kuadron OSTİM Teknopark Dijital Dönüşüm ve YZ Mühendislik Ekibi" : "Kuadron Digital Transformation and AI Engineering Team")"
+                         width="680"
+                         height="425"
+                         decoding="async"
+                         class="dt-studio-photo" />
+                    <div class="p-5 sm:p-6">
+                        <p class="font-mono text-xs font-semibold uppercase tracking-wider text-[#FBB040]">
+                            @(IsTr ? "OSTİM TEKNOPARK AR-GE & DANIŞMANLIK ETKİSİ" : "OSTIM TECHNOPARK R&D & CONSULTANCY IMPACT")
+                        </p>
+                        <h2 class="mt-2 text-lg font-bold text-white sm:text-xl">
+                            @(IsTr
+                                ? "Mevcut ERP ve Veri Altyapınızı Bozmadan Yapay Zeka Katmanı Ekliyoruz"
+                                : "Adding an Enterprise AI Layer Without Disrupting Your Existing ERP Stack")
+                        </h2>
+                        <div class="dt-kpi-grid mt-4">
+                            @foreach (var kpi in StudioKpis)
+                            {
+                                <div class="dt-kpi-item">
+                                    <strong>@kpi.Value</strong>
+                                    <span>@kpi.Label</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ: İnteraktif Departman Dönüşüm Simülatörü (Öncesi vs. Sonrası) -->
+            <div class="lg:col-span-7" data-ai-studio>
+                <p class="section-label">
+                    <span></span>@(IsTr ? "İnteraktif Dönüşüm Simülatörü" : "Interactive Transformation Simulator")
+                </p>
+                <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+                    @(IsTr
+                        ? "Departmanlarda Geleneksel Süreçten YZ Mimarisine Geçiş"
+                        : "From Legacy Departmental Workflows to Autonomous AI")
+                </h2>
+                <p class="mt-3 text-base leading-relaxed text-[var(--text-secondary)]">
+                    @(IsTr
+                        ? "Bir departman seçerek geleneksel işleyiş ile Kuadron’un kurguladığı yapay zeka & Agent mimarisi arasındaki farkı inceleyin:"
+                        : "Select a department below to compare legacy manual processes against Kuadron’s AI & Agent architecture:")
+                </p>
+
+                <div class="dt-studio-tabs mt-6" role="tablist" aria-label="@(IsTr ? "Dönüşüm departmanları" : "Transformation departments")">
+                    @for (int i = 0; i < UseCases.Length; i++)
+                    {
+                        var uc = UseCases[i];
+                        var isFirst = i == 0;
+                        <button type="button"
+                                role="tab"
+                                id="@($"dt-tab-{Lang}-{uc.Id}")"
+                                aria-selected="@(isFirst ? "true" : "false")"
+                                aria-controls="@($"dt-panel-{Lang}-{uc.Id}")"
+                                tabindex="@(isFirst ? 0 : -1)"
+                                class="@($"dt-studio-tab{(isFirst ? " is-active" : "")}")">
+                            <Icon Name="@uc.Icon" Class="h-4 w-4" />
+                            <span>@uc.TabLabel</span>
+                        </button>
+                    }
+                </div>
+
+                @for (int i = 0; i < UseCases.Length; i++)
+                {
+                    var uc = UseCases[i];
+                    var isFirst = i == 0;
+                    <div role="tabpanel"
+                         id="@($"dt-panel-{Lang}-{uc.Id}")"
+                         aria-labelledby="@($"dt-tab-{Lang}-{uc.Id}")"
+                         hidden="@(!isFirst)"
+                         class="k-card p-6 sm:p-7">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-4">
+                            <div>
+                                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--brand-amber-text)]">
+                                    @uc.Badge
+                                </span>
+                                <h3 class="mt-1 text-xl font-bold text-[var(--text-primary)]">@uc.Title</h3>
+                            </div>
+                            <span class="rounded-full bg-[var(--status-success-bg)] px-3 py-1 font-mono text-xs font-bold text-[var(--status-success)]">
+                                @uc.ImpactMetric
+                            </span>
+                        </div>
+
+                        <div class="dt-compare-grid">
+                            <div class="dt-compare-box dt-compare-before">
+                                <span class="dt-compare-tag">@(IsTr ? "Geleneksel Süreç (Öncesi)" : "Legacy Process (Before)")</span>
+                                <p class="text-sm leading-relaxed text-[var(--text-secondary)]">@uc.BeforeText</p>
+                            </div>
+                            <div class="dt-compare-box dt-compare-after">
+                                <span class="dt-compare-tag">@(IsTr ? "Kuadron YZ Mimarisi (Sonrası)" : "Kuadron AI Architecture (After)")</span>
+                                <p class="text-sm font-medium leading-relaxed text-[var(--text-primary)]">@uc.AfterText</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 flex flex-wrap items-center gap-2 pt-3 border-t border-[var(--border-subtle)]">
+                            @foreach (var tag in uc.Deliverables)
+                            {
+                                <span class="inline-flex items-center gap-1.5 rounded-md bg-[var(--bg-subtle)] px-2.5 py-1 font-mono text-xs font-semibold text-[var(--text-primary)]">
+                                    <Icon Name="check" Class="h-3.5 w-3.5 text-[var(--brand-amber-text)]" />
+                                    <span>@tag</span>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Adım Adım Yol Haritası -->
 <WorkflowSteps Title="@D.WorkflowTitle" Subtitle="@D.WorkflowSubtitle" Steps="@D.Steps" />
 
-<!-- Enterprise AI Consultancy Pillars -->
-<section class="py-16 lg:py-24 bg-slate-50/70 dark:bg-slate-900/40 border-y border-[var(--border-subtle)]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mb-12 lg:mb-16">
-            <span class="eyebrow mb-3">
-                @(IsTr ? "Kurumsal Yapay Zeka (YZ) Danışmanlığı" : "Enterprise AI Consultancy")
-            </span>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+<!-- 3. Kurumsal YZ Danışmanlığı Uzmanlık Alanları (6 Kart) -->
+<section class="editorial-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-12">
+            <p class="section-label">
+                <span></span>@(IsTr ? "Kurumsal Yapay Zeka (YZ) Danışmanlığı" : "Enterprise AI Consultancy")
+            </p>
+            <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
                 @(IsTr
                     ? "Verinizi Konuşan ve Karar Alan Yapay Zeka Mimarisine Dönüştürüyoruz"
                     : "Turning Enterprise Data into Conversational & Autonomous AI Systems")
             </h2>
-            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+            <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
                 @(IsTr
                     ? "Standart sohbet botlarının ötesine geçin. OSTİM Teknopark’taki Ar-Ge ekibimizle, mevcut ERP/SQL altyapınızı bozmadan kurumunuza özel Agent Modu, RAG kurumsal hafıza ve açıklanabilir karar destek sistemleri inşa ediyoruz."
                     : "Go beyond generic chatbots. Our R&D engineering team builds domain-specific Agent Mode analytics, RAG enterprise memory, and explainable decision-support systems on top of your existing ERP/SQL stack.")
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             @foreach (var pillar in AiPillars)
             {
-                <article class="surface-card p-6 sm:p-7 flex flex-col justify-between rounded-2xl border border-[var(--border-subtle)] border-t-2 border-t-[var(--brand-amber)] bg-white dark:bg-slate-900/80 shadow-sm hover:border-[var(--brand-amber)] transition-colors">
+                <article class="k-card k-card-hover flex flex-col justify-between border-t-2 border-t-[var(--brand-amber)] p-6 sm:p-7">
                     <div>
-                        <div class="flex items-center justify-between gap-3 mb-5">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                        <div class="mb-5 flex items-center justify-between gap-3">
+                            <span class="inline-flex items-center rounded-full bg-[var(--brand-amber-bg)] px-3 py-1 font-mono text-xs font-semibold text-[var(--brand-amber-text)]">
                                 @pillar.Badge
                             </span>
-                            <div class="w-10 h-10 rounded-xl bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center shrink-0">
-                                <Icon Name="@pillar.Icon" Class="w-5 h-5 text-[#FBB040]" />
-                            </div>
+                            <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0b1424] text-[#FBB040]">
+                                <Icon Name="@pillar.Icon" Class="h-5 w-5" />
+                            </span>
                         </div>
 
-                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3 leading-snug">
+                        <h3 class="mb-3 text-lg font-bold leading-snug text-[var(--text-primary)] sm:text-xl">
                             @pillar.Title
                         </h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                        <p class="mb-6 text-sm leading-relaxed text-[var(--text-secondary)]">
                             @pillar.Desc
                         </p>
                     </div>
 
-                    <ul class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+                    <ul class="space-y-2 border-t border-[var(--border-subtle)] pt-4">
                         @foreach (var metric in pillar.Metrics)
                         {
-                            <li class="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                <span class="w-1.5 h-1.5 rounded-full bg-[var(--brand-amber)] shrink-0"></span>
+                            <li class="flex items-center gap-2 text-xs font-semibold text-[var(--text-primary)]">
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--brand-amber)]"></span>
                                 <span>@metric</span>
                             </li>
                         }
@@ -65,64 +183,133 @@
     </div>
 </section>
 
-<!-- Reference AI Architecture & Live OzBI Agent Mode Demo -->
-<section class="py-16 lg:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start mb-14">
+<!-- 4. Kuadron 4 Katmanlı YZ Referans Mimarisi & Canlı Ürün Simülasyonları -->
+<section class="border-y border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
             <div class="lg:col-span-5">
-                <span class="eyebrow mb-3">
-                    @(IsTr ? "Kuadron YZ Referans Mimarisi" : "Kuadron AI Reference Architecture")
-                </span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+                <p class="section-label">
+                    <span></span>@(IsTr ? "Kuadron YZ Referans Mimarisi" : "Kuadron AI Reference Architecture")
+                </p>
+                <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-3xl">
                     @(IsTr
                         ? "4 Katmanlı Güvenli Kurumsal YZ Entegrasyonu"
                         : "4-Layer Secure Enterprise AI Integration")
                 </h2>
-                <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                <p class="mt-3 mb-6 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
                     @(IsTr
                         ? "Danışmanlık projelerimizde ve lokomotif ürünlerimiz OzBI ile Klinitra’da uyguladığımız mimari; ham veriyi güvenlik katmanlarından geçirerek doğrudan yönetim kurulu seviyesinde karar özetlerine dönüştürür."
                         : "Proven across our consultancy engagements and flagship products OzBI and Klinitra, our 4-layer architecture transforms raw operational data into board-ready executive decisions.")
                 </p>
 
-                <div class="space-y-3.5">
-                    @foreach (var item in ArchitectureLayers)
+                <div>
+                    @for (int i = 0; i < ArchitectureLayers.Length; i++)
                     {
-                        <div class="p-4 rounded-xl border border-[var(--border-subtle)] border-l-2 border-l-[var(--brand-amber)] bg-slate-50/80 dark:bg-slate-900/60">
-                            <div class="text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)] mb-1">
+                        var item = ArchitectureLayers[i];
+                        <div class="dt-arch-step">
+                            <div class="font-mono text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)]">
                                 @item.Step
                             </div>
-                            <div class="text-sm font-bold text-slate-900 dark:text-white mb-1">
+                            <div class="mt-1 text-sm font-bold text-[var(--text-primary)]">
                                 @item.Title
                             </div>
-                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            <p class="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">
                                 @item.Detail
                             </p>
                         </div>
+                        @if (i < ArchitectureLayers.Length - 1)
+                        {
+                            <div class="dt-arch-connector" aria-hidden="true"></div>
+                        }
                     }
                 </div>
             </div>
 
-            <div class="lg:col-span-7">
-                <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+            <!-- Sağ: Canlı Ürün Simülasyonu Seçici (OzBI Agent Modu & Klinitra Ekosistemi) -->
+            <div class="lg:col-span-7" data-ai-studio>
+                <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)]">
-                            @(IsTr ? "Canlı Senaryo Örnekleri (OzBI Agent Modu)" : "Live Scenario Examples (OzBI Agent Mode)")
+                        <span class="font-mono text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)]">
+                            @(IsTr ? "Canlı Mimari Vitrin (Tıklayarak Deneyin)" : "Live Architecture Showcase (Interactive)")
                         </span>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+                        <h3 class="mt-1 text-lg font-bold text-[var(--text-primary)] sm:text-xl">
                             @(IsTr
-                                ? "ERP ve Finans Verisinde Yapay Zeka Ajanı Nasıl Çalışır?"
-                                : "How an AI Agent Operates on Live ERP & Financial Data")
+                                ? "Referans Mimarimizin Canlı Ürünlerimizdeki Uygulaması"
+                                : "Our Reference Architecture in Action Across Flagship Products")
                         </h3>
                     </div>
-                    <a href="https://www.ozbiapp.com.tr/"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
-                        ozbiapp.com.tr &rarr;
-                    </a>
+
+                    <div class="dt-studio-tabs !mb-0" role="tablist" aria-label="@(IsTr ? "Canlı ürün demoları" : "Live product demos")">
+                        <button type="button"
+                                role="tab"
+                                id="@($"arch-demo-tab-{Lang}-ozbi")"
+                                aria-selected="true"
+                                aria-controls="@($"arch-demo-panel-{Lang}-ozbi")"
+                                tabindex="0"
+                                class="dt-studio-tab is-active">
+                            <span>OzBI Agent Modu</span>
+                        </button>
+                        <button type="button"
+                                role="tab"
+                                id="@($"arch-demo-tab-{Lang}-klinitra")"
+                                aria-selected="false"
+                                aria-controls="@($"arch-demo-panel-{Lang}-klinitra")"
+                                tabindex="-1"
+                                class="dt-studio-tab">
+                            <span>Klinitra AI Suite</span>
+                        </button>
+                    </div>
                 </div>
-                <OzbiFlow Lang="@Lang" />
+
+                <div role="tabpanel"
+                     id="@($"arch-demo-panel-{Lang}-ozbi")"
+                     aria-labelledby="@($"arch-demo-tab-{Lang}-ozbi")"
+                     class="product-visual product-visual-ozbi">
+                    <OzbiFlow Lang="@Lang" />
+                </div>
+
+                <div role="tabpanel"
+                     id="@($"arch-demo-panel-{Lang}-klinitra")"
+                     aria-labelledby="@($"arch-demo-tab-{Lang}-klinitra")"
+                     hidden
+                     class="product-visual product-visual-klinitra">
+                    <KlinitraPreview Lang="@Lang" />
+                </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Saha Dijital Dönüşüm Başarı Örnekleri (Görselli Referans Projeler) -->
+<section class="editorial-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading Eyebrow="@(IsTr ? "Saha Uygulamaları" : "Field Implementations")"
+                        Title="@(IsTr ? "Kurumsal Dijital Dönüşüm Referanslarımızdan Seçmeler" : "Selected Enterprise Digital Transformation Case Studies")"
+                        Description="@(IsTr ? "Kamu kurumları, enerji dağıtım şirketleri ve Türkiye çapında bayi ağına sahip kuruluşlarda uçtan uca dijitalleştirdiğimiz kritik operasyonlar." : "Mission-critical operations digitized end-to-end across public institutions, energy utilities, and nationwide dealer networks.")"
+                        Href="@(IsTr ? "/yazilim-gelistirme" : "/en/software-development")"
+                        LinkLabel="@(IsTr ? "Tüm Projeleri İnceleyin" : "Explore All Projects")" />
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+            @foreach (var prj in HighlightProjects)
+            {
+                <article class="editorial-story">
+                    <img src="@prj.Image"
+                         alt="@($"{prj.Client} — {prj.Title}")"
+                         width="640"
+                         height="400"
+                         decoding="async"
+                         class="story-image rounded-lg border border-[var(--border-subtle)]" />
+                    <p class="section-label"><span></span>@prj.Client</p>
+                    <h3>@prj.Title</h3>
+                    <p class="section-description">@prj.Description</p>
+                    <ul class="story-tags" role="list">
+                        @foreach (var f in prj.Features)
+                        {
+                            <li>@f</li>
+                        }
+                    </ul>
+                </article>
+            }
         </div>
     </div>
 </section>
@@ -134,10 +321,114 @@
     private string CurrentPath => new Uri(Navigation.Uri).AbsolutePath;
     private string Lang => SiteData.DetectLocale(CurrentPath);
     private bool IsTr => Lang == "tr";
-    private DigitalTransformationContent D => SiteData.GetLocale(Lang).DigitalTransformation;
+    private LocaleSiteContent Content => SiteData.GetLocale(Lang);
+    private DigitalTransformationContent D => Content.DigitalTransformation;
+    private IEnumerable<ProjectItem> HighlightProjects => Content.Projects.Take(3);
 
+    private sealed record KpiItem(string Value, string Label);
+    private sealed record UseCaseItem(string Id, string TabLabel, string Icon, string Badge, string Title, string ImpactMetric, string BeforeText, string AfterText, string[] Deliverables);
     private sealed record AiPillarItem(string Badge, string Title, string Desc, string[] Metrics, string Icon);
     private sealed record ArchitectureLayerItem(string Step, string Title, string Detail);
+
+    private KpiItem[] StudioKpis => IsTr
+        ? [
+            new("4x Hızlı", "Yönetici Karar & Raporlama Süreci"),
+            new("< 2.4 sn", "Çapraz SQL & Kök Neden Analizi"),
+            new("%100 KVKK", "On-Premise / İzole Bulut LLM"),
+            new("7/24 Aktif", "Otonom Anomali & Risk Takibi")
+        ]
+        : [
+            new("4x Faster", "Executive Decision & Reporting Cycle"),
+            new("< 2.4 sec", "Cross-SQL & Root-Cause Analysis"),
+            new("100% GDPR", "On-Premise / Isolated Cloud LLM"),
+            new("24/7 Live", "Autonomous Anomaly & Risk Monitoring")
+        ];
+
+    private UseCaseItem[] UseCases => IsTr
+        ? [
+            new(
+                "finans-erp",
+                "Finans & ERP",
+                "chart",
+                "FİNANSAL ANALİTİK & AGENT MODU",
+                "Logo, Mikro ve SQL Verisinde Saniyeler İçinde Kök Neden Analizi",
+                "4 Gün → 8 Saniye Raporlama",
+                "Farklı ERP tablolarından alınan verilerin Excel’de manuel birleştirilmesi, geciken ay sonu FAVÖK raporları ve ciro artışının ardındaki kârlılık erimesinin geç fark edilmesi.",
+                "Doğal dilde sorulan tek bir soruyla birden fazla SQL sorgusunu otonom çalıştıran, fiyat/hacim sapmasını ve tahsilat vade riskini saniyeler içinde hesaplayan OzBI Agent mimarisi.",
+                ["Çoklu SQL Agent Modu", "FAVÖK & Nakit Akışı Projeksiyonu", "Şube Katkı Marjı Denetimi"]),
+            new(
+                "tedarik-stok",
+                "Tedarik & Stok",
+                "layers",
+                "ENVANTER & TEDARİK ZEKASI",
+                "Atıl Stok ve Kritik Tedarikçi Gecikmelerine Karşı Erken Uyarı",
+                "%32 İşletme Sermayesi Koruması",
+                "180+ gün hareketsiz kalan yedek parçaların işletme sermayesini kilitlemesi ve kritik hammaddelerde uzayan tedarik sürelerinin (lead-time) üretimi durdurma noktasına getirmesi.",
+                "Stok yaşlandırma ve tedarikçi teslim sürelerini canlı izleyen, emniyet stoku sınırına inen kalemler için satınalma birimine otomatik sipariş taslağı hazırlayan karar destek sistemi.",
+                ["6 Aylık Envanter Değerleme", "Tedarikçi Lead-Time Analizi", "Otomatik Sipariş (RFQ) Taslağı"]),
+            new(
+                "saglik-sigorta",
+                "Sağlık & Sigorta",
+                "award",
+                "KLİNİK ÖZET & RİSK SKORLAMA",
+                "Hekimler, Hastaneler ve Sigorta Şirketleri İçin Açıklanabilir YZ",
+                "0–100 Açıklanabilir Risk Skoru",
+                "Hekimlerin yıllara yayılmış tahlil ve e-Nabız geçmişini incelerken zaman kaybetmesi; sigorta provizyon süreçlerinde standart dışı ve uzun süren manuel dosya incelemeleri.",
+                "Klinitra ekosistemi ile 36 aylık laboratuvar ve klinik geçmişi saniyeler içinde özetleyen hekim asistanı, otomatik SYS gönderimli MBYS ve gerekçeli sigorta risk skorlama motoru.",
+                ["Klinitra AI Hekim Asistanı", "e-Nabız & SYS Uyumlu MBYS", "Sigorta Provizyon & Risk API"]),
+            new(
+                "kurumsal-hafiza",
+                "Kurumsal Hafıza (RAG)",
+                "compass",
+                "DOKÜMAN ZEKASI & MEVZUAT",
+                "Sözleşme, Şartname ve Prosedürlerde Kaynak Gösterimli Sorgulama",
+                "%0 Halüsinasyon / Tam İzlenebilirlik",
+                "Binlerce sayfalık ihale şartnamesi, tedarikçi sözleşmesi, kalite (KYS) prosedürü ve regülasyon dokümanı içinde aranan kritik maddelerin saatlerce manuel taranması.",
+                "Kurum içi dokümanları vektör veritabanında indeksleyen, yalnızca yetkili kullanıcılara madde ve sayfa numarası referansıyla yanıt veren güvenli yerel (On-Prem) RAG asistanı.",
+                ["Sayfa & Madde Referanslı Yanıt", "Rol Bazlı Erişim Yetkilendirme", "İzole On-Premise Kurulum"])
+        ]
+        : [
+            new(
+                "finance-erp",
+                "Finance & ERP",
+                "chart",
+                "FINANCIAL ANALYTICS & AGENT MODE",
+                "Instant Root-Cause Audits Across Logo, Mikro & SQL Databases",
+                "4 Days → 8 Seconds Reporting",
+                "Manual Excel consolidation across fragmented ERP tables, delayed month-end EBITDA reports, and late discovery of margin erosion hidden behind nominal revenue growth.",
+                "Autonomous multi-SQL Agent Mode that answers plain-language executive prompts in seconds—quantifying price vs. volume variance and receivable collection lag.",
+                ["Multi-SQL Agent Mode", "EBITDA & Cash-Flow Forecasting", "Branch Margin Contribution"]),
+            new(
+                "supply-stock",
+                "Supply & Inventory",
+                "layers",
+                "INVENTORY & PROCUREMENT INTELLIGENCE",
+                "Early Warning Against Dormant Stock & Supplier Lead-Time Risks",
+                "32% Working Capital Protection",
+                "Working capital locked in spare parts dormant for 180+ days while lengthening supplier lead-times unexpectedly push fast-moving production items below safety thresholds.",
+                "Continuous inventory aging and supplier lead-time telemetry that flags critical stockouts early and drafts automated purchase requisitions for procurement teams.",
+                ["6-Month Inventory Projection", "Supplier Lead-Time Telemetry", "Automated RFQ Drafting"]),
+            new(
+                "healthcare-insurance",
+                "Healthcare & Insurance",
+                "award",
+                "CLINICAL SUMMARY & RISK SCORING",
+                "Explainable AI for Physicians, Hospitals & Health Insurers",
+                "0–100 Explainable Risk Score",
+                "Physicians spending valuable consultation minutes parsing multi-year lab histories, and insurers facing slow, inconsistent manual underwriting reviews.",
+                "The Klinitra AI suite summarizes 36-month longitudinal patient records in seconds, automates Ministry EHR sync, and generates transparent 0–100 underwriting risk scores.",
+                ["Klinitra AI Clinical Assistant", "Ministry-Synced Practice MBYS", "Explainable Underwriting API"]),
+            new(
+                "enterprise-rag",
+                "Enterprise Memory (RAG)",
+                "compass",
+                "DOCUMENT INTELLIGENCE & COMPLIANCE",
+                "Citation-Backed Q&A Over Contracts, Tenders & Quality SOPs",
+                "100% Citation Traceability",
+                "Hours lost manually searching through thousands of pages of tender specifications, supplier contracts, ISO quality procedures, and regulatory filings.",
+                "On-premise vector RAG architecture that indexes internal documents and answers queries with exact clause and page citations under strict role-based access control.",
+                ["Clause & Page Citations", "Role-Based Access Control", "Isolated On-Premise Deployment"])
+        ];
 
     private AiPillarItem[] AiPillars => IsTr
         ? [
@@ -203,4 +494,3 @@
                 "Executive reports that go beyond static charts—explaining root causes, quantifying cash/margin impact, and recommending concrete actions.")
         ];
 }
-

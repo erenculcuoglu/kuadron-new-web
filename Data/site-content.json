@@ -14,8 +14,7 @@
     "phoneHref": "tel:+903125032051",
     "mapsUrl": "https://g.page/Kuadron?share",
     "jotform": {
-      "franchise": "https://form.jotform.com/212274364202951",
-      "career": "https://form.jotform.com/212384000649955"
+      "franchise": "https://form.jotform.com/212274364202951"
     },
     "social": [
       {
@@ -56,10 +55,6 @@
       "en": "/en/franchising/"
     },
     {
-      "tr": "/kariyer/",
-      "en": "/en/career/"
-    },
-    {
       "tr": "/haberler/",
       "en": "/en/news/"
     },
@@ -93,22 +88,12 @@
           {
             "label": "Bayilik",
             "href": "/bayilik",
-            "desc": "TORK ve Reportql iş ortaklığı ekosistemine katılın"
-          },
-          {
-            "label": "Kariyer",
-            "href": "/kariyer",
-            "desc": "Açık pozisyonlar ve insan kaynakları politikamız"
+            "desc": "OzBI ve Klinitra yapay zeka iş ortaklığı ekosistemine katılın"
           },
           {
             "label": "Haberler",
             "href": "/haberler",
             "desc": "Basında Kuadron, ürün lansmanları ve sektörel yansımalar"
-          },
-          {
-            "label": "Blog",
-            "href": "/blog",
-            "desc": "ERP, CRM, dijital dönüşüm ve yazılım dünyasından rehberler"
           }
         ],
         "servicesLabel": "Hizmetlerimiz",
@@ -133,10 +118,6 @@
           {
             "label": "Referanslar",
             "href": "/#referanslar"
-          },
-          {
-            "label": "Blog",
-            "href": "/blog"
           },
           {
             "label": "İletişim",
@@ -439,18 +420,15 @@
         {
           "id": "strife",
           "name": "Strife",
-          "tagline": "Spor Etkinlikleri ve Müsabaka Yönetimi",
-          "description": "Tek veya çok branşlı spor organizasyonlarını tek platformdan yönetin. Kulüp ve sporcu kayıtlarını, akreditasyonu, turnuvaları ve maç sonuçlarını birlikte takip edin.",
+          "tagline": "Spor Yönetimini Yeniden Tanımlayan Etkinlik, Turnuva ve Saha İçi (OVR) Platformu",
+          "description": "Tek veya çok branşlı takım ve bireysel spor organizasyonlarında etkinlik akreditasyonunu, dinamik turnuva kurgularını ve saha içi oyun yönetimini tek platformda birleştirir. Kura çekimi, fikstür, OVR saha içi sonuç sistemleri, LED skorboard ve canlı yayın widget’larını uçtan uca yönetin.",
           "features": [
-            "Katılımcı ve Akreditasyon",
-            "Turnuva, Kura ve Fikstür",
-            "Skor ve Maç İstatistikleri",
-            "Hakem ve Görevli Yönetimi",
-            "API ve Widget ile Sonuç Yayını"
+            "Etkinlik & Akreditasyon: Kulüp/Sporcu Kaydı, Dış Portal ve Özel Yaka Kartı Basımı",
+            "Dinamik Turnuva Motoru: Lig Usulü (Round Robin), Tek Eleme, Sıralama ve Otomatik Kura",
+            "Oyun Yönetimi & OVR: Saha İçi Sonuç Sistemleri, LED Skorboard ve Bayrak Seremonisi",
+            "Canlı Yayın & İstatistik: NTV, Eurosport, TRT i-Frame Widget, API ve Kapanış Raporları"
           ],
-          "image": "/uploads/products/strife-tournament.png",
-          "imageWidth": 2560,
-          "imageHeight": 1952,
+          "visual": "strife-suite",
           "url": "/#iletisim",
           "ctaLabel": "Demo Talep Edin",
           "statusBadge": "Spor Yönetim Platformu",
@@ -495,50 +473,42 @@
         {
           "quote": "Kuadron’un geliştirdiği atçılık sistemi, kurumumuz tarafından üretilen safkan atların elektronik ortamda ihale ve satış süreçlerinin rahatça organize etmemiz için çok fayda sağladı. Emeği geçen proje ve yazılım geliştirme ekibine teşekkür ederiz.",
           "author": "TİGEM",
-          "role": "TİGEM - Atçılık Daire Başkanlığı",
-          "avatar": "/uploads/refs/tigem.png"
+          "role": "TİGEM - Atçılık Daire Başkanlığı"
         },
         {
           "quote": "İşletmemizde kaynaklarımızı yönetmek için eskiden word, excel gibi araçlar kullanırdık fakat süreçler, karmaşık ve zorlayıcı bir hal alırdı. Kuadron’un bize sunduğu satış odaklı iş yönetim sistemini (TORK) deneyimledikten sonra iş süreçlerimiz çok kolaylaştı. Arta kalan zamanı artık işimizi geliştirmeye ayırabiliyoruz.",
           "author": "Orçun Çankaya",
-          "role": "Argesan Kalıp San. Tic. - Yönetim Kurulu Üyesi",
-          "avatar": "/uploads/refs/orcun-cankaya.jpeg"
+          "role": "Argesan Kalıp San. Tic. - Yönetim Kurulu Üyesi"
         },
         {
           "quote": "CRM programı sayesinde satış ekibimizde kimin hangi satışla ilgilendiğini, satışla ilgili atılacak bir sonraki adımı gibi konuları takip edebiliyoruz. Müşteri adaylarımızı değerlendirip, satış aşamalarını kuşbakışı ekranda inceleyerek tekliflerimizin satışa dönüşme oranını önemli ölçüde arttırdık.",
           "author": "Necati Yazgan",
-          "role": "Conpromac - Yönetim Kurulu Üyesi",
-          "avatar": "/uploads/refs/necati-yazgan.jpeg"
+          "role": "Conpromac - Yönetim Kurulu Üyesi"
         },
         {
           "quote": "Bayilerimizle aramızdaki iş süreçlerini güçlendirerek nihai tüketicimize çok daha hızlı ve sonuç odaklı hizmet vermeye başladık. Bayilerin sipariş girişlerini, stok ve cari hesap takiplerini artık çok daha kolay bir şekilde yapabiliyoruz.",
           "author": "Tunç Öztürk",
-          "role": "Teatub - Yönetici",
-          "avatar": "/uploads/refs/tunc-ozturk.jpg"
+          "role": "Teatub - Yönetici"
         },
         {
           "quote": "Kuadron’un yaptığı iş analizi neticesinde ortaya çıkan ERP sistemi ile pandemide işletmemizin hemen hemen tüm kaynaklarını mekandan bağımsız yönetme imkanına sahip olduk. Muhasebe çalışanları mobilden dahi fatura kesebiliyor. Bu dönemde satış ekibinin etkin CRM kullanımı sayesinde de ciro artışı sağladık.",
           "author": "İsmail Hakkı Yağcızeybek",
-          "role": "LSK Yapısal Ahşap - Yönetici",
-          "avatar": "/uploads/refs/ismail-hakki.jpg"
+          "role": "LSK Yapısal Ahşap - Yönetici"
         },
         {
           "quote": "İşletmedeki en büyük problemimiz satış ekibi arasındaki koordinasyon eksikliği idi. Kuadron’un işletmemiz özelinde yaptığı detaylı analiz ile geliştirdiği CRM uygulaması sayesinde şuan işimizle ilgili her türlü bilgiye anında ulaşıyor, ürün/hizmet bazında detaylı raporlama sayesinde veriye dayalı karar alıyoruz.",
           "author": "Fatih Beşel",
-          "role": "IOTISS Akıllı İş Çözümleri A.Ş. - Satış Müdürü",
-          "avatar": "/uploads/refs/fatih-b.jpeg"
+          "role": "IOTISS Akıllı İş Çözümleri A.Ş. - Satış Müdürü"
         },
         {
           "quote": "ERP programı sayesinde işletmemizin muhasebe, crm, proje yönetimi, satınalma, stok ve üretim gibi faaliyetlerini bir arada takip etme ve yönetme imkanımız oldu. Kaynaklarımızı efektif bir şekilde planlayarak verimliliğimizi arttırdık. Oryantasyon ve eğitim süreçlerinde her daim yanımızda olan Kuadron ekibine çok teşekkür ederim.",
           "author": "Burak Sivrikaya",
-          "role": "Çözüm İş Grup - Yönetici",
-          "avatar": "/uploads/refs/burak-sivrikaya.jpeg"
+          "role": "Çözüm İş Grup - Yönetici"
         },
         {
           "quote": "Müşterilerimizle proje bazlı işler yürüten bir firmayız. Kuadron Bilişim ile geliştirdiğimiz Proje Yönetim Sistemi sayesinde yürütmekte olduğumuz her bir proje için maliyet kontrolü yapabiliyor, takip gerektiren konuları da profesyonel bir şekilde çalışan bazında planlayabilme imkanına sahip olduk.",
           "author": "Ruhi Gönüllü",
-          "role": "Mavion Bilişim Teknolojileri - Genel Müd.Yrd.",
-          "avatar": "/uploads/refs/ruhi-gonullu.jpeg"
+          "role": "Mavion Bilişim Teknolojileri - Genel Müd.Yrd."
         }
       ],
       "featuredNewsSection": {
@@ -625,108 +595,67 @@
         ]
       },
       "franchising": {
-        "metaTitle": "Bayilik | Kuadron Bilişim Teknolojileri",
-        "metaDescription": "Çalışma hayatının gelişen ihtiyaçlarına değer katan bulut tabanlı ürünlerimizle işinizi daha ileriye taşıyoruz. Bayilik başvurunuzu hemen bugün yapın!",
-        "eyebrow": "İş Ortaklığı Ekosistemi",
+        "metaTitle": "OzBI ve Klinitra Bayilik | Kuadron Bilişim Teknolojileri",
+        "metaDescription": "Kuadron’un lokomotif yapay zeka ürünleri OzBI ve Klinitra için çözüm ve satış ortağı olun. Bayilik başvurunuzu hemen bugün yapın!",
+        "eyebrow": "OzBI & Klinitra İş Ortaklığı Ekosistemi",
         "title": "Bayilik",
-        "introTitle": "Sizinle tanışmak için sabırsızlanıyoruz!",
-        "introDescription": "Çalışma hayatının gelişen ihtiyaçlarına değer katan ürünlerimizle işinizi daha ileriye taşıyacak olmanın heyecanı içerisindeyiz.",
+        "introTitle": "OzBI ve Klinitra ile geleceğin yapay zeka ekosisteminde yerinizi alın!",
+        "introDescription": "ERP verisiyle konuşan yapay zeka platformumuz OzBI ve sağlık için yapay zeka ürün ailemiz Klinitra ile müşterilerinize yüksek katma değer sunacak iş ortaklarımızla tanışmak için sabırsızlanıyoruz.",
         "faqs": [
           {
             "question": "Hangi ürünler için bayilik başvurusu yapabilirim?",
-            "answer": "Marka tescili Kuadron Bilişime ait TORK ve Reportql yazılım ürünleri için bayilik başvurusu yapabilirsiniz. Detaylı bilgi için lütfen 0312 503 20 51 veya info@kuadron.com üzerinden iletişime geçiniz."
+            "answer": "Kuadron Bilişim’in lokomotif yapay zeka ürünleri olan OzBI (ERP Verinizle Konuşan Yapay Zeka ve Agent Modu) ve Klinitra (Sağlık İçin Yapay Zeka Ürün Ailesi: Klinitra AI, Klinitra MBYS, Klinitra Sigorta AI ve Tanı Öngörü & BI) için satış ve çözüm ortaklığı başvurusu yapabilirsiniz. Detaylı bilgi için 0312 503 20 51 veya info@kuadron.com üzerinden bizimle iletişime geçebilirsiniz."
           },
           {
-            "question": "Ürünlerin satış modeli nedir?",
-            "answer": "TORK ve Reportql lisanslanabilir iş modeli ile bayiye yıllık tekrarlayan gelir avantajı sağlar. Karlılık oranları ve detaylı bilgi için lütfen 0312 503 20 51 veya info@kuadron.com üzerinden iletişime geçiniz."
+            "question": "OzBI ve Klinitra’nın satış ve gelir modeli nedir?",
+            "answer": "OzBI ve Klinitra; yıllık abonelik (SaaS), yerel kurulum (On-Premise / Hibrit) lisanslama ve kurumsal entegrasyon modelleriyle iş ortaklarımıza yüksek kârlılık ve düzenli tekrarlayan gelir (ARR) avantajı sağlar. Gelir paylaşımı ve bayi kademeleri için 0312 503 20 51 veya info@kuadron.com üzerinden iletişime geçiniz."
           },
           {
-            "question": "Ürünlerin pazarlanmasına yönelik destek veriyor musunuz?",
-            "answer": "Medya ve basın ilişkileri, grafik tasarım süreçleri, görsel iletişim, etkinlik yönetimi, dijital pazarlama ve kampanya yönetimi ile ilgili destekler Kuadron Kurumsal İletişim Direktörlüğü tarafından yönetilir. Bayilik sürecini tamamlayan iş ortaklarına yukarıdaki konularda destek sağlanır. Detaylı bilgi için kurumsaliletisim@kuadron.com adresine mail gönderebilirsiniz."
+            "question": "Ürünlerin pazarlanmasına ve PoC süreçlerine destek veriyor musunuz?",
+            "answer": "OzBI ve Klinitra saha sunumları, canlı demo/PoC ortamları, kurumsal iletişim materyalleri, dijital pazarlama ve sektörel etkinlik yönetimi süreçlerinde Kuadron Kurumsal İletişim ve Ürün ekipleri iş ortaklarımıza doğrudan destek sağlar. Detaylı bilgi için kurumsaliletisim@kuadron.com adresine e-posta gönderebilirsiniz."
           },
           {
-            "question": "Ürün destek ve eğitim çalışmaları gerçekleştiriyor musunuz?",
-            "answer": "Evet. Talep doğrultusunda düzenlenen webinarlar ile online destek eğitimlerimize katılabilirsiniz. Detaylı bilgi için destek@kuadron.com adresine mail gönderiniz."
+            "question": "Teknik eğitim, ERP/HBYS entegrasyonu ve destek çalışmaları yapıyor musunuz?",
+            "answer": "Evet. OzBI için Logo, Mikro ve SQL veri katmanı kurulum eğitimleri; Klinitra için muayenehane (MBYS), e-Nabız/SYS ve hastane iş zekası entegrasyon webinarları düzenliyoruz. Teknik sertifikasyon ve destek için destek@kuadron.com adresine ulaşabilirsiniz."
           }
         ],
-        "benefitsTitle": "İş Ortaklarımıza Sunduğumuz Avantajlar",
+        "benefitsTitle": "OzBI ve Klinitra İş Ortaklarımıza Sunduğumuz Avantajlar",
         "benefits": [
           {
-            "title": "Son Teknoloji Ürünleri",
-            "description": "Yeni nesil yazılımlarımızla işletmelerin günlük iş süreçlerinde fark yaratmasına katkı sağlayın.",
+            "title": "Lokomotif Yapay Zeka Ürünleri",
+            "description": "OzBI Agent Modu ve Klinitra sağlık yapay zekası ile kurumsal müşterilerinize ve sağlık kuruluşlarına doğrudan ölçülebilir yatırım getirisi (ROI) sunun.",
             "icon": "rocket"
           },
           {
-            "title": "Destek ve Eğitim",
-            "description": "Kuadron Akademi koordinasyonunda düzenlenen webinar ve eğitimlerle kişisel gelişiminiz her daim ön planda.",
+            "title": "Akademi & Teknik Sertifikasyon",
+            "description": "Kuadron Akademi koordinasyonunda düzenlenen OzBI ve Klinitra ürün, satış ve teknik entegrasyon eğitimleriyle ekibinizi güçlendirin.",
             "icon": "award"
           },
           {
-            "title": "Çözüm Geliştirme",
-            "description": "Kuadron'un geliştirdiği ürünlerle uyumlu çalışan, sektörel ve dikey çözümler özelinde ortaklık yapalım.",
+            "title": "Sektörel ve Dikey Çözüm Ortaklığı",
+            "description": "Mevcut ERP danışmanlığınızı OzBI ile, sağlık bilişimi ve sigorta uzmanlığınızı Klinitra ürün ailesiyle birleştirerek ek hizmet geliri yaratın.",
             "icon": "code"
           },
           {
-            "title": "Müşteri Sadakat Yönetimi",
-            "description": "Müşteri memnuniyetini ölçmek için anket çalışmaları yapıyor, iş ortaklarımızla veriye dayalı analizler paylaşıyoruz.",
+            "title": "Tekrarlayan Gelir & Müşteri Sadakati",
+            "description": "Yıllık lisans yenilemeleri, kurumsal bakım paketleri ve yüksek müşteri tutundurma oranlarıyla sürdürülebilir nakit akışı elde edin.",
             "icon": "chart"
           },
           {
-            "title": "Pazarlama",
-            "description": "Ürünlerimizin görünür olmasını sağlayarak, yarattığımız katma değerin doğru hedef kitle ile buluşmasına özen gösteriyoruz.",
+            "title": "Ortak Pazarlama & Lead Desteği",
+            "description": "OzBI ve Klinitra için yürütülen ulusal pazarlama kampanyalarından gelen kurumsal talepleri yetkin iş ortaklarımızla paylaşıyoruz.",
             "icon": "compass"
           },
           {
-            "title": "Dijital Dönüşüm",
-            "description": "İşletmelerin dijital dönüşüm süreçlerini ağrısız bir şekilde geçirmeleri için iş ortaklarımızla omuz omuza ilerliyoruz.",
+            "title": "Uçtan Uca PoC ve Kurulum Desteği",
+            "description": "Kurumsal müşterilerde güvenli yerel (On-Prem) veya hibrit yapay zeka kurulumlarında Kuadron mühendislik ekibiyle omuz omuza ilerleyin.",
             "icon": "layers"
           }
         ],
-        "ctaBannerTitle": "Bizimle iletişime geçin!",
-        "ctaBannerSubtitle": "Aşağıda yer alan butonu kullanarak bayilik başvurunuzu hemen iletebilirsiniz.",
+        "ctaBannerTitle": "OzBI ve Klinitra İş Ortağımız Olun!",
+        "ctaBannerSubtitle": "Aşağıda yer alan butonu kullanarak OzBI ve Klinitra bayilik başvurunuzu hemen iletebilirsiniz.",
         "ctaButtonLabel": "Bayilik Başvuru Formu",
         "bannerImage": "/assets/img/bayi-iletisim1.jpg"
-      },
-      "career": {
-        "metaTitle": "Kariyer | Kuadron Bilişim Teknolojileri",
-        "metaDescription": "Kuadron ekibinin bir parçası olmak için açık pozisyonlara hemen göz atın!",
-        "eyebrow": "Kariyer Fırsatları",
-        "title": "Kariyer",
-        "subtitle": "Ekibimize Katılın!",
-        "openPositionsTitle": "Açık Pozisyonlar",
-        "positions": [
-          {
-            "title": "Full-Stack Developer",
-            "location": "Ankara, Remote",
-            "badge": "Mühendislik"
-          },
-          {
-            "title": "Senior Software Engineer",
-            "location": "Ankara, Hybrid",
-            "badge": "Mühendislik",
-            "externalUrl": "https://www.linkedin.com/jobs/view/1344628594/?refId=yKOn2SEgzA2JSkmLQBI7EQ%3D%3D&trackingId=pi0bSrlVMOwXF1m5hrKLsQ%3D%3D"
-          },
-          {
-            "title": "Senior Product Marketing Manager",
-            "location": "Ankara, Tam Zamanlı/Remote",
-            "badge": "Ürün & Pazarlama"
-          }
-        ],
-        "hrTitle": "İnsan Kaynakları Politikamız",
-        "hrDescription": "Faaliyette olduğumuz iş yazılımları sektöründe bugün ulaştığımız kalite ve başarı anlayışını çalışanlarımıza borçluyuz. İnsanı “kaynak” değil “kıymet” olarak gören politikamız; ailemize yeni katılan veya bugünlere gelmemizde emeği geçen çalışanlarımızın tecrübelerini harmanlayarak ekip ruhu içerisinde, kaynakları verimli kullanan bir çalışan profili oluşturmayı hedefliyoruz.",
-        "hrTraits": [
-          "Şeffaf",
-          "İçsel Odaklı",
-          "Katılımcı",
-          "Üretken",
-          "Yenilikçi",
-          "Sürekli Öğrenen",
-          "Çevresine Duyarlı"
-        ],
-        "hrImage": "/uploads/site/human-resources-img.jpg",
-        "cvCtaTitle": "Özgeçmişini Gönder!",
-        "cvCtaSubtitle": "İlgilendiğiniz pozisyonla birlikte CV’nizi hemen bizimle paylaşın.",
-        "cvCtaButton": "Şimdi Başvur"
       },
       "softwareDev": {
         "metaTitle": "Yazılım Geliştirme | Kuadron Bilişim Teknolojileri",
@@ -873,16 +802,8 @@
             "href": "/bayilik"
           },
           {
-            "label": "Kariyer",
-            "href": "/kariyer"
-          },
-          {
             "label": "Haberler",
             "href": "/haberler"
-          },
-          {
-            "label": "Blog",
-            "href": "/blog"
           },
           {
             "label": "Çerez Politikası",
@@ -948,12 +869,7 @@
           {
             "label": "Franchising",
             "href": "/en/franchising",
-            "desc": "Partner with Kuadron for recurring SaaS/PaaS growth"
-          },
-          {
-            "label": "Career",
-            "href": "/en/career",
-            "desc": "Open roles and our human-first talent philosophy"
+            "desc": "Partner with Kuadron on OzBI and Klinitra AI solutions"
           },
           {
             "label": "News",
@@ -983,10 +899,6 @@
           {
             "label": "References",
             "href": "/en/#references"
-          },
-          {
-            "label": "Blog (TR)",
-            "href": "/blog"
           },
           {
             "label": "Contact Us",
@@ -1289,18 +1201,15 @@
         {
           "id": "strife",
           "name": "Strife",
-          "tagline": "Sports Event and Competition Management",
-          "description": "Manage single-sport and multi-sport events in one platform. Track club and athlete registrations, accreditation, tournaments and match results together.",
+          "tagline": "End-to-End Event, Tournament & On-Venue Results (OVR) Sports Platform",
+          "description": "Redefining sports management for single-sport and multi-sport team or individual competitions. Unify participant accreditation, dynamic tournament draws, fixtures, On-Venue Results (OVR), LED scoreboard control and live broadcast widgets in one platform.",
           "features": [
-            "Participants and Accreditation",
-            "Tournaments, Draws and Fixtures",
-            "Scores and Match Statistics",
-            "Referees and Officials",
-            "Results via API and Widgets"
+            "Event & Accreditation: Club/Athlete Registration, External Portal & Custom Badge Printing",
+            "Dynamic Tournament Engine: Round Robin, Single Elimination, Ranking & Automated Draws",
+            "Game Control & OVR: On-Venue Results Integration, LED Scoreboard & Flag Ceremonies",
+            "Live Broadcast & Analytics: TV/Media i-Frame Widgets, Public API & Closing Reports"
           ],
-          "image": "/uploads/products/strife-tournament.png",
-          "imageWidth": 2560,
-          "imageHeight": 1952,
+          "visual": "strife-suite",
           "url": "/en/#contact-us",
           "ctaLabel": "Request a Demo",
           "statusBadge": "Sports Management Platform",
@@ -1345,50 +1254,42 @@
         {
           "quote": "With the system developed by Kuadron, we can easily manage the tender and sales processes of thoroughbred horses in an electronic environment. We would like to thank the project and software development team for their successful work.",
           "author": "TİGEM",
-          "role": "TİGEM - Equestrian Department",
-          "avatar": "/uploads/refs/tigem.png"
+          "role": "TİGEM - Equestrian Department"
         },
         {
           "quote": "We used to use tools like Word or Excel to manage resources in our business. Therefore, processes would become complex and challenging. After experiencing TORK, it has become much more convenient to manage daily operations. Now we can devote the remaining time to growing our business.",
           "author": "Orçun Çankaya",
-          "role": "Argesan Kalıp San. Tic. - Board Member",
-          "avatar": "/uploads/refs/orcun-cankaya.jpeg"
+          "role": "Argesan Kalıp San. Tic. - Board Member"
         },
         {
           "quote": "Our sales team can prepare professional offers and track customer feedback online with TORK CRM. We can easily follow the stages of the sale and the next step to be taken on the kanban board. So, we significantly increased the conversion rate of our offers.",
           "author": "Necati Yazgan",
-          "role": "Conpromac - Board Member",
-          "avatar": "/uploads/refs/necati-yazgan.jpeg"
+          "role": "Conpromac - Board Member"
         },
         {
           "quote": "By strengthening the business processes between us and our dealers, we started to provide faster and result-oriented service to our end consumers. We can now manage stock and current account follow-ups much more easy with TORK's Mikro Software integration.",
           "author": "Tunç Öztürk",
-          "role": "Teatub - Manager",
-          "avatar": "/uploads/refs/tunc-ozturk.jpg"
+          "role": "Teatub - Manager"
         },
         {
           "quote": "During the pandemic, we had the chance to manage almost all the resources of our business with TORK, independently of the location. With the improvements that we experienced in offer, order, stock management and e-invoice processes, our business spent the pandemic period making profit instead of losing turnover.",
           "author": "İsmail Hakkı Yağcızeybek",
-          "role": "LSK Yapısal Ahşap - Manager",
-          "avatar": "/uploads/refs/ismail-hakki.jpg"
+          "role": "LSK Yapısal Ahşap - Manager"
         },
         {
           "quote": "Our biggest challenge was the lack of coordination between the sales team. CRM application which was developed by Kuadron specifically for our business, we now have instant access to all kinds of information about our works, and now we can make data-oriented decisions by making detailed reports of our product/services.",
           "author": "Fatih Beşel",
-          "role": "IOTISS Akıllı İş Çözümleri A.Ş. - Sales Manager",
-          "avatar": "/uploads/refs/fatih-b.jpeg"
+          "role": "IOTISS Akıllı İş Çözümleri A.Ş. - Sales Manager"
         },
         {
           "quote": "With the implementation of the ERP program, we had the opportunity to monitor and manage the activities of our business such as accounting, CRM, project management, purchasing, stock and production. We have increased our productivity by effectively planning our resources. I would like to thank the Kuadron team, who are always with us during the orientation and training period.",
           "author": "Burak Sivrikaya",
-          "role": "Çözüm İş Grup - Manager",
-          "avatar": "/uploads/refs/burak-sivrikaya.jpeg"
+          "role": "Çözüm İş Grup - Manager"
         },
         {
           "quote": "We are a company that carries out project-based business. So, we need software that runs our work. Thanks to the Project Management System (PMS) which we developed with Kuadron, we were able to control costs for each project we carry out, and we had the opportunity to plan the issues that require follow-up on employee basis.",
           "author": "Ruhi Gönüllü",
-          "role": "Mavion Bilişim Teknolojileri - General Manager Assistant",
-          "avatar": "/uploads/refs/ruhi-gonullu.jpeg"
+          "role": "Mavion Bilişim Teknolojileri - General Manager Assistant"
         }
       ],
       "featuredNewsSection": {
@@ -1475,112 +1376,67 @@
         ]
       },
       "franchising": {
-        "metaTitle": "Franchising | Kuadron Information Technologies Inc.",
-        "metaDescription": "We take your business further with our cloud-based products that add value to the evolving needs of working life. Make your dealership application today!",
-        "eyebrow": "Partner Ecosystem",
+        "metaTitle": "OzBI & Klinitra Partnership | Kuadron Information Technologies Inc.",
+        "metaDescription": "Become an authorized sales and solution partner for Kuadron’s flagship AI platforms OzBI and Klinitra. Apply for partnership today!",
+        "eyebrow": "OzBI & Klinitra Partner Ecosystem",
         "title": "Franchising",
-        "introTitle": "We are looking forward to meet you!",
-        "introDescription": "We are excited to carry your work forward with our products which add value to the evolving needs of business life.",
+        "introTitle": "Grow with our OzBI and Klinitra AI product ecosystem!",
+        "introDescription": "We are excited to partner with organizations ready to deliver high-impact enterprise and healthcare value through OzBI (Conversational AI & Agent Mode for ERP) and Klinitra (AI Product Suite for Healthcare).",
         "faqs": [
           {
             "question": "For which products can I apply for franchising?",
-            "answer": "You can apply for franchising for the business software TORK and Reportql, which are trademarks registered by Kuadron. For detailed information please contact via info@kuadron.com."
+            "answer": "You can apply for sales and solution partnership exclusively for Kuadron’s flagship AI products: OzBI (Conversational AI & Agent Mode for ERP Data) and Klinitra (AI Suite for Healthcare: Klinitra AI, Klinitra MBYS, Klinitra Insurance AI, and Diagnostic API & BI). For detailed information, please contact info@kuadron.com."
           },
           {
-            "question": "What is the sales/business model of the products?",
-            "answer": "TORK provides the franchisor with an annual recurring income advantage with its PaaS/SaaS business model. For profitability ratios and detailed information, please contact kanal@kuadron.com."
+            "question": "What is the sales and revenue model of OzBI and Klinitra?",
+            "answer": "OzBI and Klinitra offer annual recurring revenue (ARR) through SaaS subscriptions, on-premise/hybrid enterprise licensing, and implementation services. For partner margin tiers and details, please contact kanal@kuadron.com or info@kuadron.com."
           },
           {
-            "question": "Do you provide support for the marketing of the products?",
-            "answer": "Support for media and press relations, graphic design, visual communication, event management, digital marketing and campaign management is managed by the Kuadron Corporate Communications Directorate. Business partners who complete the franchise process are provided with support on the above subjects. For detailed information, you can send an e-mail to kurumsaliletisim@kuadron.com."
+            "question": "Do you provide support for marketing and PoC demos?",
+            "answer": "Our Corporate Communications and Product teams support authorized partners with live demo environments, PoC support, co-branded marketing collateral, digital campaigns, and industry events. For details, reach out to kurumsaliletisim@kuadron.com."
           },
           {
-            "question": "Do you carry out product support and training activities?",
-            "answer": "Yes. You can join our online support training with webinars organized upon request. For detailed information, send an e-mail to destek@kuadron.com."
+            "question": "Do you offer technical certification and integration training?",
+            "answer": "Yes. We organize regular technical webinars and certification programs covering Logo, Mikro, and SQL data layer integrations for OzBI, as well as practice management (MBYS) and hospital BI deployments for Klinitra. Contact destek@kuadron.com for details."
           }
         ],
-        "benefitsTitle": "Partner Advantages",
+        "benefitsTitle": "OzBI & Klinitra Partner Advantages",
         "benefits": [
           {
-            "title": "Latest Technology Products",
-            "description": "Help businesses make a difference in their daily business with our new generation software.",
+            "title": "Flagship AI Products",
+            "description": "Deliver immediate, measurable ROI to enterprise and healthcare clients with OzBI Agent Mode and the Klinitra healthcare AI suite.",
             "icon": "rocket"
           },
           {
-            "title": "Support and Education",
-            "description": "Your personal development is always at the forefront with webinars and training organized under the coordination of Kuadron Academy.",
+            "title": "Academy & Technical Certification",
+            "description": "Empower your sales and engineering teams through dedicated OzBI and Klinitra onboarding and certification programs at Kuadron Academy.",
             "icon": "award"
           },
           {
-            "title": "Problem Solution",
-            "description": "Let's partner on sectoral and vertical solutions that work in harmony with the products developed by Kuadron.",
+            "title": "Vertical Solution Synergy",
+            "description": "Combine your existing ERP consultancy with OzBI or your health-tech/insurance expertise with Klinitra to unlock high-margin services.",
             "icon": "code"
           },
           {
-            "title": "Customer Loyalty Management",
-            "description": "We conduct surveys to measure customer satisfaction and share data-based analyzes with our business partners.",
+            "title": "Recurring Revenue & Retention",
+            "description": "Build predictable annual recurring revenue (ARR) backed by enterprise subscription renewals and high customer retention.",
             "icon": "chart"
           },
           {
-            "title": "Marketing",
-            "description": "By ensuring that our products are visible on the market, we make certain the value that we create meets with the right target audience.",
+            "title": "Co-Marketing & Lead Sharing",
+            "description": "Benefit from qualified enterprise and clinical leads generated through national OzBI and Klinitra marketing campaigns.",
             "icon": "compass"
           },
           {
-            "title": "Digital Transformation",
-            "description": "We work very close with our business partners so that businesses can go through their digital transformation processes painlessly.",
+            "title": "End-to-End PoC & Deployment Support",
+            "description": "Work side-by-side with Kuadron engineers on privacy-first on-premise and hybrid AI deployments.",
             "icon": "layers"
           }
         ],
-        "ctaBannerTitle": "Contact us!",
-        "ctaBannerSubtitle": "You can contact us and submit your partnership application using the button below.",
+        "ctaBannerTitle": "Become an OzBI & Klinitra Partner!",
+        "ctaBannerSubtitle": "Submit your OzBI and Klinitra partnership application right away using the button below.",
         "ctaButtonLabel": "Franchise Application Form",
         "bannerImage": "/assets/img/bayi-iletisim1.jpg"
-      },
-      "career": {
-        "metaTitle": "Career | Kuadron Information Technologies Inc.",
-        "metaDescription": "Check out the open positions now to be a part of the Kuadron team!",
-        "eyebrow": "Careers at Kuadron",
-        "title": "Career",
-        "subtitle": "Join Our Team!",
-        "openPositionsTitle": "Open Positions",
-        "positions": [
-          {
-            "title": "Full-Stack Developer",
-            "location": "Ankara, Remote",
-            "badge": "Engineering"
-          },
-          {
-            "title": "Front-end Developer",
-            "location": "Ankara, Remote",
-            "badge": "Engineering"
-          },
-          {
-            "title": "Senior Product Marketing Manager",
-            "location": "Ankara, Full Time/Remote",
-            "badge": "Product & Marketing"
-          },
-          {
-            "title": "Marketing Intern",
-            "location": "Ankara, Part-Time/Remote",
-            "badge": "Will Close Soon"
-          }
-        ],
-        "hrTitle": "Our Human Resources Policy",
-        "hrDescription": "We owe the quality and success we have achieved in the industry to our employees. We take care to create a profile that works in a team spirit by blending the experiences of our employees who have just joined our family and contributed to our day. Because we see human not as a \"resource\", but as a \"value\".",
-        "hrTraits": [
-          "Clear",
-          "Intrinsically Focused",
-          "Participative",
-          "Productive",
-          "Innovator",
-          "Continuous Learning",
-          "Environmentally Sensitive"
-        ],
-        "hrImage": "/uploads/site/human-resources-img.jpg",
-        "cvCtaTitle": "Submit Your Resume!",
-        "cvCtaSubtitle": "Share your CV with us now, along with the position you are interested in.",
-        "cvCtaButton": "Apply Now"
       },
       "softwareDev": {
         "metaTitle": "Software Development | Kuadron Information Technologies Inc.",
@@ -1727,16 +1583,8 @@
             "href": "/en/franchising"
           },
           {
-            "label": "Career",
-            "href": "/en/career"
-          },
-          {
             "label": "News",
             "href": "/en/news"
-          },
-          {
-            "label": "Blog (TR)",
-            "href": "/blog"
           },
           {
             "label": "Cookie Policy",

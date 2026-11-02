@@ -58,6 +58,48 @@
         });
     });
 
+    // 2b. Hash / Bölüm Bağlantılarında (#referanslar, #iletisim, #urunler vb.) Hassas Kaydırma
+    function scrollToHashTarget(hash, smooth) {
+        if (!hash || hash === '#') return false;
+        var id = decodeURIComponent(hash.replace(/^#/, ''));
+        var target = document.getElementById(id);
+        if (!target) return false;
+        var header = document.querySelector('header');
+        var headerOffset = header ? header.getBoundingClientRect().height : 64;
+        var top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({
+            top: top,
+            behavior: (smooth && !reduced) ? 'smooth' : 'instant'
+        });
+        return true;
+    }
+
+    document.querySelectorAll('a[href*="#"]').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            var rawHref = link.getAttribute('href');
+            if (!rawHref) return;
+            var url;
+            try { url = new URL(rawHref, window.location.origin); } catch (e) { return; }
+            var normCurrent = window.location.pathname.replace(/\/+$/, '') || '/';
+            var normTarget = url.pathname.replace(/\/+$/, '') || '/';
+            if (normCurrent !== normTarget || !url.hash) return;
+            if (scrollToHashTarget(url.hash, true)) {
+                event.preventDefault();
+                history.pushState(null, '', url.hash);
+            }
+        });
+    });
+
+    if (window.location.hash) {
+        window.requestAnimationFrame(function () {
+            scrollToHashTarget(window.location.hash, false);
+        });
+        window.addEventListener('load', function () {
+            scrollToHashTarget(window.location.hash, false);
+        }, { once: true });
+    }
+
     // 3. Native <dialog> Modallar ve Mobil Çekmece
     document.querySelectorAll('[data-open-dialog]').forEach(function (trigger) {
         trigger.addEventListener('click', function () {
@@ -65,12 +107,6 @@
             if (!targetId) return;
             var dialog = document.getElementById(targetId);
             if (!dialog || typeof dialog.showModal !== 'function') return;
-
-            var presetPosition = trigger.getAttribute('data-position-title');
-            if (presetPosition) {
-                var posInput = dialog.querySelector('input[name="position"]');
-                if (posInput) posInput.value = presetPosition;
-            }
             dialog.showModal();
         });
     });
@@ -95,10 +131,15 @@
         }
     });
 
-    // 4. OzBI Agent Modu Senaryo Sekmeleri
-    document.querySelectorAll('[data-ozbi-console]').forEach(function (root) {
-        var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
-        var panels = Array.prototype.slice.call(root.querySelectorAll('[role="tabpanel"]'));
+    // 4. OzBI Agent Modu, Strife & YZ Danışmanlığı Senaryo Sekmeleri (İç İçe Sekme Güvenli)
+    document.querySelectorAll('[data-ozbi-console], [data-strife-console], [data-ai-studio]').forEach(function (root) {
+        var tablist = root.querySelector('[role="tablist"]');
+        if (!tablist) return;
+        var tabs = Array.prototype.slice.call(tablist.querySelectorAll('[role="tab"]'));
+        var panels = tabs.map(function (tab) {
+            var id = tab.getAttribute('aria-controls');
+            return id ? document.getElementById(id) : null;
+        });
 
         function selectTab(index) {
             tabs.forEach(function (tab, i) {
@@ -108,7 +149,7 @@
                 tab.tabIndex = active ? 0 : -1;
             });
             panels.forEach(function (panel, i) {
-                panel.hidden = i !== index;
+                if (panel) panel.hidden = i !== index;
             });
         }
 
@@ -122,6 +163,114 @@
                     selectTab(next);
                     if (tabs[next]) tabs[next].focus();
                 }
+            });
+        });
+    });
+
+    // 4b. Strife İnteraktif Alt Kontrolleri (Sezon Aşaması, Fikstür İşlemler, Kulüp Seçici, LED Skorboard & Yaka Kartı)
+    document.querySelectorAll('[data-strife-console]').forEach(function (root) {
+        // Normal Sezon / Play-Off Puan Tablosu Geçişi
+        var stageBtns = root.querySelectorAll('[data-strife-stage-btn]');
+        var stageViews = root.querySelectorAll('[data-strife-stage-view]');
+        stageBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var target = btn.getAttribute('data-strife-stage-btn');
+                stageBtns.forEach(function (b) {
+                    var active = b === btn;
+                    b.classList.toggle('is-active', active);
+                    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+                });
+                stageViews.forEach(function (view) {
+                    view.hidden = view.getAttribute('data-strife-stage-view') !== target;
+                });
+            });
+        });
+
+        // Fikstür Satırı & "İşlemler" Maç Denetçisi
+        var matchRows = root.querySelectorAll('[data-strife-match-row]');
+        var titleEl = root.querySelector('[data-strife-inspector-title]');
+        var quartersEl = root.querySelector('[data-strife-inspector-quarters]');
+        var venueEl = root.querySelector('[data-strife-inspector-venue]');
+        var refEl = root.querySelector('[data-strife-inspector-referee]');
+
+        function selectMatchRow(row) {
+            matchRows.forEach(function (r) { r.classList.toggle('is-selected', r === row); });
+            if (titleEl) titleEl.textContent = row.getAttribute('data-match-title') || '';
+            if (quartersEl) quartersEl.textContent = row.getAttribute('data-match-quarters') || '';
+            if (venueEl) venueEl.textContent = row.getAttribute('data-match-venue') || '';
+            if (refEl) refEl.textContent = row.getAttribute('data-match-referee') || '';
+        }
+
+        matchRows.forEach(function (row) {
+            row.addEventListener('click', function () { selectMatchRow(row); });
+        });
+
+        // Kulüp Kartı & Sonuç Widget Seçici
+        var clubBtns = root.querySelectorAll('[data-strife-club-btn]');
+        var clubViews = root.querySelectorAll('[data-strife-club-view]');
+        clubBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var clubId = btn.getAttribute('data-strife-club-btn');
+                clubBtns.forEach(function (b) {
+                    var active = b === btn;
+                    b.classList.toggle('is-active', active);
+                    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+                });
+                clubViews.forEach(function (v) {
+                    v.hidden = v.getAttribute('data-strife-club-view') !== clubId;
+                });
+            });
+        });
+
+        // OVR LED Skorboard Canlı Gol & Bayrak Seremonisi Kontrolleri
+        var homeScoreEl = root.querySelector('[data-strife-home-score]');
+        var awayScoreEl = root.querySelector('[data-strife-away-score]');
+        var matchBoardEl = root.querySelector('[data-strife-led-match]');
+        var ceremonyEl = root.querySelector('[data-strife-led-ceremony]');
+        var ceremonyBtn = root.querySelector('[data-strife-ceremony-toggle]');
+
+        root.querySelectorAll('[data-strife-score-btn]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var side = btn.getAttribute('data-strife-score-btn');
+                var targetEl = side === 'home' ? homeScoreEl : awayScoreEl;
+                if (!targetEl) return;
+                var val = parseInt(targetEl.textContent || '0', 10);
+                targetEl.textContent = String((val + 1) % 30);
+                if (ceremonyEl && !ceremonyEl.hidden && matchBoardEl) {
+                    ceremonyEl.hidden = true;
+                    matchBoardEl.hidden = false;
+                    if (ceremonyBtn) {
+                        ceremonyBtn.classList.remove('is-active');
+                        ceremonyBtn.setAttribute('aria-pressed', 'false');
+                    }
+                }
+            });
+        });
+
+        if (ceremonyBtn && ceremonyEl && matchBoardEl) {
+            ceremonyBtn.addEventListener('click', function () {
+                var showCeremony = ceremonyEl.hidden;
+                ceremonyEl.hidden = !showCeremony;
+                matchBoardEl.hidden = showCeremony;
+                ceremonyBtn.classList.toggle('is-active', showCeremony);
+                ceremonyBtn.setAttribute('aria-pressed', showCeremony ? 'true' : 'false');
+            });
+        }
+
+        // Akreditasyon Yaka Kartı & TV i-Frame Rol Seçici
+        var roleBtns = root.querySelectorAll('[data-strife-role-btn]');
+        var roleViews = root.querySelectorAll('[data-strife-role-view]');
+        roleBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var role = btn.getAttribute('data-strife-role-btn');
+                roleBtns.forEach(function (b) {
+                    var active = b === btn;
+                    b.classList.toggle('is-active', active);
+                    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+                });
+                roleViews.forEach(function (v) {
+                    v.hidden = v.getAttribute('data-strife-role-view') !== role;
+                });
             });
         });
     });
@@ -151,17 +300,7 @@
         updateCarousel();
     }
 
-    // 6. Reportql Demo Video Kontrolü
-    document.querySelectorAll('.product-demo').forEach(function (details) {
-        details.addEventListener('toggle', function () {
-            if (!details.open) {
-                var video = details.querySelector('video');
-                if (video && typeof video.pause === 'function') video.pause();
-            }
-        });
-    });
-
-    // 7. Basın Arşivi Arama ve Yıl Filtresi (/haberler ve /en/news)
+    // 6. Basın Arşivi Arama ve Yıl Filtresi (/haberler ve /en/news)
     var pressSearch = document.getElementById('press-search');
     var yearBtns = document.querySelectorAll('[data-year-filter]');
     var pressItems = document.querySelectorAll('[data-press-item]');
@@ -198,24 +337,7 @@
         });
     }
 
-    // 8. Blog Arama (/blog)
-    var blogSearch = document.getElementById('blog-search');
-    var blogCards = document.querySelectorAll('[data-blog-card]');
-    var blogEmpty = document.getElementById('blog-empty');
-    if (blogSearch && blogCards.length > 0) {
-        blogSearch.addEventListener('input', function () {
-            var q = blogSearch.value.trim().toLowerCase();
-            var count = 0;
-            blogCards.forEach(function (card) {
-                var match = !q || (card.dataset.search || '').includes(q);
-                card.classList.toggle('hidden', !match);
-                if (match) count++;
-            });
-            if (blogEmpty) blogEmpty.classList.toggle('hidden', count > 0);
-        });
-    }
-
-    // 9. Form Doğrulama ve Gönderim
+    // 7. Form Doğrulama ve Gönderim
     var touched = new WeakSet();
     function isField(target) {
         return (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement)

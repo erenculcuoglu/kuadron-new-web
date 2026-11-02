@@ -27,18 +27,18 @@
                         <span>@F.CtaButtonLabel</span>
                         <Icon Name="arrow-right" Class="h-4 w-4" />
                     </button>
-                    <a href="https://torkapp.com"
+                    <a href="https://www.ozbiapp.com.tr/"
                        target="_blank"
                        rel="noopener noreferrer"
                        class="k-btn-secondary">
-                        <span>TORK</span>
+                        <span>OzBI</span>
                         <Icon Name="external" Class="h-4 w-4" />
                     </a>
-                    <a href="https://www.reportql.com/"
+                    <a href="https://www.klinitra.com/"
                        target="_blank"
                        rel="noopener noreferrer"
                        class="k-btn-secondary">
-                        <span>Reportql</span>
+                        <span>Klinitra</span>
                         <Icon Name="external" Class="h-4 w-4" />
                     </a>
                 </div>
@@ -99,7 +99,7 @@
                 <div class="lg:col-span-5">
                     <img src="@F.BannerImage"
                          alt="@F.CtaBannerTitle"
-                         loading="lazy"
+                         decoding="async"
                          width="600"
                          height="420"
                          class="h-64 w-full object-cover lg:h-full lg:min-h-[22rem]" />
@@ -135,9 +135,9 @@
                   Subtitle="@F.IntroDescription"
                   FallbackEmail="@Company.ChannelEmail"
                   JotformUrl="@Company.Jotform.Franchise"
-                  ExtraFieldLabel="@(Lang == "tr" ? "Firma Adı ve Şehir (TORK / Reportql)" : "Company Name & City (TORK / Reportql)")"
-                  ExtraFieldName="company"
-                  ExtraFieldPlaceholder="@(Lang == "tr" ? "Örn: ABC Teknoloji - İstanbul" : "e.g. ABC Tech - Istanbul")" />
+                  ExtraFieldLabel="@(Lang == "tr" ? "Firma Adı, Şehir ve Ürün (OzBI / Klinitra)" : "Company Name, City & Product (OzBI / Klinitra)")"
+                  ExtraFieldName="company_city"
+                  ExtraFieldPlaceholder="@(Lang == "tr" ? "Örn: ABC Teknoloji - İstanbul (OzBI / Klinitra)" : "e.g. ABC Tech - Istanbul (OzBI / Klinitra)")" />
 
 @code {
     private string CurrentPath => new Uri(Navigation.Uri).AbsolutePath;

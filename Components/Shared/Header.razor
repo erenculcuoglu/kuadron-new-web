@@ -9,7 +9,6 @@
         if (href.Contains('#')) return false;
         var cleanPath = SiteDataService.NormalizePath(CurrentPath);
         var cleanHref = SiteDataService.NormalizePath(href);
-        if (cleanHref == "/blog") return cleanPath.StartsWith("/blog", StringComparison.OrdinalIgnoreCase);
         return string.Equals(cleanPath, cleanHref, StringComparison.OrdinalIgnoreCase);
     }
 
@@ -20,7 +19,7 @@
 <header class="sticky top-0 z-50 border-b border-[#1e2f4a] bg-[#0b1424]/95 text-slate-100 backdrop-blur-md">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
         <a href="@homeHref" class="site-brand inline-flex min-w-0 items-center gap-2 text-white transition-opacity hover:opacity-90" aria-label="@content.SiteName">
-            <KuadronLogo Class="h-8 w-auto sm:h-9" />
+            <KuadronLogo Class="kuadron-logo" />
         </a>
 
         <nav class="hidden items-center gap-1 lg:flex" aria-label="@(Lang == "tr" ? "Ana menü" : "Main navigation")">
@@ -87,7 +86,7 @@
                 </span>
             </button>
 
-            <a href="@content.Nav.CtaHref" class="k-btn-primary hidden !min-h-11 !px-4 !py-2 !text-sm sm:inline-flex">
+            <a href="@content.Nav.CtaHref" class="k-btn-amber hidden !min-h-11 !px-4 !py-2 !text-sm sm:inline-flex">
                 <span>@content.Nav.CtaButton</span>
                 <Icon Name="arrow-right" Class="h-4 w-4" />
             </a>
@@ -104,7 +103,7 @@
         <div>
             <div class="-mx-6 -mt-6 mb-6 flex items-center justify-between border-b border-[#1e2f4a] bg-[#0b1424] px-6 py-4">
                 <a href="@homeHref" class="text-white" data-close-dialog>
-                    <KuadronLogo Class="h-7 w-auto" />
+                    <KuadronLogo Class="kuadron-logo kuadron-logo-sm" />
                 </a>
                 <form method="dialog">
                     <button type="submit" class="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-xl border border-slate-700/80 text-white" aria-label="@content.Nav.CloseMenu">

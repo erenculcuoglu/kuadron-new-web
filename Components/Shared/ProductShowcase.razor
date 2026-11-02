@@ -25,16 +25,6 @@
                         @product.CtaLabel<Icon Name="@(external ? "external" : "arrow-right")" Class="h-4 w-4" />
                     </a>
                 }
-                @if (product.Id == "reportql")
-                {
-                    <details class="product-demo">
-                        <summary>@(Lang == "tr" ? "Reportql tanıtımını izleyin" : "Watch the Reportql demo")<Icon Name="play" Class="h-4 w-4" /></summary>
-                        <video controls playsinline preload="none" poster="@product.Image" aria-label="@(Lang == "tr" ? "Reportql ürün tanıtımı" : "Reportql product demo")">
-                            <source src="/uploads/rq-ai.mp4" type="video/mp4" />
-                            <a href="/uploads/rq-ai.mp4">@(Lang == "tr" ? "Reportql videosunu aç" : "Open the Reportql video")</a>
-                        </video>
-                    </details>
-                }
             </div>
         </article>
     }

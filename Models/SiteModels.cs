@@ -26,7 +26,6 @@ public sealed class CompanyInfoModel
 public sealed class JotformLinksModel
 {
     public string Franchise { get; set; } = "";
-    public string Career { get; set; } = "";
 }
 
 public sealed class SocialLinkModel
@@ -55,7 +54,6 @@ public sealed class LocaleSiteContent
     public FeaturedNewsSectionContent FeaturedNewsSection { get; set; } = new();
     public AboutContent About { get; set; } = new();
     public FranchisingContent Franchising { get; set; } = new();
-    public CareerContent Career { get; set; } = new();
     public SoftwareDevContent SoftwareDev { get; set; } = new();
     public ProductDevContent ProductDev { get; set; } = new();
     public DigitalTransformationContent DigitalTransformation { get; set; } = new();
@@ -182,7 +180,6 @@ public sealed class TestimonialItem
     public string Quote { get; set; } = "";
     public string Author { get; set; } = "";
     public string Role { get; set; } = "";
-    public string Avatar { get; set; } = "";
 }
 
 public sealed class FeaturedNewsSectionContent
@@ -245,32 +242,6 @@ public sealed class FaqItem
 {
     public string Question { get; set; } = "";
     public string Answer { get; set; } = "";
-}
-
-public sealed class CareerContent
-{
-    public string MetaTitle { get; set; } = "";
-    public string MetaDescription { get; set; } = "";
-    public string Eyebrow { get; set; } = "";
-    public string Title { get; set; } = "";
-    public string Subtitle { get; set; } = "";
-    public string OpenPositionsTitle { get; set; } = "";
-    public List<CareerPositionItem> Positions { get; set; } = [];
-    public string HrTitle { get; set; } = "";
-    public string HrDescription { get; set; } = "";
-    public List<string> HrTraits { get; set; } = [];
-    public string HrImage { get; set; } = "";
-    public string CvCtaTitle { get; set; } = "";
-    public string CvCtaSubtitle { get; set; } = "";
-    public string CvCtaButton { get; set; } = "";
-}
-
-public sealed class CareerPositionItem
-{
-    public string Title { get; set; } = "";
-    public string Location { get; set; } = "";
-    public string Badge { get; set; } = "";
-    public string? ExternalUrl { get; set; }
 }
 
 public sealed class SoftwareDevContent
@@ -394,33 +365,4 @@ public sealed class PressArchiveItem
     public string Source { get; set; } = "";
     public string Title { get; set; } = "";
     public string Url { get; set; } = "";
-}
-
-public sealed class BlogPostEntry
-{
-    public string Id { get; set; } = "";
-    public string Title { get; set; } = "";
-    public string MetaTitle { get; set; } = "";
-    public string Description { get; set; } = "";
-    public string PubDate { get; set; } = "";
-    public string DisplayDate { get; set; } = "";
-    public int ReadingTime { get; set; }
-    public string Author { get; set; } = "";
-    public string AuthorAvatar { get; set; } = "";
-    public string CoverImage { get; set; } = "";
-    public List<BlogTagItem> Tags { get; set; } = [];
-    public List<BlogTocItem> TocHeadings { get; set; } = [];
-    public string ContentHtml { get; set; } = "";
-}
-
-public sealed class BlogTagItem
-{
-    public string Slug { get; set; } = "";
-    public string Label { get; set; } = "";
-}
-
-public sealed class BlogTocItem
-{
-    public string Slug { get; set; } = "";
-    public string Text { get; set; } = "";
 }

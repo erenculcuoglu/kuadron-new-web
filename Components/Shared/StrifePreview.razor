@@ -1,0 +1,504 @@
+<figure class="strife-suite-card" aria-label="@FigureLabel" data-strife-console>
+    <!-- Strife Application Top Navigation Bar (modeled after PDF Pages 7 & 8) -->
+    <div class="strife-app-topbar">
+        <div class="strife-brand-group">
+            <span class="strife-logo-mark" aria-hidden="true">S</span>
+            <span class="strife-brand-name">STRIFE</span>
+            <span class="strife-breadcrumb-pill">@LeagueTitle</span>
+        </div>
+        <div class="strife-season-meta">
+            <span class="strife-live-dot" aria-hidden="true"></span>
+            <span>@SeasonBadge</span>
+        </div>
+    </div>
+
+    <!-- Primary Interactive Module Tabs -->
+    <div class="strife-tabs" role="tablist" aria-label="@TablistLabel">
+        @for (int i = 0; i < MainTabs.Length; i++)
+        {
+            var tab = MainTabs[i];
+            var isFirst = i == 0;
+            <button type="button"
+                    role="tab"
+                    id="@($"strife-tab-{Lang}-{tab.Id}")"
+                    aria-selected="@(isFirst ? "true" : "false")"
+                    aria-controls="@($"strife-panel-{Lang}-{tab.Id}")"
+                    tabindex="@(isFirst ? 0 : -1)"
+                    class="@($"strife-tab{(isFirst ? " is-active" : "")}")"
+                    data-strife-tab="@tab.Id">
+                <span class="strife-tab-code">@tab.Code</span>
+                <span>@tab.Label</span>
+            </button>
+        }
+    </div>
+
+    <!-- PANEL 1: PUAN TABLOSU (PDF Pages 8 & 9) -->
+    <div role="tabpanel"
+         id="@($"strife-panel-{Lang}-standings")"
+         aria-labelledby="@($"strife-tab-{Lang}-standings")"
+         class="strife-panel"
+         data-strife-panel="standings">
+        <div class="strife-subbar">
+            <div class="strife-subbar-left">
+                <span class="strife-stage-pill">@StandingsHeading</span>
+                <span class="strife-subbar-hint">@StandingsSubhint</span>
+            </div>
+            <div class="strife-stage-switch" role="group" aria-label="@StageSwitchLabel">
+                <button type="button" class="strife-stage-btn is-active" data-strife-stage-btn="regular" aria-pressed="true">
+                    @(Lang == "tr" ? "Normal Sezon" : "Regular Season")
+                </button>
+                <button type="button" class="strife-stage-btn" data-strife-stage-btn="playoff" aria-pressed="false">
+                    @(Lang == "tr" ? "Yarı Final / Play-Off" : "Semi-Final / Play-Off")
+                </button>
+            </div>
+        </div>
+
+        <!-- Regular Season Standings (PDF Page 8) -->
+        <div class="strife-table-region" tabindex="0" role="region" aria-label="@StandingsHeading" data-strife-stage-view="regular">
+            <table class="strife-standings-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">@(Lang == "tr" ? "Kulüp" : "Club")</th>
+                        <th scope="col" title="@(Lang == "tr" ? "Oynanan" : "Played")">O</th>
+                        <th scope="col" title="@(Lang == "tr" ? "Galibiyet" : "Won")">G</th>
+                        <th scope="col" title="@(Lang == "tr" ? "Beraberlik" : "Drawn")">B</th>
+                        <th scope="col" title="@(Lang == "tr" ? "Mağlubiyet" : "Lost")">M</th>
+                        <th scope="col" title="@(Lang == "tr" ? "Atılan" : "Goals For")">A</th>
+                        <th scope="col" title="@(Lang == "tr" ? "Yenen" : "Goals Against")">Y</th>
+                        <th scope="col">@(Lang == "tr" ? "Puan" : "Pts")</th>
+                        <th scope="col">@(Lang == "tr" ? "Averaj" : "Diff")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in RegularStandings)
+                    {
+                        <tr>
+                            <td><span class="strife-rank-badge @(row.Rank <= 2 ? "is-top" : "")">@row.Rank</span></td>
+                            <th scope="row" class="strife-club-cell">
+                                <span class="strife-club-dot" style="background:@row.Color" aria-hidden="true"></span>
+                                <span>@row.Club</span>
+                            </th>
+                            <td>@row.Played</td>
+                            <td>@row.Won</td>
+                            <td>@row.Drawn</td>
+                            <td>@row.Lost</td>
+                            <td>@row.GoalsFor</td>
+                            <td>@row.GoalsAgainst</td>
+                            <td class="strife-pts-cell">@row.Points</td>
+                            <td class="@(row.Diff.StartsWith("+") ? "strife-diff-pos" : "strife-diff-neg")">@row.Diff</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Play-Off / Semi-Final Standings (PDF Page 9) -->
+        <div class="strife-table-region" tabindex="0" role="region" aria-label="@(Lang == "tr" ? "Yarı Final Puan Tablosu" : "Semi-Final Standings")" data-strife-stage-view="playoff" hidden>
+            <table class="strife-standings-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">@(Lang == "tr" ? "Kulüp (Play-Off Grubu)" : "Club (Play-Off Stage)")</th>
+                        <th scope="col">O</th>
+                        <th scope="col">G</th>
+                        <th scope="col">B</th>
+                        <th scope="col">M</th>
+                        <th scope="col">A</th>
+                        <th scope="col">Y</th>
+                        <th scope="col">@(Lang == "tr" ? "Puan" : "Pts")</th>
+                        <th scope="col">@(Lang == "tr" ? "Averaj" : "Diff")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in PlayoffStandings)
+                    {
+                        <tr>
+                            <td><span class="strife-rank-badge @(row.Rank <= 2 ? "is-top" : "")">@row.Rank</span></td>
+                            <th scope="row" class="strife-club-cell">
+                                <span class="strife-club-dot" style="background:@row.Color" aria-hidden="true"></span>
+                                <span>@row.Club</span>
+                            </th>
+                            <td>@row.Played</td>
+                            <td>@row.Won</td>
+                            <td>@row.Drawn</td>
+                            <td>@row.Lost</td>
+                            <td>@row.GoalsFor</td>
+                            <td>@row.GoalsAgainst</td>
+                            <td class="strife-pts-cell">@row.Points</td>
+                            <td class="@(row.Diff.StartsWith("+") ? "strife-diff-pos" : "strife-diff-neg")">@row.Diff</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PANEL 2: FİKSTÜR & MAÇ YÖNETİMİ (PDF Page 7) -->
+    <div role="tabpanel"
+         id="@($"strife-panel-{Lang}-fixtures")"
+         aria-labelledby="@($"strife-tab-{Lang}-fixtures")"
+         class="strife-panel"
+         data-strife-panel="fixtures"
+         hidden>
+        <!-- KPI Summary Strip from PDF Page 7 -->
+        <div class="strife-kpi-strip">
+            <div class="strife-kpi-box">
+                <strong>5</strong>
+                <span>@(Lang == "tr" ? "Takım/Sporcu" : "Teams/Athletes")</span>
+            </div>
+            <div class="strife-kpi-box">
+                <strong>10</strong>
+                <span>@(Lang == "tr" ? "Toplam Maç" : "Total Matches")</span>
+            </div>
+            <div class="strife-kpi-box is-played">
+                <strong>10</strong>
+                <span>@(Lang == "tr" ? "Oynanan" : "Completed")</span>
+            </div>
+            <div class="strife-kpi-box">
+                <strong>0</strong>
+                <span>@(Lang == "tr" ? "Oynanmayan" : "Pending")</span>
+            </div>
+            <div class="strife-fixture-actions">
+                <span class="strife-action-navy">@(Lang == "tr" ? "Devre/Tur: 1" : "Round: 1")</span>
+                <span class="strife-action-coral">@(Lang == "tr" ? "Fikstür Motoru Aktif" : "Fixture Engine Active")</span>
+            </div>
+        </div>
+
+        <!-- Signature Mint-Green Fixture Table from PDF Page 7 -->
+        <div class="strife-table-region" tabindex="0" role="region" aria-label="@(Lang == "tr" ? "Fikstür ve Maç Sonuçları" : "Fixtures and Match Results")">
+            <table class="strife-fixture-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">@(Lang == "tr" ? "Ev Sahibi" : "Home Team")</th>
+                        <th scope="col">@(Lang == "tr" ? "Skor" : "Score")</th>
+                        <th scope="col">@(Lang == "tr" ? "Misafir" : "Away Team")</th>
+                        <th scope="col">@(Lang == "tr" ? "Tarih" : "Date")</th>
+                        <th scope="col">@(Lang == "tr" ? "İşlem" : "Action")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Fixtures.Length; i++)
+                    {
+                        var match = Fixtures[i];
+                        var isSelected = i == 0;
+                        <tr class="@($"strife-mint-row{(isSelected ? " is-selected" : "")}")"
+                            data-strife-match-row="@i"
+                            data-match-title="@($"{match.Home} {match.Score} {match.Away}")"
+                            data-match-quarters="@match.Quarters"
+                            data-match-venue="@match.Venue"
+                            data-match-referee="@match.Referee">
+                            <td>@match.No</td>
+                            <th scope="row">@match.Home</th>
+                            <td><span class="strife-fixture-score">@match.Score</span></td>
+                            <td>@match.Away</td>
+                            <td>@match.Date</td>
+                            <td>
+                                <button type="button"
+                                        class="strife-ops-btn"
+                                        data-strife-match-btn="@i"
+                                        aria-label="@($"{match.Home} - {match.Away} {(Lang == "tr" ? "maç detayını incele" : "inspect match details")}")">
+                                    @(Lang == "tr" ? "İşlemler ▾" : "Actions ▾")
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Interactive Match Detail Inspector (updates when clicking any row or "İşlemler") -->
+        <div class="strife-match-inspector" data-strife-inspector aria-live="polite">
+            <div class="strife-inspector-head">
+                <span class="strife-inspector-badge">@(Lang == "tr" ? "MAÇ KONTROL & OVR KAYDI" : "MATCH CONTROL & OVR LOG")</span>
+                <strong data-strife-inspector-title>@($"{Fixtures[0].Home} {Fixtures[0].Score} {Fixtures[0].Away}")</strong>
+            </div>
+            <div class="strife-inspector-meta">
+                <span><strong>@(Lang == "tr" ? "Periyotlar:" : "Periods:")</strong> <em data-strife-inspector-quarters>@Fixtures[0].Quarters</em></span>
+                <span><strong>@(Lang == "tr" ? "Mekan:" : "Venue:")</strong> <em data-strife-inspector-venue>@Fixtures[0].Venue</em></span>
+                <span><strong>@(Lang == "tr" ? "Başhakem:" : "Referee:")</strong> <em data-strife-inspector-referee>@Fixtures[0].Referee</em></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL 3: KULÜP KARTI & SONUÇ WIDGET'I (PDF Page 6) -->
+    <div role="tabpanel"
+         id="@($"strife-panel-{Lang}-clubs")"
+         aria-labelledby="@($"strife-tab-{Lang}-clubs")"
+         class="strife-panel"
+         data-strife-panel="clubs"
+         hidden>
+        <div class="strife-subbar">
+            <span class="strife-subbar-hint">@(Lang == "tr" ? "Kulüp seçerek akreditasyon künyesini ve maç sonuç widget’ını inceleyin:" : "Select a club to inspect its accreditation profile and match results widget:")</span>
+            <div class="strife-stage-switch" role="group" aria-label="@(Lang == "tr" ? "Kulüp Seçimi" : "Club Selector")">
+                @for (int i = 0; i < Clubs.Length; i++)
+                {
+                    var club = Clubs[i];
+                    <button type="button"
+                            class="@($"strife-stage-btn{(i == 0 ? " is-active" : "")}")"
+                            data-strife-club-btn="@club.Id"
+                            aria-pressed="@(i == 0 ? "true" : "false")">
+                        @club.ShortName
+                    </button>
+                }
+            </div>
+        </div>
+
+        @for (int i = 0; i < Clubs.Length; i++)
+        {
+            var club = Clubs[i];
+            <div class="strife-club-layout" data-strife-club-view="@club.Id" hidden="@(i != 0)">
+                <!-- Left: Club Profile Card (PDF Page 6 Left Column) -->
+                <div class="strife-club-card">
+                    <div class="strife-club-card-head">
+                        <span class="strife-club-crest" style="background:@club.Color" aria-hidden="true">@club.Initials</span>
+                        <div>
+                            <h4>@club.FullName</h4>
+                            <span class="strife-status-active">@(Lang == "tr" ? "Durumu: Faal" : "Status: Active")</span>
+                        </div>
+                    </div>
+                    <dl class="strife-club-dl">
+                        <div><dt>@(Lang == "tr" ? "Başkan" : "President")</dt><dd>@club.President</dd></div>
+                        <div><dt>@(Lang == "tr" ? "Şehir" : "City")</dt><dd>@club.City</dd></div>
+                        <div><dt>@(Lang == "tr" ? "Telefon" : "Phone")</dt><dd>@club.Phone</dd></div>
+                        <div><dt>@(Lang == "tr" ? "E-Posta" : "Email")</dt><dd>@club.Email</dd></div>
+                        <div><dt>@(Lang == "tr" ? "Lisanslı Sporcu" : "Licensed Athletes")</dt><dd>@club.AthleteCount</dd></div>
+                    </dl>
+                </div>
+
+                <!-- Right: 2-Column Match Result Cards with Crimson Score Pills (PDF Page 6 Right Column) -->
+                <div class="strife-widget-grid">
+                    @foreach (var res in club.Results)
+                    {
+                        <div class="strife-result-card">
+                            <span class="strife-result-date">@res.Date · @res.Stage</span>
+                            <div class="strife-result-match">
+                                <span class="strife-result-team">@res.Home</span>
+                                <span class="strife-crimson-score">@res.Score</span>
+                                <span class="strife-result-team">@res.Away</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- PANEL 4: SAHA İÇİ OVR, LED SKORBOARD & AKREDİTASYON (PDF Pages 3, 5, 10) -->
+    <div role="tabpanel"
+         id="@($"strife-panel-{Lang}-ovr")"
+         aria-labelledby="@($"strife-tab-{Lang}-ovr")"
+         class="strife-panel"
+         data-strife-panel="ovr"
+         hidden>
+        <div class="strife-ovr-grid">
+            <!-- Interactive LED Scoreboard & Flag Ceremony Controller -->
+            <div class="strife-led-board" data-strife-led>
+                <div class="strife-led-top">
+                    <span class="strife-led-tag">OVR · LED SKORBOARD</span>
+                    <span class="strife-led-clock" data-strife-led-period>4. PERİYOT · 02:14 · HÜCUM: 18"</span>
+                </div>
+
+                <div class="strife-led-scoreline" data-strife-led-match>
+                    <div class="strife-led-team">
+                        <span class="strife-led-code">GS</span>
+                        <strong>GALATASARAY</strong>
+                    </div>
+                    <div class="strife-led-digits">
+                        <span data-strife-home-score>13</span>
+                        <span class="strife-led-colon">:</span>
+                        <span data-strife-away-score>11</span>
+                    </div>
+                    <div class="strife-led-team is-right">
+                        <span class="strife-led-code">ENKA</span>
+                        <strong>ENKA SPOR</strong>
+                    </div>
+                </div>
+
+                <!-- Ceremony Overlay (toggled by user) -->
+                <div class="strife-ceremony-view" data-strife-led-ceremony hidden>
+                    <span class="strife-ceremony-badge">@(Lang == "tr" ? "LED BAYRAK SEREMONİSİ & MADALYA TÖRENİ AKTİF" : "LED FLAG CEREMONY & PODIUM MODE ACTIVE")</span>
+                    <div class="strife-podium-list">
+                        <span>1. GALATASARAY S.K. (TR)</span>
+                        <span>2. ENKA SPOR KULÜBÜ (TR)</span>
+                        <span>3. ADALAR SU SPORLARI (TR)</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Controls for the Visitor -->
+                <div class="strife-led-controls" role="group" aria-label="@(Lang == "tr" ? "Canlı Skorboard Kontrolleri" : "Live Scoreboard Controls")">
+                    <button type="button" class="strife-ctrl-btn" data-strife-score-btn="home">
+                        +1 @(Lang == "tr" ? "Ev Sahibi Gol" : "Home Goal")
+                    </button>
+                    <button type="button" class="strife-ctrl-btn" data-strife-score-btn="away">
+                        +1 @(Lang == "tr" ? "Misafir Gol" : "Away Goal")
+                    </button>
+                    <button type="button" class="strife-ctrl-btn is-ceremony" data-strife-ceremony-toggle aria-pressed="false">
+                        @(Lang == "tr" ? "Bayrak Seremonisi" : "Flag Ceremony")
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Accreditation Badge & TV/Media i-Frame Card -->
+            <div class="strife-accred-card">
+                <div class="strife-accred-head">
+                    <span class="strife-accred-eyebrow">@(Lang == "tr" ? "YAKA KARTI BASIMI & BASIN WIDGET" : "BADGE PRINTING & MEDIA WIDGET")</span>
+                    <div class="strife-role-pills" role="group" aria-label="@(Lang == "tr" ? "Akreditasyon Rolü" : "Accreditation Role")">
+                        <button type="button" class="strife-role-pill is-active" data-strife-role-btn="athlete" aria-pressed="true">
+                            @(Lang == "tr" ? "Sporcu" : "Athlete")
+                        </button>
+                        <button type="button" class="strife-role-pill" data-strife-role-btn="referee" aria-pressed="false">
+                            @(Lang == "tr" ? "Hakem" : "Referee")
+                        </button>
+                        <button type="button" class="strife-role-pill" data-strife-role-btn="press" aria-pressed="false">
+                            @(Lang == "tr" ? "TV / Basın" : "TV / Press")
+                        </button>
+                    </div>
+                </div>
+
+                <div class="strife-badge-preview" data-strife-role-view="athlete">
+                    <div class="strife-badge-id">STR-2025-0148 · ZONE A / HAVUZ & SAHA İÇİ</div>
+                    <strong>KAAN YILMAZ — GALATASARAY S.K.</strong>
+                    <span>@(Lang == "tr" ? "A Takım Kaptanı · QR Yaka Kartı Basıma Hazır" : "Team Captain · QR Accreditation Badge Ready")</span>
+                </div>
+
+                <div class="strife-badge-preview" data-strife-role-view="referee" hidden>
+                    <div class="strife-badge-id">STR-2025-REF04 · OVR & HAKEM MASASI</div>
+                    <strong>MURAT ÖZDEMİR — ULUSLARARASI HAKEM</strong>
+                    <span>@(Lang == "tr" ? "OVR Saha İçi Tablet & İstatistik Yetkisi Aktif" : "OVR Poolside Tablet & Match Stats Authorized")</span>
+                </div>
+
+                <div class="strife-badge-preview" data-strife-role-view="press" hidden>
+                    <div class="strife-badge-id">STR-2025-MED19 · NTV · EUROSPORT · TRT i-FRAME</div>
+                    <strong>CANLI SONUÇ API & TV YAYIN AKREDİTASYONU</strong>
+                    <span>@(Lang == "tr" ? "Anlık skor, puan durumu ve kapanış raporu i-Frame yayında" : "Real-time score, standings & closing report i-Frame active")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</figure>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+
+    private sealed record TabItem(string Id, string Code, string Label);
+    private sealed record StandingRow(int Rank, string Club, string Color, int Played, int Won, int Drawn, int Lost, int GoalsFor, int GoalsAgainst, int Points, string Diff);
+    private sealed record FixtureRow(int No, string Home, string Score, string Away, string Date, string Quarters, string Venue, string Referee);
+    private sealed record MatchResultCard(string Date, string Stage, string Home, string Score, string Away);
+    private sealed record ClubProfile(string Id, string ShortName, string FullName, string Initials, string Color, string President, string City, string Phone, string Email, string AthleteCount, MatchResultCard[] Results);
+
+    private string FigureLabel => Lang == "tr"
+        ? "Strife spor etkinlik, turnuva ve saha içi OVR yönetim platformu interaktif önizlemesi"
+        : "Strife interactive sports event, tournament and on-venue results (OVR) platform preview";
+
+    private string TablistLabel => Lang == "tr" ? "Strife uygulama ekranları" : "Strife application modules";
+    private string LeagueTitle => Lang == "tr" ? "ERKEKLER SPOR TOTO SÜPER LİG" : "MEN'S SUPER LEAGUE TOURNAMENT";
+    private string SeasonBadge => Lang == "tr" ? "2024-25 SEZONU · CANLI" : "2024-25 SEASON · LIVE";
+    private string StandingsHeading => Lang == "tr" ? "PUAN TABLOSU" : "STANDINGS TABLE";
+    private string StandingsSubhint => Lang == "tr" ? "Aşama seçerek puan durumunu değiştirin" : "Switch stage to inspect standings";
+    private string StageSwitchLabel => Lang == "tr" ? "Turnuva Aşaması" : "Tournament Stage";
+
+    private TabItem[] MainTabs => Lang == "tr"
+        ? [
+            new("standings", "01", "Puan Tablosu"),
+            new("fixtures", "02", "Fikstür & Maçlar"),
+            new("clubs", "03", "Kulüp & Sonuç Widget"),
+            new("ovr", "04", "OVR & LED Skorboard")
+        ]
+        : [
+            new("standings", "01", "Standings Table"),
+            new("fixtures", "02", "Fixtures & Matches"),
+            new("clubs", "03", "Club & Results Widget"),
+            new("ovr", "04", "OVR & LED Scoreboard")
+        ];
+
+    private static readonly StandingRow[] RegularStandings =
+    [
+        new(1, "GALATASARAY SPOR KULÜBÜ", "#dc2626", 14, 14, 0, 0, 301, 73, 42, "+228"),
+        new(2, "ENKA SPOR KULÜBÜ", "#2563eb", 14, 12, 0, 2, 319, 80, 36, "+239"),
+        new(3, "ADALAR SU SPORLARI KULÜBÜ", "#0284c7", 14, 10, 0, 4, 187, 150, 30, "+37"),
+        new(4, "KINALIADA SU SPORLARI İHTİSAS", "#0d9488", 13, 7, 0, 6, 126, 178, 21, "-52"),
+        new(5, "HEYBELİADA SU SPORLARI KULÜBÜ", "#f59e0b", 13, 5, 1, 7, 157, 192, 16, "-35"),
+        new(6, "İZMİR BÜYÜKŞEHİR BELEDİYESİ GSK", "#6366f1", 14, 4, 0, 10, 127, 216, 12, "-89")
+    ];
+
+    private static readonly StandingRow[] PlayoffStandings =
+    [
+        new(1, "GALATASARAY SPOR KULÜBÜ", "#dc2626", 2, 2, 0, 0, 35, 15, 6, "+20"),
+        new(2, "ENKA SPOR KULÜBÜ", "#2563eb", 2, 2, 0, 0, 39, 16, 6, "+23"),
+        new(3, "ADALAR SU SPORLARI KULÜBÜ", "#0284c7", 2, 0, 0, 2, 16, 39, 0, "-23"),
+        new(4, "KINALIADA SU SPORLARI İHTİSAS", "#0d9488", 2, 0, 0, 2, 15, 35, 0, "-20")
+    ];
+
+    private static readonly FixtureRow[] Fixtures =
+    [
+        new(1, "GALATASARAY SPOR KULÜBÜ", "13 - 6", "ADALAR SU SPORLARI KULÜBÜ", "19.11", "4-1, 3-2, 3-1, 3-2", "Ataköy Olimpik Havuzu", "M. Özdemir · C. Kaya"),
+        new(2, "KINALIADA SU SPORLARI İHTİSAS", "2 - 20", "ENKA SPOR KULÜBÜ", "19.11", "0-5, 1-6, 1-4, 0-5", "ENKA Sadi Gülçelik Havuzu", "H. Erdem · A. Tekin"),
+        new(3, "ADALAR SU SPORLARI KULÜBÜ", "3 - 21", "ENKA SPOR KULÜBÜ", "19.11", "1-5, 1-6, 0-5, 1-5", "Ataköy Olimpik Havuzu", "S. Yavuz · B. Arslan"),
+        new(4, "KINALIADA SU SPORLARI İHTİSAS", "14 - 6", "İZMİR BÜYÜKŞEHİR BELEDİYESİ GSK", "19.11", "4-2, 3-1, 4-2, 3-1", "Kınalıada Su Sporları Havuzu", "M. Özdemir · K. Soylu"),
+        new(5, "ENKA SPOR KULÜBÜ", "14 - 3", "İSTANBUL İTÜ GELİŞTİRME VAKFI GSK", "20.11", "4-1, 4-0, 3-1, 3-1", "ENKA Sadi Gülçelik Havuzu", "T. Çelik · E. Doğan")
+    ];
+
+    private static readonly ClubProfile[] Clubs =
+    [
+        new(
+            "enka",
+            "ENKA SPOR",
+            "ENKA SPOR KULÜBÜ",
+            "EN",
+            "#2563eb",
+            "ALPARSLAN TANSUĞ",
+            "İSTANBUL (Sarıyer)",
+            "0212 705 60 00",
+            "bilgi@enkaspor.com",
+            "142 Sporcu / 6 Branş",
+            [
+                new("19.11.2024", "1. Devre", "KINALIADA S.S.İ.", "4 - 20", "ENKA SPOR KULÜBÜ"),
+                new("26.11.2024", "1. Devre", "ADALAR S.S.K.", "1 - 8", "ENKA SPOR KULÜBÜ"),
+                new("03.12.2024", "1. Devre", "ENKA SPOR KULÜBÜ", "15 - 2", "HEYBELİADA S.S.K."),
+                new("10.12.2024", "1. Devre", "ENKA SPOR KULÜBÜ", "23 - 0", "ODTÜ SPOR KULÜBÜ"),
+                new("17.12.2024", "2. Devre", "ENKA SPOR KULÜBÜ", "14 - 3", "İTÜ GELİŞTİRME GSK"),
+                new("24.12.2024", "Play-Off", "ENKA SPOR KULÜBÜ", "7 - 3", "ADALAR S.S.K.")
+            ]),
+        new(
+            "gs",
+            "GALATASARAY",
+            "GALATASARAY SPOR KULÜBÜ",
+            "GS",
+            "#dc2626",
+            "DURSUN AYDIN ÖZBEK",
+            "İSTANBUL (Beyoğlu)",
+            "0212 305 19 05",
+            "sutopu@galatasaray.org",
+            "168 Sporcu / 8 Branş",
+            [
+                new("19.11.2024", "1. Devre", "GALATASARAY S.K.", "13 - 6", "ADALAR S.S.K."),
+                new("26.11.2024", "1. Devre", "GALATASARAY S.K.", "18 - 4", "KINALIADA S.S.İ."),
+                new("03.12.2024", "1. Devre", "ENKA SPOR KULÜBÜ", "9 - 11", "GALATASARAY S.K."),
+                new("10.12.2024", "1. Devre", "GALATASARAY S.K.", "24 - 5", "İZMİR BŞB GSK"),
+                new("17.12.2024", "2. Devre", "HEYBELİADA S.S.K.", "6 - 19", "GALATASARAY S.K."),
+                new("24.12.2024", "Play-Off", "GALATASARAY S.K.", "16 - 7", "KINALIADA S.S.İ.")
+            ]),
+        new(
+            "adalar",
+            "ADALAR S.S.K.",
+            "ADALAR SU SPORLARI KULÜBÜ",
+            "AD",
+            "#0284c7",
+            "AV. ÖZER ÇELİK",
+            "İSTANBUL (Adalar)",
+            "0216 382 60 42",
+            "info@adalarsusporlari.org",
+            "86 Sporcu / 3 Branş",
+            [
+                new("19.11.2024", "1. Devre", "GALATASARAY S.K.", "13 - 6", "ADALAR S.S.K."),
+                new("26.11.2024", "1. Devre", "ADALAR S.S.K.", "14 - 8", "KINALIADA S.S.İ."),
+                new("03.12.2024", "1. Devre", "ADALAR S.S.K.", "12 - 9", "HEYBELİADA S.S.K."),
+                new("10.12.2024", "1. Devre", "İZMİR BŞB GSK", "7 - 15", "ADALAR S.S.K."),
+                new("17.12.2024", "2. Devre", "ADALAR S.S.K.", "17 - 6", "ODTÜ SPOR KULÜBÜ"),
+                new("24.12.2024", "Play-Off", "ENKA SPOR KULÜBÜ", "7 - 3", "ADALAR S.S.K.")
+            ])
+    ];
+}
+
