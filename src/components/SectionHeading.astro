@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  href?: string;
+  linkLabel?: string;
+}
+const { eyebrow, title, description, href, linkLabel } = Astro.props;
+---
+
+<div class="section-heading">
+  <div class="max-w-2xl">
+    <p class="section-label">{eyebrow}</p>
+    <h2>{title}</h2>
+    {description && <p class="section-description">{description}</p>}
+  </div>
+  {href && linkLabel && <a href={href} class="editorial-link">{linkLabel}<Icon name="arrow-right" class="h-4 w-4" /></a>}
+</div>

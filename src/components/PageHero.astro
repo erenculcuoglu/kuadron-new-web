@@ -1,0 +1,45 @@
+---
+import type { Locale } from '../data/types';
+
+interface Props {
+  lang: Locale;
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+
+const { lang, eyebrow, title, lead } = Astro.props;
+const homeHref = lang === 'tr' ? '/' : '/en/';
+const homeLabel = lang === 'tr' ? 'Ana Sayfa' : 'Home';
+---
+
+<section class="page-hero relative overflow-hidden border-b border-[var(--border-subtle)] py-14 sm:py-20">
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav aria-label={lang === 'tr' ? 'Sayfa yolu' : 'Breadcrumb'} class="mb-5">
+      <ol class="flex flex-wrap items-center gap-2 text-xs font-medium text-[var(--text-muted)]">
+        <li>
+          <a href={homeHref} class="transition-colors hover:text-[var(--text-primary)]">{homeLabel}</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li class="text-[var(--text-primary)] font-semibold" aria-current="page">{title}</li>
+      </ol>
+    </nav>
+
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--brand-amber-text)]">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#FBB040]"></span>
+        {eyebrow}
+      </span>
+
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-5xl">
+        {title}
+      </h1>
+
+      {lead && (
+        <p class="mt-5 text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
+          {lead}
+        </p>
+      )}
+    </div>
+  </div>
+</section>

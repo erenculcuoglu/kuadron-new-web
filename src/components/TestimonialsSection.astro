@@ -1,0 +1,59 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import type { TestimonialItem } from '../data/types';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  testimonials: TestimonialItem[];
+  prevLabel?: string;
+  nextLabel?: string;
+}
+const { eyebrow, title, testimonials, prevLabel = 'Önceki yorumlar', nextLabel = 'Sonraki yorumlar' } = Astro.props;
+---
+
+<section class="editorial-section testimonial-section" aria-label={title}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="testimonial-heading">
+      <SectionHeading eyebrow={eyebrow} title={title} />
+      <div class="flex shrink-0 gap-2">
+        <button type="button" data-testimonial-prev aria-label={prevLabel} aria-controls="testimonial-track" class="testimonial-control"><Icon name="arrow-left" class="h-4 w-4" /></button>
+        <button type="button" data-testimonial-next aria-label={nextLabel} aria-controls="testimonial-track" class="testimonial-control"><Icon name="arrow-right" class="h-4 w-4" /></button>
+      </div>
+    </div>
+    <div id="testimonial-track" data-testimonial-track tabindex="0" role="region" aria-label={title} class="testimonial-track">
+      {testimonials.map((item) => (
+        <figure class="testimonial-note">
+          <Icon name="quote" class="h-7 w-7 text-[var(--brand-amber-text)]" />
+          <blockquote>“{item.quote}”</blockquote>
+          <figcaption>
+            <img src={item.avatar} alt="" width="48" height="48" loading="lazy" />
+            <div><strong>{item.author}</strong><span>{item.role}</span></div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector<HTMLElement>('[data-testimonial-track]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-testimonial-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-testimonial-next]');
+  if (track && prev && next) {
+    const move = (direction: number) => track.scrollBy({
+      left: direction * (track.firstElementChild?.getBoundingClientRect().width || track.clientWidth),
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    });
+    const update = () => {
+      prev.disabled = track.scrollLeft < 2;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    };
+    prev.addEventListener('click', () => move(-1));
+    next.addEventListener('click', () => move(1));
+    track.addEventListener('scroll', update, { passive: true });
+    new ResizeObserver(update).observe(track);
+    update();
+  }
+</script>

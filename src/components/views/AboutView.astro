@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import Icon from '../Icon.astro';
+import FeaturedNewsSection from '../FeaturedNewsSection.astro';
+import ContactSection from '../ContactSection.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import { type Locale } from '../../data/types';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const a = SITE_CONTENT[lang].about;
+---
+
+<BaseLayout lang={lang} title={a.metaTitle} description={a.metaDescription}>
+  <PageHero lang={lang} eyebrow={a.eyebrow} title={a.title} lead={a.valuesDescription} />
+
+  <!-- Core Values & Principles -->
+  <section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-5">
+          <h2 class="text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+            {a.valuesTitle}
+          </h2>
+          <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
+            {a.valuesDescription}
+          </p>
+
+          <ul class="mt-8 space-y-3.5">
+            {a.principles.map((pr) => (
+              <li class="flex items-start gap-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4">
+                <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                  <Icon name="check" class="h-3.5 w-3.5" />
+                </span>
+                <span class="text-sm font-semibold text-[var(--text-primary)] sm:text-base">{pr}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="space-y-5 lg:col-span-7">
+          {a.valueCards.map((card, idx) => (
+            <article
+              class:list={[
+                'k-card k-card-hover flex flex-col gap-4 p-6 sm:flex-row sm:items-start sm:p-8',
+                idx === 0 && 'border-[#FBB040]',
+              ]}
+            >
+              <span class="inline-flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                <Icon name={card.icon} class="h-6 w-6" />
+              </span>
+              <div>
+                <h3 class="text-xl font-bold text-[var(--text-primary)]">{card.title}</h3>
+                <p class="mt-2 text-base leading-relaxed text-[var(--text-secondary)]">
+                  {card.description}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Culture Editorial Split Blocks -->
+  <section class="border-y border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl space-y-12 px-4 sm:px-6 lg:px-8">
+      {a.cultureBlocks.map((blk, idx) => (
+        <div class="k-card overflow-hidden p-5 sm:p-8 lg:p-10">
+          <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+            <div class:list={['lg:col-span-6', idx % 2 === 1 && 'lg:order-2']}>
+              <img
+                src={blk.image}
+                alt={blk.title}
+                loading="lazy"
+                width="680"
+                height="440"
+                class="aspect-[16/10] w-full rounded-xl border border-[var(--border-subtle)] object-cover"
+              />
+            </div>
+            <div class:list={['lg:col-span-6', idx % 2 === 1 && 'lg:order-1']}>
+              <h2 class="text-2xl font-extrabold leading-snug text-[var(--text-primary)] sm:text-3xl">
+                {blk.title}
+              </h2>
+              <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
+                {blk.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <FeaturedNewsSection lang={lang} />
+  <ContactSection lang={lang} />
+</BaseLayout>

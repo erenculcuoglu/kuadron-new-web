@@ -1,0 +1,28 @@
+---
+import Icon from '../Icon.astro';
+import SectionHeading from '../SectionHeading.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import type { Locale } from '../../data/types';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const { home, projects } = SITE_CONTENT[lang];
+---
+
+<section id={home.projectsAnchor} class="editorial-section">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow={home.projectsEyebrow} title={home.projectsTitle} description={home.projectsSubtitle} href={home.viewAllProjectsHref} linkLabel={home.viewAllProjectsLabel} />
+    <div class="project-grid">
+      {projects.filter((project) => project.featuredOnHome).map((project) => (
+        <article class="editorial-story">
+          <img src={project.homeImage || project.image} alt={`${project.client} — ${project.title}`} width="720" height="460" loading="lazy" class="story-image" />
+          <p class="section-label">{project.client}</p>
+          <h3>{project.title}</h3>
+          <p class="section-description">{project.description}</p>
+          <ul class="story-tags" role="list">{project.features.map((feature) => <li>{feature}</li>)}</ul>
+          {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="editorial-link">{project.ctaLabel}<Icon name="external" class="h-4 w-4" /></a>}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

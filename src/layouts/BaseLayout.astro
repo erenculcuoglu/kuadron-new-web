@@ -1,0 +1,141 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { getAlternateUrl, hasBilingualAlternate, canonicalPath as toCanonicalPath } from '../config/routes';
+import { COMPANY_INFO } from '../config/company';
+import { type Locale } from '../data/types';
+
+interface Props {
+  lang?: Locale;
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  lang = 'tr',
+  title,
+  description,
+  canonicalPath,
+  ogImage = '/uploads/home-screenshot.png',
+  ogType = 'website',
+  jsonLd,
+} = Astro.props;
+
+const siteOrigin = Astro.site?.origin || 'https://www.kuadron.com';
+const canonicalUrl = new URL(toCanonicalPath(canonicalPath || Astro.url.pathname), siteOrigin).toString();
+const emitHreflang = hasBilingualAlternate(Astro.url.pathname);
+const trUrl = new URL(getAlternateUrl(Astro.url.pathname, 'tr'), siteOrigin).toString();
+const enUrl = new URL(getAlternateUrl(Astro.url.pathname, 'en'), siteOrigin).toString();
+const fullOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteOrigin).toString();
+
+const defaultOrgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: lang === 'tr' ? COMPANY_INFO.legalNameTR : COMPANY_INFO.legalNameEN,
+  url: siteOrigin,
+  logo: `${siteOrigin}/assets/icons/android-icon-192x192.png`,
+  email: COMPANY_INFO.email,
+  telephone: '+90-312-503-20-51',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'OSTİM OSB Mah. 100. Yıl Blv. No: 55 E İç Kapı No: 32',
+    addressLocality: 'Yenimahalle',
+    addressRegion: 'Ankara',
+    addressCountry: 'TR',
+  },
+  sameAs: COMPANY_INFO.social.map((s) => s.href),
+};
+
+const structuredData = jsonLd
+  ? Array.isArray(jsonLd)
+    ? [defaultOrgLd, ...jsonLd]
+    : [defaultOrgLd, jsonLd]
+  : [defaultOrgLd];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- MANDATORY: Declare light and dark support & synchronous FOUC prevention -->
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      try {
+        const meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) {
+          const saved = localStorage.getItem('color-scheme');
+          if (saved === 'light' || saved === 'dark') {
+            meta.content = saved;
+            document.documentElement.dataset.theme = saved;
+          }
+        }
+      } catch {}
+    </script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {emitHreflang && (
+      <>
+        <link rel="alternate" hreflang="tr" href={trUrl} />
+        <link rel="alternate" hreflang="en" href={enUrl} />
+        <link rel="alternate" hreflang="x-default" href={trUrl} />
+      </>
+    )}
+
+    <!-- Favicons & App Manifest -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png" />
+    <link rel="manifest" href="/assets/icons/manifest.json" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@kuadronsoft" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <!-- Fonts: Plus Jakarta Sans, Inter, JetBrains Mono (with full Turkish Latin-Ext support) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
+
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">{lang === 'tr' ? 'Ana içeriğe geç' : 'Skip to content'}</a>
+    <Header lang={lang} />
+
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+
+    <CookieBanner lang={lang} />
+    <Footer lang={lang} />
+
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

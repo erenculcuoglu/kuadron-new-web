@@ -1,0 +1,25 @@
+---
+import Icon from '../Icon.astro';
+import SectionHeading from '../SectionHeading.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import type { Locale } from '../../data/types';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const home = SITE_CONTENT[lang].home;
+---
+
+<section class="editorial-section approach-section">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow={home.pillarsEyebrow} title={home.pillarsTitle} description={home.pillarsDescription} />
+    <div class="approach-grid">
+      {home.pillars.map((pillar) => (
+        <article class="approach-item">
+          <Icon name={pillar.icon} class="h-6 w-6 text-[var(--brand-primary)]" />
+          <h3>{pillar.title}</h3>
+          <p>{pillar.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,225 @@
+---
+import Icon from './Icon.astro';
+import type { Locale } from '../data/types';
+
+interface Props {
+  dialogId: string;
+  lang: Locale;
+  title: string;
+  subtitle: string;
+  endpoint?: string;
+  fallbackEmail: string;
+  jotformUrl: string;
+  extraFieldLabel: string;
+  extraFieldName: string;
+  extraFieldPlaceholder: string;
+}
+
+const {
+  dialogId,
+  lang,
+  title,
+  subtitle,
+  endpoint = '',
+  fallbackEmail,
+  jotformUrl,
+  extraFieldLabel,
+  extraFieldName,
+  extraFieldPlaceholder,
+} = Astro.props;
+
+const labels =
+  lang === 'tr'
+    ? {
+        close: 'Pencereyi kapat',
+        name: 'İsim ve Soyisim',
+        namePlaceholder: 'Adınız Soyadınız',
+        nameErr: 'Lütfen adınızı ve soyadınızı girin.',
+        email: 'E-posta Adresi',
+        emailPlaceholder: 'ornek@sirketiniz.com',
+        emailErr: 'Lütfen geçerli bir e-posta adresi girin.',
+        phone: 'Telefon',
+        phonePlaceholder: '05XX XXX XX XX',
+        notes: 'Notunuz / Özet Bilgi',
+        notesPlaceholder: 'Eklemek istediğiniz detaylar veya LinkedIn / özgeçmiş bağlantınız...',
+        submit: 'Başvuruyu Gönder',
+        submitting: 'Gönderiliyor...',
+        success: 'Başvurunuz alındı! Ekibimiz en kısa sürede sizinle iletişime geçecektir.',
+        fallback: 'Başvuru henüz gönderilmedi. E-posta uygulamanızdan gönderin veya aşağıdaki başvuru formunu açın.',
+        jotformBtn: 'Resmi Jotform Başvuru Ekranını Aç',
+      }
+    : {
+        close: 'Close modal',
+        name: 'Full Name',
+        namePlaceholder: 'Your Full Name',
+        nameErr: 'Please enter your full name.',
+        email: 'Email Address',
+        emailPlaceholder: 'you@company.com',
+        emailErr: 'Please enter a valid email address.',
+        phone: 'Phone Number',
+        phonePlaceholder: '+90 5XX XXX XX XX',
+        notes: 'Message / Details',
+        notesPlaceholder: 'Share relevant details or your LinkedIn / portfolio link...',
+        submit: 'Submit Application',
+        submitting: 'Submitting...',
+        success: 'Your application has been received! Our team will contact you shortly.',
+        fallback: 'Your application has not been sent. Send it from your email app or open the application form below.',
+        jotformBtn: 'Open Official Jotform Application',
+      };
+---
+
+<dialog id={dialogId} closedby="any" aria-labelledby={`${dialogId}-title`} class="k-dialog">
+  <div class="p-6 sm:p-8">
+    <div class="flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
+      <div>
+        <h2 id={`${dialogId}-title`} class="text-xl font-extrabold text-[var(--text-primary)]">
+          {title}
+        </h2>
+        <p class="mt-1 text-sm text-[var(--text-secondary)]">{subtitle}</p>
+      </div>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] hover:border-[var(--brand-amber)]"
+          aria-label={labels.close}
+        >
+          <Icon name="close" class="h-5 w-5" />
+        </button>
+      </form>
+    </div>
+
+    <form
+      action={endpoint || `mailto:${fallbackEmail}`}
+      method="POST"
+      data-kuadron-form
+      data-endpoint={endpoint}
+      data-fallback-email={fallbackEmail}
+      data-submitting-text={labels.submitting}
+      data-submit-text={labels.submit}
+      data-success-text={labels.success}
+      data-fallback-text={labels.fallback}
+      class="mt-5 space-y-4"
+    >
+      <div class="visually-hidden" aria-hidden="true">
+        <label for={`${dialogId}-hp`}>Website</label>
+        <input type="text" id={`${dialogId}-hp`} name="_gotcha" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div>
+        <label for={`${dialogId}-name`} class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+          {labels.name} <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+        </label>
+        <input
+          type="text"
+          id={`${dialogId}-name`}
+          name="name"
+          required
+          minlength="2"
+          autocomplete="name"
+          placeholder={labels.namePlaceholder}
+          aria-errormessage={`${dialogId}-name-err`}
+          class="k-input"
+        />
+        <div id={`${dialogId}-name-err`} class="k-error-msg">
+          <Icon name="alert" class="h-4 w-4 shrink-0" />
+          <span>{labels.nameErr}</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for={`${dialogId}-email`} class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+            {labels.email} <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="email"
+            id={`${dialogId}-email`}
+            name="email"
+            required
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder={labels.emailPlaceholder}
+            aria-errormessage={`${dialogId}-email-err`}
+            class="k-input"
+          />
+          <div id={`${dialogId}-email-err`} class="k-error-msg">
+            <Icon name="alert" class="h-4 w-4 shrink-0" />
+            <span>{labels.emailErr}</span>
+          </div>
+        </div>
+
+        <div>
+          <label for={`${dialogId}-phone`} class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+            {labels.phone}
+          </label>
+          <input
+            type="tel"
+            id={`${dialogId}-phone`}
+            name="phone"
+            autocomplete="tel"
+            inputmode="tel"
+            placeholder={labels.phonePlaceholder}
+            class="k-input"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for={`${dialogId}-extra`} class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+          {extraFieldLabel} <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+        </label>
+        <input
+          type="text"
+          id={`${dialogId}-extra`}
+          name={extraFieldName}
+          required
+          placeholder={extraFieldPlaceholder}
+          aria-errormessage={`${dialogId}-extra-err`}
+          class="k-input"
+        />
+        <div id={`${dialogId}-extra-err`} class="k-error-msg">
+          <Icon name="alert" class="h-4 w-4 shrink-0" />
+          <span>{lang === 'tr' ? `${extraFieldLabel} alanını doldurun.` : `Enter ${extraFieldLabel.toLowerCase()}.`}</span>
+        </div>
+      </div>
+
+      <div>
+        <label for={`${dialogId}-notes`} class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+          {labels.notes}
+        </label>
+        <textarea
+          id={`${dialogId}-notes`}
+          name="message"
+          rows="3"
+          placeholder={labels.notesPlaceholder}
+          class="k-input resize-y"
+        ></textarea>
+      </div>
+
+      <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+        <button type="submit" class="k-btn-primary">
+          <span data-submit-label>{labels.submit}</span>
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </button>
+
+        <a
+          href={jotformUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-[var(--brand-sky)] hover:underline"
+        >
+          <span>{labels.jotformBtn}</span>
+          <Icon name="external" class="h-3.5 w-3.5" />
+        </a>
+      </div>
+
+      <div
+        data-form-feedback
+        aria-live="polite"
+        class="hidden rounded-xl border border-[var(--status-success)] bg-[var(--status-success-bg)] px-4 py-3 text-sm font-medium text-[var(--status-success)]"
+      ></div>
+    </form>
+  </div>
+</dialog>

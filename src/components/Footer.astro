@@ -1,0 +1,164 @@
+---
+import KuadronLogo from './KuadronLogo.astro';
+import Icon from './Icon.astro';
+import { SITE_CONTENT } from '../data/site-content';
+import { COMPANY_INFO } from '../config/company';
+import { type Locale } from '../data/types';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = SITE_CONTENT[lang];
+const homeHref = lang === 'tr' ? '/' : '/en/';
+---
+
+<footer class="mt-auto border-t border-[#1e2f4a] bg-[#0b1424] text-slate-300">
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-12">
+      <!-- Brand & Summary -->
+      <div class="lg:col-span-4">
+        <a href={homeHref} class="inline-block text-white" aria-label={content.siteName}>
+          <KuadronLogo class="h-9 w-auto" />
+        </a>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
+          {content.footer.summary}
+        </p>
+        <div class="mt-5 inline-flex items-center gap-2 font-mono text-xs text-amber-300">
+          <span class="h-2 w-2 rounded-full bg-[#FBB040]"></span>
+          <span>{lang === 'tr' ? COMPANY_INFO.campusLabelTR : COMPANY_INFO.campusLabelEN}</span>
+        </div>
+
+        <!-- Social Links -->
+        <div class="mt-6 flex items-center gap-2.5">
+          {COMPANY_INFO.social.map((soc) => (
+            <a
+              href={soc.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={soc.name}
+              class="inline-flex h-10 w-10 items-center justify-center rounded border border-slate-700/80 bg-slate-900/60 text-slate-300 transition-colors hover:border-[#FBB040] hover:text-[#FBB040]"
+            >
+              <Icon name={soc.icon} class="h-4.5 w-4.5" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Corporate -->
+      <div class="lg:col-span-2">
+        <h2 class="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+          {content.footer.corporateTitle}
+        </h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {content.footer.corporateLinks.map((item) => (
+            <li>
+              <a href={item.href} class="text-slate-400 transition-colors hover:text-[#FBB040]">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="lg:col-span-3">
+        <h2 class="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+          {content.footer.servicesTitle}
+        </h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {content.footer.servicesLinks.map((item) => (
+            <li>
+              <a href={item.href} class="text-slate-400 transition-colors hover:text-[#FBB040]">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <h2 class="mt-7 font-mono text-xs font-semibold uppercase tracking-wider text-white">
+          {content.footer.completedProjectsTitle}
+        </h2>
+        <ul class="mt-3 space-y-2 text-sm">
+          {content.footer.completedProjects.map((prj) => (
+            <li>
+              <a
+                href={prj.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                class="inline-flex items-center gap-1 text-slate-400 transition-colors hover:text-[#FBB040]"
+              >
+                <span>{prj.label}</span>
+                <Icon name="external" class="h-3.5 w-3.5 opacity-70" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact Details -->
+      <div class="lg:col-span-3">
+        <h2 class="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+          {content.footer.contactTitle}
+        </h2>
+        <div class="mt-4 space-y-3.5 text-sm text-slate-400">
+          <a
+            href={COMPANY_INFO.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-start gap-2.5 transition-colors hover:text-white"
+          >
+            <Icon name="map-pin" class="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#FBB040]" />
+            <span>
+              {COMPANY_INFO.addressLines.map((ln, idx) => (
+                <>
+                  {ln}
+                  {idx < COMPANY_INFO.addressLines.length - 1 && <br />}
+                </>
+              ))}
+            </span>
+          </a>
+          <a
+            href={`mailto:${COMPANY_INFO.email}`}
+            class="flex items-center gap-2.5 transition-colors hover:text-white"
+          >
+            <Icon name="mail" class="h-4.5 w-4.5 shrink-0 text-[#FBB040]" />
+            <span>{COMPANY_INFO.email}</span>
+          </a>
+          <a
+            href={COMPANY_INFO.phoneHref}
+            class="flex items-center gap-2.5 transition-colors hover:text-white"
+          >
+            <Icon name="phone" class="h-4.5 w-4.5 shrink-0 text-[#FBB040]" />
+            <span>{COMPANY_INFO.phoneDisplay}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800/90 pt-8 text-xs text-slate-400 sm:flex-row">
+      <p>{content.footer.copyright}</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+        <a href={content.cookieBanner.linkHref} class="transition-colors hover:text-white">
+          {lang === 'tr' ? 'Çerez Politikası' : 'Cookie Policy'}
+        </a>
+        <button type="button" data-cookie-settings class="min-h-11 cursor-pointer text-slate-300 underline underline-offset-4 transition-colors hover:text-white">
+          {lang === 'tr' ? 'Çerez tercihlerini değiştir' : 'Change cookie preferences'}
+        </button>
+        <span aria-hidden="true">•</span>
+        <a href="https://www.ozbiapp.com.tr/" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">OzBI</a>
+        <span aria-hidden="true">•</span>
+        <a href={`${homeHref}#strife`} class="transition-colors hover:text-white">Strife</a>
+        <span aria-hidden="true">•</span>
+        <a href="https://torkapp.com" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">
+          TORK
+        </a>
+        <span aria-hidden="true">•</span>
+        <a href="https://www.reportql.com/" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">
+          Reportql
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

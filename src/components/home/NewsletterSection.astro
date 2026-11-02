@@ -1,0 +1,33 @@
+---
+import Icon from '../Icon.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import type { Locale } from '../../data/types';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const h = SITE_CONTENT[lang].home;
+const endpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT || '';
+---
+
+{endpoint && (
+  <section class="border-t border-[var(--border-subtle)] py-12">
+    <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <div>
+        <h2 class="text-2xl font-bold">{lang === 'tr' ? 'Kuadron’dan haberler' : 'News from Kuadron'}</h2>
+        <p class="mt-2 text-[var(--text-secondary)]">{h.newsletterHint}</p>
+      </div>
+      <form action={endpoint} method="POST" data-kuadron-form data-is-newsletter="true" data-endpoint={endpoint} data-success-text={h.newsletterSuccess}>
+        <div class="visually-hidden" aria-hidden="true">
+          <label for="newsletter-hp">Website</label>
+          <input id="newsletter-hp" name="_gotcha" tabindex="-1" autocomplete="off" />
+        </div>
+        <label for="newsletter-email" class="mb-2 block text-sm font-semibold">{h.newsletterLabel}</label>
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <input id="newsletter-email" type="email" name="email" autocomplete="email" required placeholder={h.newsletterPlaceholder} class="k-input" />
+          <button type="submit" class="k-btn-primary shrink-0"><span data-submit-label>{h.newsletterButton}</span><Icon name="arrow-right" class="h-4 w-4" /></button>
+        </div>
+        <p data-form-feedback aria-live="polite" class="mt-3 hidden rounded-lg border p-3 text-sm"></p>
+      </form>
+    </div>
+  </section>
+)}

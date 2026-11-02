@@ -1,0 +1,23 @@
+---
+import ProductShowcase from '../ProductShowcase.astro';
+import SectionHeading from '../SectionHeading.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import type { Locale } from '../../data/types';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const { home, products } = SITE_CONTENT[lang];
+---
+
+<section id="urunler" class="editorial-section">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading
+      eyebrow={home.productsEyebrow}
+      title={home.productsTitle}
+      description={home.productsSubtitle}
+      href={`${home.viewAllProductsHref}/#urunler`}
+      linkLabel={home.viewAllProductsLabel}
+    />
+    <ProductShowcase products={products.filter((product) => product.featuredOnHome)} lang={lang} />
+  </div>
+</section>

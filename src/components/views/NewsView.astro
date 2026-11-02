@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import Icon from '../Icon.astro';
+import FeaturedNewsSection from '../FeaturedNewsSection.astro';
+import ContactSection from '../ContactSection.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import { type Locale } from '../../data/types';
+import { pressArchiveTR, pressArchiveEN } from '../../data/press-archive';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const np = SITE_CONTENT[lang].newsPage;
+const archive = lang === 'tr' ? pressArchiveTR : pressArchiveEN;
+const years = Array.from(new Set(archive.map((item) => item.year))).filter(Boolean);
+---
+
+<BaseLayout lang={lang} title={np.metaTitle} description={np.metaDescription}>
+  <PageHero lang={lang} eyebrow={np.eyebrow} title={np.title} lead={np.subtitle} />
+
+  <FeaturedNewsSection lang={lang} />
+
+  <section class="border-t border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Search & Year Filter Controls -->
+      <div class="k-card p-5 sm:p-6">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div class="relative flex-1">
+            <label for="press-search" class="visually-hidden">{np.searchLabel}</label>
+            <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-[var(--text-muted)]">
+              <Icon name="search" class="h-5 w-5" />
+            </span>
+            <input
+              type="search"
+              id="press-search"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              placeholder={np.searchPlaceholder}
+              class="k-input !pl-11"
+            />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2" role="group" aria-label={lang === 'tr' ? 'Yıla göre filtrele' : 'Filter by year'}>
+            <button
+              type="button"
+              data-year-filter="all"
+              aria-pressed="true"
+              class="cursor-pointer rounded-xl border border-[#FBB040] bg-[var(--brand-amber-bg)] px-3.5 py-2 font-mono text-xs font-bold text-[var(--brand-amber-text)] transition-colors"
+            >
+              {np.allYearsLabel} ({archive.length})
+            </button>
+            {years.map((yr) => (
+              <button
+                type="button"
+                data-year-filter={yr}
+                aria-pressed="false"
+                class="cursor-pointer rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-2 font-mono text-xs font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-amber)]"
+              >
+                {yr}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Press Archive List -->
+      <div id="press-archive-list" class="mt-8 space-y-3">
+        {archive.map((item) => (
+          <article
+            data-press-item
+            data-year={item.year}
+            data-search={`${item.title} ${item.source} ${item.month} ${item.year}`.toLowerCase()}
+            class="k-card k-card-hover overflow-hidden"
+          >
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              class="flex flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center sm:px-6"
+            >
+              <div class="flex items-start gap-4 sm:items-center">
+                <time class="flex w-20 shrink-0 flex-col items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)] px-2 py-2.5 text-center">
+                  <span class="font-mono text-xl font-extrabold leading-none text-[var(--text-primary)]">
+                    {item.day}
+                  </span>
+                  <span class="mt-1 text-[11px] font-semibold text-[var(--text-secondary)]">
+                    {item.month}
+                  </span>
+                  <span class="font-mono text-[10px] text-[var(--text-muted)]">{item.year}</span>
+                </time>
+
+                <div>
+                  <span class="inline-block rounded-md bg-[var(--brand-amber-bg)] px-2.5 py-0.5 font-mono text-xs font-semibold text-[var(--brand-amber-text)]">
+                    {item.source}
+                  </span>
+                  <h3 class="mt-1.5 text-base font-bold leading-snug text-[var(--text-primary)] sm:text-lg">
+                    {item.title}
+                  </h3>
+                </div>
+              </div>
+
+              <span class="inline-flex shrink-0 items-center gap-1.5 self-end rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-subtle)] px-3.5 py-2 font-mono text-xs font-bold text-[var(--brand-sky)] sm:self-center">
+                <span>{np.readLabel}</span>
+                <Icon name="external" class="h-3.5 w-3.5" />
+              </span>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <p
+        id="press-empty-state"
+        class="mt-8 hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 text-center text-sm font-medium text-[var(--text-muted)]"
+      >
+        {np.emptyLabel}
+      </p>
+    </div>
+  </section>
+
+  <ContactSection lang={lang} />
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('press-search') as HTMLInputElement | null;
+  const yearBtns = document.querySelectorAll('[data-year-filter]');
+  const items = document.querySelectorAll('[data-press-item]') as NodeListOf<HTMLElement>;
+  const emptyState = document.getElementById('press-empty-state');
+
+  let activeYear = 'all';
+
+  function filterArchive() {
+    const query = (searchInput?.value || '').trim().toLowerCase();
+    let visibleCount = 0;
+
+    items.forEach((el) => {
+      const matchesYear = activeYear === 'all' || el.dataset.year === activeYear;
+      const matchesQuery = !query || (el.dataset.search || '').includes(query);
+      const show = matchesYear && matchesQuery;
+      el.classList.toggle('hidden', !show);
+      if (show) visibleCount++;
+    });
+
+    emptyState?.classList.toggle('hidden', visibleCount > 0);
+  }
+
+  searchInput?.addEventListener('input', filterArchive);
+
+  yearBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeYear = btn.getAttribute('data-year-filter') || 'all';
+      yearBtns.forEach((b) => {
+        const isCurrent = b === btn;
+        b.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
+        b.classList.toggle('border-[#FBB040]', isCurrent);
+        b.classList.toggle('bg-[var(--brand-amber-bg)]', isCurrent);
+        b.classList.toggle('text-[var(--brand-amber-text)]', isCurrent);
+        b.classList.toggle('border-[var(--border-subtle)]', !isCurrent);
+        b.classList.toggle('bg-[var(--bg-surface)]', !isCurrent);
+      });
+      filterArchive();
+    });
+  });
+</script>

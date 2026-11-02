@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import SectionHeading from '../SectionHeading.astro';
+import ProductShowcase from '../ProductShowcase.astro';
+import WorkflowSteps from '../WorkflowSteps.astro';
+import FeaturedNewsSection from '../FeaturedNewsSection.astro';
+import ContactSection from '../ContactSection.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import type { Locale } from '../../data/types';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const { productDev: p, products } = SITE_CONTENT[lang];
+---
+
+<BaseLayout lang={lang} title={p.metaTitle} description={p.metaDescription}>
+  <PageHero lang={lang} eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
+  <WorkflowSteps title={p.workflowTitle} subtitle={p.workflowSubtitle} steps={p.steps} />
+  <section id="urunler" class="editorial-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="SaaS & Cloud"
+        title={p.productsTitle}
+      />
+      <ProductShowcase products={products} lang={lang} />
+    </div>
+  </section>
+  <FeaturedNewsSection lang={lang} />
+  <ContactSection lang={lang} />
+</BaseLayout>

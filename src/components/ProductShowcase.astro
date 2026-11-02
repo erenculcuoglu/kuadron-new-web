@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import ProductMedia from './ProductMedia.astro';
+import type { Locale, ProductItem } from '../data/types';
+
+interface Props { products: ProductItem[]; lang: Locale }
+const { products, lang } = Astro.props;
+---
+
+<div class="product-list">
+  {products.map((product) => {
+    const external = product.url?.startsWith('https://');
+    return (
+      <article id={product.id} class:list={['product-row', product.isNew && 'product-row-featured']} data-product={product.id}>
+        <ProductMedia product={product} lang={lang} />
+        <div class="product-copy">
+          <p class="section-label">{product.statusBadge}</p>
+          <h3>{product.name}</h3>
+          <p class="product-tagline">{product.tagline}</p>
+          <p class="section-description">{product.description}</p>
+          <ul class="product-features" role="list">
+            {product.features.map((feature) => <li><Icon name="check" class="h-4 w-4 shrink-0" />{feature}</li>)}
+          </ul>
+          {product.url && product.ctaLabel && (
+            <a href={product.url} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} class="editorial-link" aria-label={`${product.name}: ${product.ctaLabel}`}>
+              {product.ctaLabel}<Icon name={external ? 'external' : 'arrow-right'} class="h-4 w-4" />
+            </a>
+          )}
+          {product.id === 'reportql' && (
+            <details class="product-demo">
+              <summary>{lang === 'tr' ? 'Reportql tanıtımını izleyin' : 'Watch the Reportql demo'}<Icon name="play" class="h-4 w-4" /></summary>
+              <video controls playsinline preload="none" poster={product.image} aria-label={lang === 'tr' ? 'Reportql ürün tanıtımı' : 'Reportql product demo'}>
+                <source src="/uploads/rq-ai.mp4" type="video/mp4" />
+                <a href="/uploads/rq-ai.mp4">{lang === 'tr' ? 'Reportql videosunu aç' : 'Open the Reportql video'}</a>
+              </video>
+            </details>
+          )}
+        </div>
+      </article>
+    );
+  })}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.product-demo').forEach((details) => {
+    details.addEventListener('toggle', () => {
+      if (!details.open) details.querySelector('video')?.pause();
+    });
+  });
+</script>

@@ -1,0 +1,82 @@
+---
+import Icon from './Icon.astro';
+import type { ProjectItem } from '../data/types';
+
+interface Props {
+  items: ProjectItem[];
+  useHomeImages?: boolean;
+}
+
+const { items, useHomeImages = false } = Astro.props;
+---
+
+<div class="space-y-8 sm:space-y-12">
+  {items.map((item, index) => {
+    const imgSrc = useHomeImages && item.homeImage ? item.homeImage : item.image;
+    const isEven = index % 2 === 1;
+    return (
+      <article class="k-card overflow-hidden p-5 sm:p-8 lg:p-10">
+        <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          <!-- Image Column -->
+          <div class:list={['lg:col-span-6', isEven && 'lg:order-2']}>
+            <div class="overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]">
+              <img
+                src={imgSrc}
+                alt={`${item.client} — ${item.title}`}
+                loading="lazy"
+                width="720"
+                height="460"
+                class="aspect-[16/10] w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+              />
+            </div>
+          </div>
+
+          <!-- Content Column -->
+          <div class:list={['lg:col-span-6', isEven && 'lg:order-1']}>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="rounded-full bg-[var(--brand-amber-bg)] px-3 py-1 font-mono text-xs font-semibold text-[var(--brand-amber-text)]">
+                {item.categoryBadge}
+              </span>
+            </div>
+
+            <p class="mt-4 text-sm font-bold uppercase tracking-wider text-[var(--brand-sky)]">
+              {item.client}
+            </p>
+            <h3 class="mt-1 text-2xl font-extrabold text-[var(--text-primary)] sm:text-3xl">
+              {item.title}
+            </h3>
+
+            <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
+              {item.description}
+            </p>
+
+            <ul class="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              {item.features.map((feat) => (
+                <li class="flex items-start gap-2 text-sm font-medium text-[var(--text-primary)]">
+                  <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                    <Icon name="check" class="h-3.5 w-3.5" />
+                  </span>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+
+            {item.url && (
+              <div class="mt-8">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  class="k-btn-secondary !min-h-11 !px-5 !py-2.5 !text-sm"
+                >
+                  <span>{item.ctaLabel}</span>
+                  <Icon name="external" class="h-4 w-4" />
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </article>
+    );
+  })}
+</div>

@@ -1,0 +1,42 @@
+---
+import Icon from '../Icon.astro';
+import { SITE_CONTENT } from '../../data/site-content';
+import type { Locale } from '../../data/types';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const { home: h, nav, products } = SITE_CONTENT[lang];
+const portfolio = products.filter((product) => product.featuredOnHome);
+---
+
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <p class="section-label"><span aria-hidden="true"></span>{h.heroBadge}</p>
+        <h1 id="home-title"><span class="hero-title-main">{h.heroTitleLine1}</span> <span>{h.heroTitleHighlight}</span></h1>
+        <p class="hero-lead">{h.heroSubtitle}</p>
+        <div class="hero-actions">
+          <a href={nav.ctaHref} class="k-btn-primary">{nav.ctaButton}<Icon name="arrow-right" class="h-4 w-4" /></a>
+          <a href="#urunler" class="hero-text-link">{h.productsEyebrow}<Icon name="chevron-down" class="h-4 w-4" /></a>
+        </div>
+      </div>
+      <div class="hero-portfolio" aria-labelledby="portfolio-title">
+        <h2 id="portfolio-title" class="section-label">{h.productsEyebrow}</h2>
+        <div class="hero-portfolio-grid">
+          {portfolio.map((product) => (
+            <a href={`#${product.id}`} class:list={['hero-portfolio-card', product.isNew && 'hero-portfolio-new']} data-portfolio-product={product.id}>
+              <span class="hero-portfolio-status">{product.statusBadge}</span>
+              <strong>{product.name}</strong>
+              <span class="hero-portfolio-tagline">{product.tagline}</span>
+              <Icon name="arrow-right" class="hero-portfolio-arrow h-4 w-4" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+    <dl class="hero-facts">
+      {h.stats.map((stat) => <div><dt>{stat.label}</dt><dd>{stat.value}</dd></div>)}
+    </dl>
+  </div>
+</section>
