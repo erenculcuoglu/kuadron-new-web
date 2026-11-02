@@ -1,0 +1,63 @@
+<figure class="klinitra-suite-card" aria-label="@FigureLabel">
+    <div class="klinitra-top-bar">
+        <span class="klinitra-badge">@HeaderBadge</span>
+        <span class="klinitra-subtitle">@HeaderSubtitle</span>
+    </div>
+
+    <div class="klinitra-clinical-box">
+        <div class="klinitra-clinical-head">
+            <span class="klinitra-clinical-tag">@SummaryLabel</span>
+            <span class="klinitra-clinical-meta">@PatientMeta</span>
+        </div>
+        <p class="klinitra-clinical-text">@SummaryText</p>
+    </div>
+
+    <p class="klinitra-modules-label">@ModulesLabel</p>
+    <div class="klinitra-modules-grid">
+        @foreach (var mod in Modules)
+        {
+            <div class="klinitra-module-item">
+                <div class="klinitra-module-head">
+                    <span class="klinitra-module-code">@mod.Code</span>
+                    <strong>@mod.Name</strong>
+                </div>
+                <span class="klinitra-module-role">@mod.Role</span>
+                <span class="klinitra-module-metric">@mod.Metric</span>
+            </div>
+        }
+    </div>
+</figure>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+
+    private sealed record ModuleInfo(string Code, string Name, string Role, string Metric);
+
+    private string FigureLabel => Lang == "tr"
+        ? "Klinitra sağlık için yapay zeka ürün ailesi önizlemesi"
+        : "Klinitra healthcare AI product suite preview";
+
+    private string HeaderBadge => Lang == "tr" ? "KLİNİTRA EKOSİSTEMİ" : "KLINITRA SUITE";
+    private string HeaderSubtitle => Lang == "tr" ? "Hekim · Sağlık Kurumu · Sigorta" : "Physicians · Providers · Insurers";
+    private string SummaryLabel => Lang == "tr" ? "KLİNİTRA AI · HASTA ÖZETİ & TREND" : "KLINITRA AI · CLINICAL SUMMARY & LAB TRENDS";
+    private string PatientMeta => Lang == "tr" ? "Dahiliye Polikliniği · e-Nabız Senkronize · 36 Ay Kayıt" : "Internal Medicine · Ministry EHR Synced · 36M History";
+    private string SummaryText => Lang == "tr"
+        ? "Son 3 yılda HbA1c %6,1 → %7,4 yükseldi; eGFR 88 → 64 mL/dk geriledi. Mevcut ACEi tedavisinde potasyum sınırda (5,1 mmol/L)."
+        : "Over 36 months HbA1c rose 6.1% → 7.4%; eGFR declined 88 → 64 mL/min. Borderline potassium (5.1 mmol/L) under active ACEi therapy.";
+    private string ModulesLabel => Lang == "tr" ? "ÜRÜN AİLESİ MODÜLLERİ" : "PRODUCT SUITE MODULES";
+
+    private ModuleInfo[] Modules => Lang == "tr"
+        ? [
+            new("01", "Klinitra AI", "Hekimler İçin Klinik Asistan", "Saniyeler içinde e-Nabız özeti & sesli sorgu"),
+            new("02", "Klinitra MBYS", "Muayenehane Bilgi Yönetim Sistemi", "Randevu, e-Reçete & otomatik SYS paket gönderimi"),
+            new("03", "Klinitra Sigorta AI", "Gerekçeli Risk Değerlendirmesi", "0–100 açıklanabilir risk skoru & provizyon"),
+            new("04", "Tanı Öngörü & BI", "Erken Risk Sinyali API & HBYS Analitiği", "Rutin tetkiklerden erken uyarı & hastane BI")
+        ]
+        : [
+            new("01", "Klinitra AI", "Clinical Assistant for Physicians", "Instant longitudinal summary & voice Q&A"),
+            new("02", "Klinitra MBYS", "Practice Management System", "Scheduling, e-Prescription & Ministry sync"),
+            new("03", "Klinitra Insurance AI", "Explainable Underwriting & Claims", "0–100 transparent risk score & rationale"),
+            new("04", "Diagnostic API & BI", "Early Risk Signals & Hospital BI", "Lab-driven early warning & conversational BI")
+        ];
+}
+

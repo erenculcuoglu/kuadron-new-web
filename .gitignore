@@ -1,19 +1,23 @@
-# build output
-dist/
-.astro/
+# .NET Build Outputs
+bin/
+obj/
+out/
+publish/
 
-# dependencies
-node_modules/
+# IDE & User-Specific Files
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# environment variables
-.env
-.env.production
-
-# macOS
+# OS Files
 .DS_Store
+Thumbs.db
+
+# Environment & Local Secrets
+appsettings.Development.local.json
+.env
+.env.*

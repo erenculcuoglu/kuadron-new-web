@@ -1,0 +1,37 @@
+@page "/yazilim-gelistirme"
+@page "/en/software-development"
+@inject SiteDataService SiteData
+@inject NavigationManager Navigation
+
+<PageMeta Title="@S.MetaTitle" Description="@S.MetaDescription" />
+
+<PageHero Lang="@Lang" Eyebrow="@S.Eyebrow" Title="@S.Title" Lead="@S.Lead" />
+
+<WorkflowSteps Title="@S.WorkflowTitle" Subtitle="@S.WorkflowSubtitle" Steps="@S.Steps" />
+
+<section class="border-y border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mb-12">
+            <span class="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--brand-amber-text)]">
+                <span class="h-1.5 w-1.5 rounded-full bg-[var(--brand-amber)]"></span>
+                @(Lang == "tr" ? "Portföy" : "Portfolio")
+            </span>
+            <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+                @S.ProjectsTitle
+            </h2>
+        </div>
+
+        <ProjectShowcase Items="@Content.Projects" />
+    </div>
+</section>
+
+<FeaturedNewsSection Lang="@Lang" />
+<ContactSection Lang="@Lang" />
+
+@code {
+    private string CurrentPath => new Uri(Navigation.Uri).AbsolutePath;
+    private string Lang => SiteData.DetectLocale(CurrentPath);
+    private LocaleSiteContent Content => SiteData.GetLocale(Lang);
+    private SoftwareDevContent S => Content.SoftwareDev;
+}
+

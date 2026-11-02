@@ -1,0 +1,109 @@
+@page "/haberler"
+@page "/en/news"
+@inject SiteDataService SiteData
+@inject NavigationManager Navigation
+
+<PageMeta Title="@Np.MetaTitle" Description="@Np.MetaDescription" />
+
+<PageHero Lang="@Lang" Eyebrow="@Np.Eyebrow" Title="@Np.Title" Lead="@Np.Subtitle" />
+
+<FeaturedNewsSection Lang="@Lang" />
+
+<section class="border-t border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <!-- Search & Year Filter Controls -->
+        <div class="k-card p-5 sm:p-6">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div class="relative flex-1">
+                    <label for="press-search" class="visually-hidden">@Np.SearchLabel</label>
+                    <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-[var(--text-muted)]">
+                        <Icon Name="search" Class="h-5 w-5" />
+                    </span>
+                    <input type="search"
+                           id="press-search"
+                           autocorrect="off"
+                           autocapitalize="off"
+                           spellcheck="false"
+                           placeholder="@Np.SearchPlaceholder"
+                           class="k-input !pl-11" />
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2" role="group" aria-label="@(Lang == "tr" ? "Yıla göre filtrele" : "Filter by year")">
+                    <button type="button"
+                            data-year-filter="all"
+                            aria-pressed="true"
+                            class="cursor-pointer rounded-xl border border-[var(--brand-amber)] bg-[var(--brand-amber-bg)] px-3.5 py-2 font-mono text-xs font-bold text-[var(--brand-amber-text)] transition-colors">
+                        @Np.AllYearsLabel (@Archive.Count)
+                    </button>
+                    @foreach (var yr in Years)
+                    {
+                        <button type="button"
+                                data-year-filter="@yr"
+                                aria-pressed="false"
+                                class="cursor-pointer rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-2 font-mono text-xs font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-amber)]">
+                            @yr
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Press Archive List -->
+        <div id="press-archive-list" class="mt-8 space-y-3">
+            @foreach (var item in Archive)
+            {
+                <article data-press-item
+                         data-year="@item.Year"
+                         data-search="@($"{item.Title} {item.Source} {item.Month} {item.Year}".ToLowerInvariant())"
+                         class="k-card k-card-hover overflow-hidden">
+                    <a href="@item.Url"
+                       target="_blank"
+                       rel="noopener noreferrer nofollow"
+                       class="flex flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center sm:px-6">
+                        <div class="flex items-start gap-4 sm:items-center">
+                            <time class="flex w-20 shrink-0 flex-col items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)] px-2 py-2.5 text-center">
+                                <span class="font-mono text-xl font-extrabold leading-none text-[var(--text-primary)]">
+                                    @item.Day
+                                </span>
+                                <span class="mt-1 text-[11px] font-semibold text-[var(--text-secondary)]">
+                                    @item.Month
+                                </span>
+                                <span class="font-mono text-[10px] text-[var(--text-muted)]">@item.Year</span>
+                            </time>
+
+                            <div>
+                                <span class="inline-block rounded-md bg-[var(--brand-amber-bg)] px-2.5 py-0.5 font-mono text-xs font-semibold text-[var(--brand-amber-text)]">
+                                    @item.Source
+                                </span>
+                                <h3 class="mt-1.5 text-base font-bold leading-snug text-[var(--text-primary)] sm:text-lg">
+                                    @item.Title
+                                </h3>
+                            </div>
+                        </div>
+
+                        <span class="inline-flex shrink-0 items-center gap-1.5 self-end rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-subtle)] px-3.5 py-2 font-mono text-xs font-bold text-[var(--brand-sky)] sm:self-center">
+                            <span>@Np.ReadLabel</span>
+                            <Icon Name="external" Class="h-3.5 w-3.5" />
+                        </span>
+                    </a>
+                </article>
+            }
+        </div>
+
+        <p id="press-empty-state"
+           class="mt-8 hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 text-center text-sm font-medium text-[var(--text-muted)]">
+            @Np.EmptyLabel
+        </p>
+    </div>
+</section>
+
+<ContactSection Lang="@Lang" />
+
+@code {
+    private string CurrentPath => new Uri(Navigation.Uri).AbsolutePath;
+    private string Lang => SiteData.DetectLocale(CurrentPath);
+    private NewsPageContent Np => SiteData.GetLocale(Lang).NewsPage;
+    private IReadOnlyList<PressArchiveItem> Archive => SiteData.GetPressArchive(Lang);
+    private List<string> Years => Archive.Select(i => i.Year).Where(y => !string.IsNullOrEmpty(y)).Distinct().ToList();
+}
+

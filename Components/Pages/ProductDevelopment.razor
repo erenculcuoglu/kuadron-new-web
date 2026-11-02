@@ -1,0 +1,28 @@
+@page "/urun-gelistirme"
+@page "/en/product-development"
+@inject SiteDataService SiteData
+@inject NavigationManager Navigation
+
+<PageMeta Title="@P.MetaTitle" Description="@P.MetaDescription" />
+
+<PageHero Lang="@Lang" Eyebrow="@P.Eyebrow" Title="@P.Title" Lead="@P.Lead" />
+
+<WorkflowSteps Title="@P.WorkflowTitle" Subtitle="@P.WorkflowSubtitle" Steps="@P.Steps" />
+
+<section id="urunler" class="editorial-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading Eyebrow="SaaS & Cloud" Title="@P.ProductsTitle" />
+        <ProductShowcase Products="@Content.Products" Lang="@Lang" />
+    </div>
+</section>
+
+<FeaturedNewsSection Lang="@Lang" />
+<ContactSection Lang="@Lang" />
+
+@code {
+    private string CurrentPath => new Uri(Navigation.Uri).AbsolutePath;
+    private string Lang => SiteData.DetectLocale(CurrentPath);
+    private LocaleSiteContent Content => SiteData.GetLocale(Lang);
+    private ProductDevContent P => Content.ProductDev;
+}
+

@@ -1,0 +1,72 @@
+<div class="space-y-8 sm:space-y-12">
+    @for (int index = 0; index < Items.Count; index++)
+    {
+        var item = Items[index];
+        var imgSrc = UseHomeImages && !string.IsNullOrEmpty(item.HomeImage) ? item.HomeImage : item.Image;
+        var isEven = index % 2 == 1;
+        <article class="k-card overflow-hidden p-5 sm:p-8 lg:p-10">
+            <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+                <div class="@($"lg:col-span-6{(isEven ? " lg:order-2" : "")}")">
+                    <div class="overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]">
+                        <img src="@imgSrc"
+                             alt="@($"{item.Client} — {item.Title}")"
+                             loading="lazy"
+                             width="720"
+                             height="460"
+                             class="aspect-[16/10] w-full object-cover transition-transform duration-300 hover:scale-[1.02]" />
+                    </div>
+                </div>
+
+                <div class="@($"lg:col-span-6{(isEven ? " lg:order-1" : "")}")">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="rounded-full bg-[var(--brand-amber-bg)] px-3 py-1 font-mono text-xs font-semibold text-[var(--brand-amber-text)]">
+                            @item.CategoryBadge
+                        </span>
+                    </div>
+
+                    <p class="mt-4 text-sm font-bold uppercase tracking-wider text-[var(--brand-sky)]">
+                        @item.Client
+                    </p>
+                    <h3 class="mt-1 text-2xl font-extrabold text-[var(--text-primary)] sm:text-3xl">
+                        @item.Title
+                    </h3>
+
+                    <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
+                        @item.Description
+                    </p>
+
+                    <ul class="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                        @foreach (var feat in item.Features)
+                        {
+                            <li class="flex items-start gap-2 text-sm font-medium text-[var(--text-primary)]">
+                                <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                                    <Icon Name="check" Class="h-3.5 w-3.5" />
+                                </span>
+                                <span>@feat</span>
+                            </li>
+                        }
+                    </ul>
+
+                    @if (!string.IsNullOrEmpty(item.Url))
+                    {
+                        <div class="mt-8">
+                            <a href="@item.Url"
+                               target="_blank"
+                               rel="noopener noreferrer nofollow"
+                               class="k-btn-secondary !min-h-11 !px-5 !py-2.5 !text-sm">
+                                <span>@item.CtaLabel</span>
+                                <Icon Name="external" Class="h-4 w-4" />
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </article>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public List<ProjectItem> Items { get; set; } = new();
+    [Parameter] public bool UseHomeImages { get; set; }
+}
+

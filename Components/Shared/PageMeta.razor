@@ -1,0 +1,83 @@
+@inject SiteDataService SiteData
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var siteOrigin = "https://www.kuadron.com";
+    var rawPath = CanonicalPath ?? HttpContextAccessor.HttpContext?.Request.Path.Value ?? "/";
+    var effectiveLang = !string.IsNullOrEmpty(Lang) ? Lang : SiteData.DetectLocale(rawPath);
+    var canonicalRel = SiteDataService.CanonicalPath(rawPath);
+    var canonicalUrl = $"{siteOrigin}{canonicalRel}";
+    var emitHreflang = SiteData.HasBilingualAlternate(rawPath);
+    var trUrl = $"{siteOrigin}{SiteData.GetAlternateUrl(rawPath, "tr")}";
+    var enUrl = $"{siteOrigin}{SiteData.GetAlternateUrl(rawPath, "en")}";
+    var fullOgImage = OgImage.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+        ? OgImage
+        : $"{siteOrigin}{(OgImage.StartsWith('/') ? OgImage : "/" + OgImage)}";
+
+    var company = SiteData.Company;
+    var defaultOrgLd = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "Organization",
+        ["name"] = effectiveLang == "tr" ? company.LegalNameTR : company.LegalNameEN,
+        ["url"] = siteOrigin,
+        ["logo"] = $"{siteOrigin}/assets/icons/android-icon-192x192.png",
+        ["email"] = company.Email,
+        ["telephone"] = "+90-312-503-20-51",
+        ["address"] = new Dictionary<string, string>
+        {
+            ["@type"] = "PostalAddress",
+            ["streetAddress"] = "OSTİM OSB Mah. 100. Yıl Blv. No: 55 E İç Kapı No: 32",
+            ["addressLocality"] = "Yenimahalle",
+            ["addressRegion"] = "Ankara",
+            ["addressCountry"] = "TR"
+        },
+        ["sameAs"] = company.Social.Select(s => s.Href).ToArray()
+    };
+
+    var structuredList = new List<object> { defaultOrgLd };
+    if (ExtraJsonLd is not null)
+    {
+        structuredList.Add(ExtraJsonLd);
+    }
+    if (!string.IsNullOrEmpty(JsonLd))
+    {
+        using var doc = JsonDocument.Parse(JsonLd);
+        structuredList.Add(doc.RootElement.Clone());
+    }
+    var jsonLdString = JsonSerializer.Serialize(structuredList).Replace("<", "\\u003c");
+}
+
+<PageTitle>@Title</PageTitle>
+<HeadContent>
+    <meta name="description" content="@Description">
+    <link rel="canonical" href="@canonicalUrl">
+    @if (emitHreflang)
+    {
+        <link rel="alternate" hreflang="tr" href="@trUrl">
+        <link rel="alternate" hreflang="en" href="@enUrl">
+        <link rel="alternate" hreflang="x-default" href="@trUrl">
+    }
+    <meta property="og:type" content="@OgType">
+    <meta property="og:title" content="@Title">
+    <meta property="og:description" content="@Description">
+    <meta property="og:url" content="@canonicalUrl">
+    <meta property="og:image" content="@fullOgImage">
+    <meta property="og:locale" content="@(effectiveLang == "tr" ? "tr_TR" : "en_US")">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@@kuadronsoft">
+    <meta name="twitter:title" content="@Title">
+    <meta name="twitter:description" content="@Description">
+    <meta name="twitter:image" content="@fullOgImage">
+    @((MarkupString)$"<script type=\"application/ld+json\">{jsonLdString}</script>")
+</HeadContent>
+
+@code {
+    [Parameter] public string? Lang { get; set; }
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter, EditorRequired] public string Description { get; set; } = "";
+    [Parameter] public string? CanonicalPath { get; set; }
+    [Parameter] public string OgImage { get; set; } = "/uploads/home-screenshot.png";
+    [Parameter] public string OgType { get; set; } = "website";
+    [Parameter] public object? ExtraJsonLd { get; set; }
+    [Parameter] public string? JsonLd { get; set; }
+}

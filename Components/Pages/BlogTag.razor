@@ -1,0 +1,68 @@
+@page "/blog/tag/{Tag}"
+@inject SiteDataService SiteData
+
+<PageMeta Title="@($"#{TagData.Label} Yazıları | Kuadron Blog")"
+          Description="@($"Kuadron Blog üzerinde \"{TagData.Label}\" etiketiyle yayınlanan tüm teknoloji ve iş yazılımı rehberleri.")" />
+
+<PageHero Lang="tr"
+          Eyebrow="Blog Etiketi"
+          Title="@($"#{TagData.Label}")"
+          Lead="@($"Bu etikete ait toplam {TagData.Posts.Count} içerik listeleniyor.")" />
+
+<section class="py-14 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+            <a href="/blog" class="k-btn-secondary !min-h-10 !px-4 !py-2 !text-xs">
+                <Icon Name="arrow-left" Class="h-4 w-4" />
+                <span>Tüm Blog Yazılarına Dön</span>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+            @foreach (var post in TagData.Posts)
+            {
+                <article class="k-card k-card-hover flex flex-col justify-between overflow-hidden">
+                    <div>
+                        <a href="@($"/blog/{post.Id}")"
+                           class="block aspect-[16/10] overflow-hidden border-b border-[var(--border-subtle)] bg-[var(--bg-subtle)]">
+                            <img src="@post.CoverImage"
+                                 alt="@post.Title"
+                                 loading="lazy"
+                                 width="480"
+                                 height="300"
+                                 class="h-full w-full object-cover" />
+                        </a>
+                        <div class="p-6">
+                            <p class="text-xs text-[var(--text-muted)]">
+                                @post.DisplayDate • @post.ReadingTime dk okuma
+                            </p>
+                            <h2 class="mt-2.5 line-clamp-2 text-xl font-bold text-[var(--text-primary)]">
+                                <a href="@($"/blog/{post.Id}")" class="hover:text-[var(--brand-sky)]">
+                                    @post.Title
+                                </a>
+                            </h2>
+                            <p class="mt-2.5 line-clamp-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                                @post.Description
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-[var(--border-subtle)] px-6 py-4">
+                        <a href="@($"/blog/{post.Id}")"
+                           class="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--brand-sky)] hover:text-[var(--brand-amber-text)]">
+                            <span>Yazıyı Oku</span>
+                            <Icon Name="arrow-right" Class="h-4 w-4" />
+                        </a>
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter] public string Tag { get; set; } = "";
+
+    private (string Label, List<BlogPostEntry> Posts) TagData =>
+        SiteData.GetPostsByTag(Uri.UnescapeDataString(Tag)) ?? (Tag, SiteData.BlogPosts.Take(6).ToList());
+}

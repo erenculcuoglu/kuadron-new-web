@@ -1,0 +1,191 @@
+@inject SiteDataService SiteData
+
+<section id="@Contact.Anchor" class="border-t border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
+            <!-- Left Info & Office Card -->
+            <div class="flex flex-col justify-between lg:col-span-5">
+                <div>
+                    <p class="section-label">@Contact.Eyebrow</p>
+                    <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+                        @Contact.Title
+                    </h2>
+                    <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
+                        @Contact.Description
+                    </p>
+
+                    <div class="mt-8 space-y-4">
+                        <div class="contact-address">
+                            <p class="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--brand-amber-text)]">
+                                @Contact.AddressTitle
+                            </p>
+                            <p class="mt-2 text-sm font-medium leading-relaxed text-[var(--text-primary)]">
+                                @string.Join(", ", Company.AddressLines)
+                            </p>
+                            <a href="@Company.MapsUrl"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-[var(--brand-sky)] hover:underline">
+                                <Icon Name="map-pin" Class="h-4 w-4" />
+                                <span>@Contact.MapLabel</span>
+                                <Icon Name="external" Class="h-3.5 w-3.5" />
+                            </a>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <a href="@Company.PhoneHref" class="contact-detail">
+                                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                                    <Icon Name="phone" Class="h-5 w-5" />
+                                </span>
+                                <div>
+                                    <span class="block text-xs text-[var(--text-muted)]">
+                                        @(Lang == "tr" ? "Telefon" : "Phone")
+                                    </span>
+                                    <span class="text-sm font-bold text-[var(--text-primary)]">@Company.PhoneDisplay</span>
+                                </div>
+                            </a>
+
+                            <a href="@($"mailto:{Company.Email}")" class="contact-detail">
+                                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded bg-[var(--brand-sky-bg)] text-[var(--brand-sky)]">
+                                    <Icon Name="mail" Class="h-5 w-5" />
+                                </span>
+                                <div class="min-w-0">
+                                    <span class="block text-xs text-[var(--text-muted)]">E-mail</span>
+                                    <span class="block truncate text-sm font-bold text-[var(--text-primary)]">@Company.Email</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Native Accessible Contact Form -->
+            <div class="lg:col-span-7">
+                <div class="contact-form">
+                    <h3 class="text-xl font-bold text-[var(--text-primary)]">@Contact.FormTitle</h3>
+
+                    <form action="@($"mailto:{Company.Email}")"
+                          method="POST"
+                          data-kuadron-form
+                          data-endpoint=""
+                          data-fallback-email="@Company.Email"
+                          data-submitting-text="@Contact.SubmittingLabel"
+                          data-submit-text="@Contact.SubmitLabel"
+                          data-success-text="@Contact.SuccessMessage"
+                          data-fallback-text="@Contact.FallbackNotice"
+                          class="mt-6 space-y-5">
+                        <!-- Honeypot spam trap -->
+                        <div class="visually-hidden" aria-hidden="true">
+                            <label for="@($"{IdPrefix}-company-website")">Website</label>
+                            <input type="text" id="@($"{IdPrefix}-company-website")" name="_gotcha" tabindex="-1" autocomplete="off" />
+                        </div>
+
+                        <div>
+                            <label for="@($"{IdPrefix}-name")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                                @Contact.NameLabel <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text"
+                                   id="@($"{IdPrefix}-name")"
+                                   name="name"
+                                   required
+                                   minlength="2"
+                                   maxlength="120"
+                                   autocomplete="name"
+                                   enterkeyhint="next"
+                                   placeholder="@Contact.NamePlaceholder"
+                                   aria-errormessage="@($"{IdPrefix}-name-err")"
+                                   class="k-input" />
+                            <div id="@($"{IdPrefix}-name-err")" class="k-error-msg">
+                                <Icon Name="alert" Class="h-4 w-4 shrink-0" />
+                                <span>@Contact.NameError</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            <div>
+                                <label for="@($"{IdPrefix}-phone")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                                    @Contact.PhoneLabel
+                                </label>
+                                <input type="tel"
+                                       id="@($"{IdPrefix}-phone")"
+                                       name="phone"
+                                       autocomplete="tel"
+                                       inputmode="tel"
+                                       enterkeyhint="next"
+                                       pattern="[0-9+\(\)\-\s]{7,22}"
+                                       placeholder="@Contact.PhonePlaceholder"
+                                       aria-errormessage="@($"{IdPrefix}-phone-err")"
+                                       class="k-input" />
+                                <div id="@($"{IdPrefix}-phone-err")" class="k-error-msg">
+                                    <Icon Name="alert" Class="h-4 w-4 shrink-0" />
+                                    <span>@Contact.PhoneError</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="@($"{IdPrefix}-email")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                                    @Contact.EmailLabel <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+                                </label>
+                                <input type="email"
+                                       id="@($"{IdPrefix}-email")"
+                                       name="email"
+                                       required
+                                       autocomplete="email"
+                                       autocorrect="off"
+                                       autocapitalize="off"
+                                       spellcheck="false"
+                                       enterkeyhint="next"
+                                       placeholder="@Contact.EmailPlaceholder"
+                                       aria-errormessage="@($"{IdPrefix}-email-err")"
+                                       class="k-input" />
+                                <div id="@($"{IdPrefix}-email-err")" class="k-error-msg">
+                                    <Icon Name="alert" Class="h-4 w-4 shrink-0" />
+                                    <span>@Contact.EmailError</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="@($"{IdPrefix}-message")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                                @Contact.MessageLabel <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+                            </label>
+                            <textarea id="@($"{IdPrefix}-message")"
+                                      name="message"
+                                      rows="4"
+                                      required
+                                      minlength="5"
+                                      maxlength="2000"
+                                      placeholder="@Contact.MessagePlaceholder"
+                                      aria-errormessage="@($"{IdPrefix}-message-err")"
+                                      class="k-input resize-y"></textarea>
+                            <div id="@($"{IdPrefix}-message-err")" class="k-error-msg">
+                                <Icon Name="alert" Class="h-4 w-4 shrink-0" />
+                                <span>@Contact.MessageError</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-start justify-between gap-4 pt-1 sm:flex-row sm:items-center">
+                            <button type="submit" class="k-btn-primary w-full sm:w-auto">
+                                <span data-submit-label>@Contact.SubmitLabel</span>
+                                <Icon Name="arrow-right" Class="h-4 w-4" />
+                            </button>
+                        </div>
+
+                        <div data-form-feedback
+                             aria-live="polite"
+                             class="hidden rounded border border-[var(--status-success)] bg-[var(--status-success-bg)] px-4 py-3 text-sm font-medium text-[var(--status-success)]"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+    [Parameter] public string IdPrefix { get; set; } = "main-contact";
+
+    private ContactContent Contact => SiteData.GetLocale(Lang).Contact;
+    private CompanyInfoModel Company => SiteData.Company;
+}
+

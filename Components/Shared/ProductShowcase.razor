@@ -1,0 +1,47 @@
+<div class="product-list">
+    @foreach (var product in Products)
+    {
+        var external = product.Url?.StartsWith("https://", StringComparison.OrdinalIgnoreCase) == true;
+        <article id="@product.Id" class="@($"product-row{(product.IsNew ? " product-row-featured" : "")}")" data-product="@product.Id">
+            <ProductMedia Product="@product" Lang="@Lang" />
+            <div class="product-copy">
+                <p class="section-label">@product.StatusBadge</p>
+                <h3>@product.Name</h3>
+                <p class="product-tagline">@product.Tagline</p>
+                <p class="section-description">@product.Description</p>
+                <ul class="product-features" role="list">
+                    @foreach (var feature in product.Features)
+                    {
+                        <li><Icon Name="check" Class="h-4 w-4 shrink-0" />@feature</li>
+                    }
+                </ul>
+                @if (!string.IsNullOrEmpty(product.Url) && !string.IsNullOrEmpty(product.CtaLabel))
+                {
+                    <a href="@product.Url"
+                       target="@(external ? "_blank" : null)"
+                       rel="@(external ? "noopener noreferrer" : null)"
+                       class="editorial-link"
+                       aria-label="@($"{product.Name}: {product.CtaLabel}")">
+                        @product.CtaLabel<Icon Name="@(external ? "external" : "arrow-right")" Class="h-4 w-4" />
+                    </a>
+                }
+                @if (product.Id == "reportql")
+                {
+                    <details class="product-demo">
+                        <summary>@(Lang == "tr" ? "Reportql tanıtımını izleyin" : "Watch the Reportql demo")<Icon Name="play" Class="h-4 w-4" /></summary>
+                        <video controls playsinline preload="none" poster="@product.Image" aria-label="@(Lang == "tr" ? "Reportql ürün tanıtımı" : "Reportql product demo")">
+                            <source src="/uploads/rq-ai.mp4" type="video/mp4" />
+                            <a href="/uploads/rq-ai.mp4">@(Lang == "tr" ? "Reportql videosunu aç" : "Open the Reportql video")</a>
+                        </video>
+                    </details>
+                }
+            </div>
+        </article>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public List<ProductItem> Products { get; set; } = new();
+    [Parameter] public string Lang { get; set; } = "tr";
+}
+

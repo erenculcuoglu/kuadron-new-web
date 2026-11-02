@@ -1,0 +1,180 @@
+@inject SiteDataService SiteData
+@{
+    var content = SiteData.GetLocale(Lang);
+    var altHref = SiteData.GetAlternateUrl(CurrentPath, content.AltLang);
+    var homeHref = Lang == "tr" ? "/" : "/en/";
+
+    bool IsActive(string href)
+    {
+        if (href.Contains('#')) return false;
+        var cleanPath = SiteDataService.NormalizePath(CurrentPath);
+        var cleanHref = SiteDataService.NormalizePath(href);
+        if (cleanHref == "/blog") return cleanPath.StartsWith("/blog", StringComparison.OrdinalIgnoreCase);
+        return string.Equals(cleanPath, cleanHref, StringComparison.OrdinalIgnoreCase);
+    }
+
+    var isCorporateActive = content.Nav.CorporateItems.Any(i => IsActive(i.Href));
+    var isServicesActive = content.Nav.ServicesItems.Any(i => IsActive(i.Href));
+}
+
+<header class="sticky top-0 z-50 border-b border-[#1e2f4a] bg-[#0b1424]/95 text-slate-100 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+        <a href="@homeHref" class="site-brand inline-flex min-w-0 items-center gap-2 text-white transition-opacity hover:opacity-90" aria-label="@content.SiteName">
+            <KuadronLogo Class="h-8 w-auto sm:h-9" />
+        </a>
+
+        <nav class="hidden items-center gap-1 lg:flex" aria-label="@(Lang == "tr" ? "Ana menü" : "Main navigation")">
+            <details class="group relative nav-disclosure" name="desktop-navigation">
+                <summary class="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors @(isCorporateActive ? "bg-sky-500/15 text-sky-300" : "text-slate-200 hover:bg-slate-800/70 hover:text-white")">
+                    <span>@content.Nav.CorporateLabel</span>
+                    <Icon Name="chevron-down" Class="h-4 w-4 transition-transform duration-200 group-open:rotate-180" />
+                </summary>
+                <div class="absolute left-0 top-full z-50 w-80 pt-2">
+                    <div class="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-2 shadow-xl">
+                        @foreach (var item in content.Nav.CorporateItems)
+                        {
+                            var active = IsActive(item.Href);
+                            <a href="@item.Href" aria-current="@(active ? "page" : null)" class="block rounded-xl px-3.5 py-2.5 transition-colors @(active ? "bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]" : "hover:bg-[var(--bg-subtle)]")">
+                                <div class="text-sm font-semibold text-[var(--text-primary)]">@item.Label</div>
+                                <div class="mt-0.5 text-xs leading-snug text-[var(--text-muted)]">@item.Desc</div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </details>
+
+            <details class="group relative nav-disclosure" name="desktop-navigation">
+                <summary class="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors @(isServicesActive ? "bg-sky-500/15 text-sky-300" : "text-slate-200 hover:bg-slate-800/70 hover:text-white")">
+                    <span>@content.Nav.ServicesLabel</span>
+                    <Icon Name="chevron-down" Class="h-4 w-4 transition-transform duration-200 group-open:rotate-180" />
+                </summary>
+                <div class="absolute left-0 top-full z-50 w-88 pt-2">
+                    <div class="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-2 shadow-xl">
+                        @foreach (var item in content.Nav.ServicesItems)
+                        {
+                            var active = IsActive(item.Href);
+                            <a href="@item.Href" aria-current="@(active ? "page" : null)" class="block rounded-xl px-3.5 py-2.5 transition-colors @(active ? "bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]" : "hover:bg-[var(--bg-subtle)]")">
+                                <div class="text-sm font-semibold text-[var(--text-primary)]">@item.Label</div>
+                                <div class="mt-0.5 text-xs leading-snug text-[var(--text-muted)]">@item.Desc</div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </details>
+
+            @foreach (var link in content.Nav.DirectLinks)
+            {
+                var active = IsActive(link.Href);
+                <a href="@link.Href" aria-current="@(active ? "page" : null)" class="inline-flex min-h-11 items-center rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors @(active ? "bg-sky-500/15 text-sky-300" : "text-slate-200 hover:bg-slate-800/70 hover:text-white")">
+                    @link.Label
+                </a>
+            }
+        </nav>
+
+        <div class="flex items-center gap-2">
+            <a href="@altHref" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-700/80 bg-slate-900/60 px-3 text-xs font-bold tracking-wider text-slate-100 transition-colors hover:border-[#FBB040] hover:text-[#FBB040]" hreflang="@content.AltLang" aria-label="@(content.AltLang == "en" ? "Switch to English" : "Türkçe diline geç")">
+                @content.LangLabel
+            </a>
+
+            <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-xl border border-slate-700/80 bg-slate-900/60 text-slate-100 transition-colors hover:border-[#FBB040] hover:text-[#FBB040]">
+                <span class="theme-toggle-dark-label items-center justify-center">
+                    <Icon Name="moon" Class="h-4.5 w-4.5" />
+                    <span class="visually-hidden">@content.Nav.ThemeSwitchToDark</span>
+                </span>
+                <span class="theme-toggle-light-label items-center justify-center">
+                    <Icon Name="sun" Class="h-4.5 w-4.5 text-[#FBB040]" />
+                    <span class="visually-hidden">@content.Nav.ThemeSwitchToLight</span>
+                </span>
+            </button>
+
+            <a href="@content.Nav.CtaHref" class="k-btn-primary hidden !min-h-11 !px-4 !py-2 !text-sm sm:inline-flex">
+                <span>@content.Nav.CtaButton</span>
+                <Icon Name="arrow-right" Class="h-4 w-4" />
+            </a>
+
+            <button type="button" data-open-dialog="mobile-nav-dialog" class="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-xl border border-slate-700/80 bg-slate-900/60 text-slate-100 lg:hidden" aria-label="@content.Nav.OpenMenu">
+                <Icon Name="menu" Class="h-5 w-5" />
+            </button>
+        </div>
+    </div>
+</header>
+
+<dialog id="mobile-nav-dialog" closedby="any" aria-label="@(Lang == "tr" ? "Mobil Gezinme Menüsü" : "Mobile Navigation Menu")" class="k-drawer">
+    <div class="flex h-full flex-col justify-between overflow-y-auto p-6">
+        <div>
+            <div class="-mx-6 -mt-6 mb-6 flex items-center justify-between border-b border-[#1e2f4a] bg-[#0b1424] px-6 py-4">
+                <a href="@homeHref" class="text-white" data-close-dialog>
+                    <KuadronLogo Class="h-7 w-auto" />
+                </a>
+                <form method="dialog">
+                    <button type="submit" class="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-xl border border-slate-700/80 text-white" aria-label="@content.Nav.CloseMenu">
+                        <Icon Name="close" Class="h-5 w-5" />
+                    </button>
+                </form>
+            </div>
+
+            <div class="mt-6 space-y-6">
+                <div>
+                    <p class="px-2 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--brand-amber-text)]">
+                        @content.Nav.CorporateLabel
+                    </p>
+                    <ul class="mt-2 space-y-1">
+                        @foreach (var item in content.Nav.CorporateItems)
+                        {
+                            var active = IsActive(item.Href);
+                            <li>
+                                <a href="@item.Href" data-close-dialog aria-current="@(active ? "page" : null)" class="block rounded-xl px-3 py-2.5 text-base font-semibold transition-colors @(active ? "bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]" : "text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]")">
+                                    @item.Label
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="px-2 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--brand-amber-text)]">
+                        @content.Nav.ServicesLabel
+                    </p>
+                    <ul class="mt-2 space-y-1">
+                        @foreach (var item in content.Nav.ServicesItems)
+                        {
+                            var active = IsActive(item.Href);
+                            <li>
+                                <a href="@item.Href" data-close-dialog aria-current="@(active ? "page" : null)" class="block rounded-xl px-3 py-2.5 text-base font-semibold transition-colors @(active ? "bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]" : "text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]")">
+                                    @item.Label
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="border-t border-[var(--border-subtle)] pt-4">
+                    <ul class="space-y-1">
+                        @foreach (var link in content.Nav.DirectLinks)
+                        {
+                            var active = IsActive(link.Href);
+                            <li>
+                                <a href="@link.Href" data-close-dialog aria-current="@(active ? "page" : null)" class="block rounded-xl px-3 py-2.5 text-base font-semibold @(active ? "bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]" : "text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]")">
+                                    @link.Label
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 border-t border-[var(--border-subtle)] pt-5">
+            <a href="@content.Nav.CtaHref" data-close-dialog class="k-btn-primary w-full">
+                <span>@content.Nav.CtaButton</span>
+                <Icon Name="arrow-right" Class="h-4 w-4" />
+            </a>
+        </div>
+    </div>
+</dialog>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+    [Parameter] public string CurrentPath { get; set; } = "/";
+}
+

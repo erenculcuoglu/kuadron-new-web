@@ -1,0 +1,37 @@
+<section class="editorial-section testimonial-section" aria-label="@Title">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="testimonial-heading">
+            <SectionHeading Eyebrow="@Eyebrow" Title="@Title" />
+            <div class="flex shrink-0 gap-2">
+                <button type="button" data-testimonial-prev aria-label="@PrevLabel" aria-controls="testimonial-track" class="testimonial-control">
+                    <Icon Name="arrow-left" Class="h-4 w-4" />
+                </button>
+                <button type="button" data-testimonial-next aria-label="@NextLabel" aria-controls="testimonial-track" class="testimonial-control">
+                    <Icon Name="arrow-right" Class="h-4 w-4" />
+                </button>
+            </div>
+        </div>
+        <div id="testimonial-track" data-testimonial-track tabindex="0" role="region" aria-label="@Title" class="testimonial-track">
+            @foreach (var item in Testimonials)
+            {
+                <figure class="testimonial-note">
+                    <Icon Name="quote" Class="h-7 w-7 text-[var(--brand-amber-text)]" />
+                    <blockquote>“@item.Quote”</blockquote>
+                    <figcaption>
+                        <img src="@item.Avatar" alt="" width="48" height="48" loading="lazy" />
+                        <div><strong>@item.Author</strong><span>@item.Role</span></div>
+                    </figcaption>
+                </figure>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Eyebrow { get; set; } = "";
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter, EditorRequired] public List<TestimonialItem> Testimonials { get; set; } = new();
+    [Parameter] public string PrevLabel { get; set; } = "Önceki yorumlar";
+    [Parameter] public string NextLabel { get; set; } = "Sonraki yorumlar";
+}
+

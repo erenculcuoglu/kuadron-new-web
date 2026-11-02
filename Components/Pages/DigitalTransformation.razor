@@ -1,0 +1,206 @@
+@page "/dijital-donusum-ve-yz-danismanligi"
+@page "/en/digital-transformation-and-ai-consultancy"
+@inject SiteDataService SiteData
+@inject NavigationManager Navigation
+
+<PageMeta Title="@D.MetaTitle" Description="@D.MetaDescription" />
+
+<PageHero Lang="@Lang" Eyebrow="@D.Eyebrow" Title="@D.Title" Lead="@D.Lead" />
+
+<WorkflowSteps Title="@D.WorkflowTitle" Subtitle="@D.WorkflowSubtitle" Steps="@D.Steps" />
+
+<!-- Enterprise AI Consultancy Pillars -->
+<section class="py-16 lg:py-24 bg-slate-50/70 dark:bg-slate-900/40 border-y border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-12 lg:mb-16">
+            <span class="eyebrow mb-3">
+                @(IsTr ? "Kurumsal Yapay Zeka (YZ) Danışmanlığı" : "Enterprise AI Consultancy")
+            </span>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+                @(IsTr
+                    ? "Verinizi Konuşan ve Karar Alan Yapay Zeka Mimarisine Dönüştürüyoruz"
+                    : "Turning Enterprise Data into Conversational & Autonomous AI Systems")
+            </h2>
+            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                @(IsTr
+                    ? "Standart sohbet botlarının ötesine geçin. OSTİM Teknopark’taki Ar-Ge ekibimizle, mevcut ERP/SQL altyapınızı bozmadan kurumunuza özel Agent Modu, RAG kurumsal hafıza ve açıklanabilir karar destek sistemleri inşa ediyoruz."
+                    : "Go beyond generic chatbots. Our R&D engineering team builds domain-specific Agent Mode analytics, RAG enterprise memory, and explainable decision-support systems on top of your existing ERP/SQL stack.")
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            @foreach (var pillar in AiPillars)
+            {
+                <article class="surface-card p-6 sm:p-7 flex flex-col justify-between rounded-2xl border border-[var(--border-subtle)] border-t-2 border-t-[var(--brand-amber)] bg-white dark:bg-slate-900/80 shadow-sm hover:border-[var(--brand-amber)] transition-colors">
+                    <div>
+                        <div class="flex items-center justify-between gap-3 mb-5">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                                @pillar.Badge
+                            </span>
+                            <div class="w-10 h-10 rounded-xl bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center shrink-0">
+                                <Icon Name="@pillar.Icon" Class="w-5 h-5 text-[#FBB040]" />
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3 leading-snug">
+                            @pillar.Title
+                        </h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                            @pillar.Desc
+                        </p>
+                    </div>
+
+                    <ul class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+                        @foreach (var metric in pillar.Metrics)
+                        {
+                            <li class="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[var(--brand-amber)] shrink-0"></span>
+                                <span>@metric</span>
+                            </li>
+                        }
+                    </ul>
+                </article>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Reference AI Architecture & Live OzBI Agent Mode Demo -->
+<section class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start mb-14">
+            <div class="lg:col-span-5">
+                <span class="eyebrow mb-3">
+                    @(IsTr ? "Kuadron YZ Referans Mimarisi" : "Kuadron AI Reference Architecture")
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+                    @(IsTr
+                        ? "4 Katmanlı Güvenli Kurumsal YZ Entegrasyonu"
+                        : "4-Layer Secure Enterprise AI Integration")
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                    @(IsTr
+                        ? "Danışmanlık projelerimizde ve lokomotif ürünlerimiz OzBI ile Klinitra’da uyguladığımız mimari; ham veriyi güvenlik katmanlarından geçirerek doğrudan yönetim kurulu seviyesinde karar özetlerine dönüştürür."
+                        : "Proven across our consultancy engagements and flagship products OzBI and Klinitra, our 4-layer architecture transforms raw operational data into board-ready executive decisions.")
+                </p>
+
+                <div class="space-y-3.5">
+                    @foreach (var item in ArchitectureLayers)
+                    {
+                        <div class="p-4 rounded-xl border border-[var(--border-subtle)] border-l-2 border-l-[var(--brand-amber)] bg-slate-50/80 dark:bg-slate-900/60">
+                            <div class="text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)] mb-1">
+                                @item.Step
+                            </div>
+                            <div class="text-sm font-bold text-slate-900 dark:text-white mb-1">
+                                @item.Title
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                @item.Detail
+                            </p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="lg:col-span-7">
+                <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-[var(--brand-amber-text)]">
+                            @(IsTr ? "Canlı Senaryo Örnekleri (OzBI Agent Modu)" : "Live Scenario Examples (OzBI Agent Mode)")
+                        </span>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+                            @(IsTr
+                                ? "ERP ve Finans Verisinde Yapay Zeka Ajanı Nasıl Çalışır?"
+                                : "How an AI Agent Operates on Live ERP & Financial Data")
+                        </h3>
+                    </div>
+                    <a href="https://www.ozbiapp.com.tr/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+                        ozbiapp.com.tr &rarr;
+                    </a>
+                </div>
+                <OzbiFlow Lang="@Lang" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<FeaturedNewsSection Lang="@Lang" />
+<ContactSection Lang="@Lang" />
+
+@code {
+    private string CurrentPath => new Uri(Navigation.Uri).AbsolutePath;
+    private string Lang => SiteData.DetectLocale(CurrentPath);
+    private bool IsTr => Lang == "tr";
+    private DigitalTransformationContent D => SiteData.GetLocale(Lang).DigitalTransformation;
+
+    private sealed record AiPillarItem(string Badge, string Title, string Desc, string[] Metrics, string Icon);
+    private sealed record ArchitectureLayerItem(string Step, string Title, string Detail);
+
+    private AiPillarItem[] AiPillars => IsTr
+        ? [
+            new("Strateji & Yol Haritası", "Kurumsal YZ Olgunluk Analizi ve ROI Planlama",
+                "Departmanlarınızın veri yapısını ve iş akışlarını inceleyerek yapay zekanın en hızlı ve ölçülebilir katma değer üreteceği senaryoları önceliklendiriyoruz.",
+                ["Veri Kalitesi & Silo Analizi", "Senaryo Bazlı ROI Hesaplaması", "Fazlandırılmış Geçiş Planı"], "compass"),
+            new("Text-to-SQL & Agent Modu", "Doğal Dil ile ERP, CRM ve SQL Analitiği",
+                "Logo, Mikro ve kurumsal SQL veritabanlarınızla doğal dilde konuşun. Çoklu SQL sorguları yürüten Agent mimarisiyle ciro, stok riski ve FAVÖK kök neden raporlarını saniyeler içinde alın.",
+                ["Çoklu Tablo & Çapraz SQL", "Otomatik Kök Neden Analizi", "Yönetici Karar Özetleri"], "chart"),
+            new("RAG & Kurumsal Hafıza", "Doküman Zekası ve Kurumsal Bilgi Asistanı",
+                "Sözleşmeler, teknik şartnameler, kalite prosedürleri ve mevzuat dokümanlarınızı vektör tabanlı RAG (Retrieval-Augmented Generation) mimarisiyle sorgulanabilir kurumsal hafızaya dönüştürüyoruz.",
+                ["Kaynak Gösterimli Yanıtlar", "Halüsinasyon Önleyici Doğrulama", "Rol Bazlı Doküman Yetkilendirme"], "layers"),
+            new("Otonom Süreçler", "İş Süreçlerinde Çoklu YZ Ajanları (Multi-Agent)",
+                "Finans, satınalma, satış ve operasyon süreçlerinde veriyi sürekli izleyen, vade/fiyat/marj anomalilerini yakalayan ve ilgili yöneticilere aksiyon öneren ajan iş akışları kurguluyoruz.",
+                ["Erken Uyarı & Anomali Tespiti", "ERP / CRM API Entegrasyonu", "Onay Mekanizmalı Otomasyon"], "network"),
+            new("Tahminleme & Karar Destek", "Açıklanabilir Tahminleme ve Risk Skorlama",
+                "Geçmiş satış, maliyet, klinik veya operasyonel verilerinizden hareketle gelecek dönem talep/ciro projeksiyonları ve 0–100 ölçeğinde açıklanabilir risk skorları üretiyoruz.",
+                ["Çeyreklik Ciro & Nakit Tahmini", "Stok Yaşlandırma & Devir Hızı", "Açıklanabilir (XAI) Karar Motoru"], "award"),
+            new("KVKK & Veri Güvenliği", "Yerel (On-Premise) ve Hibrit LLM Mimarisi",
+                "Finansal ve ticari sırlarınızın kurum dışına çıkmasını engelleyen, KVKK ve regülasyonlara tam uyumlu yerel (On-Prem) veya izole bulut büyük dil modeli (LLM) altyapıları kuruyoruz.",
+                ["Sıfır Veri Sızıntısı Garantisi", "Maskeleme & Erişim Denetimi", "On-Prem / Private Cloud Kurulum"], "code")
+        ]
+        : [
+            new("Strategy & Roadmap", "Enterprise AI Maturity & ROI Assessment",
+                "We audit your departmental data pipelines and workflows to prioritize high-impact AI use cases that deliver measurable operational ROI.",
+                ["Data Readiness & Silo Audit", "Use-Case ROI Modeling", "Phased Implementation Plan"], "compass"),
+            new("Text-to-SQL & Agent Mode", "Conversational ERP, CRM & SQL Analytics",
+                "Query Logo, Mikro, and enterprise SQL databases in plain language. Multi-SQL Agent architectures generate revenue forecasts, inventory risk audits, and EBITDA root-cause reports in seconds.",
+                ["Cross-Table Multi-SQL Execution", "Automated Root-Cause Analysis", "Executive Action Summaries"], "chart"),
+            new("RAG & Enterprise Memory", "Document Intelligence & Knowledge Assistants",
+                "Transform contracts, technical specifications, SOPs, and regulatory documents into a citation-backed enterprise knowledge base powered by Retrieval-Augmented Generation (RAG).",
+                ["Citation-Backed Answers", "Hallucination Guardrails", "Role-Based Access Control"], "layers"),
+            new("Autonomous Workflows", "Multi-Agent Process Automation",
+                "Deploy AI agents across finance, procurement, sales, and operations to continuously monitor KPIs, detect margin/collection anomalies, and trigger human-in-the-loop actions.",
+                ["Early Warning & Anomaly Detection", "Native ERP / CRM API Hooks", "Human-in-the-Loop Governance"], "network"),
+            new("Predictive Analytics", "Explainable Forecasting & Risk Scoring",
+                "Build explainable machine-learning and LLM decision engines for quarterly revenue projections, inventory aging risk, and 0–100 underwriting/clinical risk scores.",
+                ["Quarterly Revenue & Cash Forecasts", "Inventory Aging & Turnover", "Explainable AI (XAI) Scoring"], "award"),
+            new("Privacy & Governance", "On-Premise & Hybrid LLM Architecture",
+                "Keep sensitive financial and proprietary records inside your perimeter with GDPR/KVKK-compliant on-premise or isolated private-cloud LLM deployments.",
+                ["Zero Data-Leakage Architecture", "PII Masking & Audit Logs", "On-Prem / Private Cloud Setup"], "code")
+        ];
+
+    private ArchitectureLayerItem[] ArchitectureLayers => IsTr
+        ? [
+            new("Katman 01", "Veri Kaynakları & ERP Entegrasyonu",
+                "Logo, Mikro, SAP, İK, CRM, HIS/MBYS ve kurumsal SQL veritabanları ile güvenli, salt-okunur veya API tabanlı canlı bağlantı."),
+            new("Katman 02", "Anlamsal Veri Katmanı & Güvenlik (Guardrails)",
+                "Şirketinize özel muhasebe, stok ve operasyon şemasının LLM tarafından hatasız anlaşılmasını sağlayan semantik sözlük ve KVKK maskeleme katmanı."),
+            new("Katman 03", "Çoklu Ajan (Agent Modu) & Karar Motoru",
+                "Tek bir soruda birden fazla hipotezi test eden, çapraz SQL sorguları çalıştıran ve sonuçları doğrulayan otonom analist ajanlar."),
+            new("Katman 04", "Yönetici Kokpiti & Aksiyon Önerileri",
+                "Sadece tablo göstermekle kalmayıp kök nedenleri açıklayan, nakit ve marj etkisini hesaplayan, somut yönetici aksiyonu üreten arayüz.")
+        ]
+        : [
+            new("Layer 01", "Data Sources & ERP Connectors",
+                "Secure read-only or API-driven live connections to Logo, Mikro, SAP, CRM, HIS/MBYS, and enterprise SQL databases."),
+            new("Layer 02", "Semantic Layer & Privacy Guardrails",
+                "Domain-specific semantic dictionary and PII masking so LLMs interpret your chart of accounts, inventory, and KPIs with zero ambiguity."),
+            new("Layer 03", "Multi-Agent Reasoning & SQL Engine",
+                "Autonomous analyst agents that test multiple hypotheses, execute cross-table SQL queries, and validate numbers before responding."),
+            new("Layer 04", "Executive Cockpit & Actionable Insights",
+                "Executive reports that go beyond static charts—explaining root causes, quantifying cash/margin impact, and recommending concrete actions.")
+        ];
+}
+

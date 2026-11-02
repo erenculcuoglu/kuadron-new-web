@@ -1,0 +1,265 @@
+<figure class="ozbi-agent-showcase" aria-label="@FigureLabel" data-ozbi-console>
+    <div class="ozbi-scenario-tabs" role="tablist" aria-label="@TablistLabel">
+        @for (int idx = 0; idx < Scenarios.Length; idx++)
+        {
+            var scenario = Scenarios[idx];
+            var isFirst = idx == 0;
+            <button type="button"
+                    role="tab"
+                    id="@($"ozbi-tab-{Lang}-{scenario.Id}")"
+                    aria-selected="@(isFirst ? "true" : "false")"
+                    aria-controls="@($"ozbi-panel-{Lang}-{scenario.Id}")"
+                    tabindex="@(isFirst ? 0 : -1)"
+                    class="@($"ozbi-scenario-tab{(isFirst ? " is-active" : "")}")"
+                    data-ozbi-tab="@scenario.Id">
+                <span class="ozbi-tab-dot" aria-hidden="true"></span>
+                <span>@scenario.Num @scenario.Tab</span>
+            </button>
+        }
+    </div>
+
+    @for (int idx = 0; idx < Scenarios.Length; idx++)
+    {
+        var scenario = Scenarios[idx];
+        var isFirst = idx == 0;
+        <div role="tabpanel"
+             id="@($"ozbi-panel-{Lang}-{scenario.Id}")"
+             aria-labelledby="@($"ozbi-tab-{Lang}-{scenario.Id}")"
+             hidden="@(!isFirst)"
+             class="ozbi-console-card"
+             data-ozbi-panel="@scenario.Id">
+            <div class="ozbi-agent-bar">
+                <span class="ozbi-agent-pill">@scenario.Agent</span>
+                <span class="ozbi-agent-meta">@scenario.Assistant</span>
+            </div>
+
+            <div class="ozbi-query-box">
+                <p class="ozbi-query-label">
+                    <span class="ozbi-query-dot" aria-hidden="true"></span>
+                    @UserQueryLabel
+                </p>
+                <p class="ozbi-query-text">@scenario.Question</p>
+            </div>
+
+            <div class="ozbi-report-box">
+                <div class="ozbi-report-header">
+                    <div class="ozbi-report-header-left">
+                        <span class="ozbi-report-eyebrow">@AiResponseLabel</span>
+                        <span class="ozbi-model-chip">@ModelBadge</span>
+                    </div>
+                    <span class="ozbi-sql-badge">@scenario.SqlBadge</span>
+                </div>
+
+                <h4 class="ozbi-report-title">@scenario.ReportTitle</h4>
+                <p class="ozbi-summary-tag">@scenario.SummaryTag</p>
+
+                <ul class="ozbi-report-bullets" role="list">
+                    @foreach (var bullet in scenario.Bullets)
+                    {
+                        <li>
+                            <strong class="ozbi-bullet-lead">@bullet.Lead</strong>
+                            <span>@((MarkupString)bullet.Body)</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+</figure>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+
+    private sealed record BulletItem(string Lead, string Body);
+    private sealed record ScenarioItem(
+        string Id,
+        string Num,
+        string Tab,
+        string Agent,
+        string Assistant,
+        string SqlBadge,
+        string Question,
+        string ReportTitle,
+        string SummaryTag,
+        BulletItem[] Bullets);
+
+    private string FigureLabel => Lang == "tr"
+        ? "OzBI Agent Modu karar senaryoları ve kök neden analizi örnekleri"
+        : "OzBI Agent Mode executive decision scenarios and root-cause analysis examples";
+
+    private string TablistLabel => Lang == "tr" ? "OzBI karar senaryoları" : "OzBI decision scenarios";
+    private string UserQueryLabel => Lang == "tr" ? "KULLANICI SORUSU:" : "USER QUERY:";
+    private string AiResponseLabel => Lang == "tr" ? "AI ASİSTAN YANITI & ANALİST RAPORU" : "AI ASSISTANT RESPONSE & ANALYST REPORT";
+    private string ModelBadge => "GPT-5.6 Sol";
+
+    private ScenarioItem[] Scenarios => Lang == "tr" ? TrScenarios : EnScenarios;
+
+    private static readonly ScenarioItem[] TrScenarios =
+    [
+        new(
+            "q1-ciro",
+            "#1",
+            "Q1 Ciro Tahmini",
+            "Agent Modu",
+            "Finansal Tahminleme Asistanı · GPT-5.6 Sol · ERP Çapraz Model",
+            "Asistan 2 SQL Çalıştırdı",
+            "2024 ve 2025 satış trendlerine dayanarak 2026 yılı 1. Çeyrek (Q1) cirosunu tahmin edip, büyümenin ardındaki olası hacim ve tahsilat risklerini analiz eder misin?",
+            "2026 Q1 Net Ciro Tahmini ve Trend Kök Neden Değerlendirmesi",
+            "TAHMİNLEME & KÖK NEDEN RAPORU",
+            [
+                new("Q1 Ciro Tahmini:", "2024 (58,4M ₺) ve 2025 (81,2M ₺) gerçekleşmelerine dayanarak 2026 Q1 konsolide net cirosunun <strong>%28,5 nominal artışla 104,3M ₺</strong> olması öngörülmektedir."),
+                new("Kök Neden (Fiyat Artışı vs. Hacim Kaybı):", "Büyümenin <strong>%86’sı</strong> birim fiyat zamlarından kaynaklanmakta olup, fiili satış hacminde (fiziki tonaj) <strong>%5,8’lik daralma</strong> tespit edilmiştir."),
+                new("Tahsilat ve Vade Riski:", "Müşteri vadelerinin 48 günden <strong>76 güne</strong> uzaması, tahmin edilen cironun nakde dönüşümünü en az <strong>45 gün geciktirerek</strong> kısa vadeli finansman maliyeti doğuracaktır."),
+                new("Yönetici Aksiyonu:", "Büyümeyi sadece fiyat artışına bağlama riski terk edilmeli; Q1’de peşin ve erken tahsilat yapan müşterilere özel <strong>%3 kademeli nakit iskontosu</strong> devreye alınmalı.")
+            ]),
+        new(
+            "stok-risk",
+            "#2",
+            "Stok Değerlemesi & Risk",
+            "Agent Modu",
+            "Tedarik & Envanter Asistanı · GPT-5.6 Sol · SQL Veri Katmanı",
+            "Asistan 2 SQL Çalıştırdı",
+            "Önümüzdeki 6 ay için potansiyel stok değerlerimizi, tedarik risklerini ve kritik seviyedeki ürünler için gereken aksiyonları özetler misin?",
+            "6 Aylık Envanter Değerleme Projeksiyonu ve Tedarik Risk Analizi",
+            "KÖK NEDEN & TEDARİK AKSİYONU",
+            [
+                new("Envanter Balonlaşması:", "Mevcut satınalma siparişleri devam ederse 6 ay içinde toplam stok değeri <strong>16,8M ₺’den 26,4M ₺’ye çıkarak</strong> işletme sermayesini kilitleme riski taşıyor."),
+                new("Kök Neden (Dengesiz Dağılım):", "Stoğun <strong>%38’i</strong> 180 gündür hareketsiz yatan ikincil yedek parçalardan oluşurken; en çok talep gören 8 kritik mamulde emniyet stoku <strong>4 günlük emniyet marjına</strong> kadar geriledi."),
+                new("Tedarikçi Risk Faktörü:", "Kritik ürünlerde ana tedarikçinin teslim süresi (lead-time) <strong>21 günden 44 güne</strong> uzadı; acil sipariş geçilmezse Q4 başında <strong>8,2M ₺ potansiyel ciro kaybı</strong> riski bulunuyor."),
+                new("Tedarikçi Aksiyonu & E-Posta:", "8 kritik hammadde için hazırlanmış acil sipariş taslağı ve teminat şartları satınalma birimine iletildi; atıl parçalar için konsinye iade süreci başlatılmalı.")
+            ]),
+        new(
+            "urun-marj",
+            "#3",
+            "Ürün Marjı & Portföy",
+            "Agent Modu",
+            "Gelir & Portföy Asistanı · GPT-5.6 Sol · Logo Wings Entegrasyonu",
+            "Asistan 1 SQL Çalıştırdı",
+            "En çok satılan 5 ürünümüzün brüt ve net kâr marjlarını analiz edip, ciro-kârlılık ayrışmasına göre pazar stratejisi önerir misin?",
+            "En Çok Satan 5 Ürün: Kârlılık Ayrışması ve Portföy Optimizasyonu",
+            "KÖK NEDEN & PORTFÖY KARARI",
+            [
+                new("Ciro Tuzağı Tespiti:", "Ciro şampiyonu ilk 2 ürün toplam satış hacminin <strong>%46’sını</strong> oluşturmasına rağmen, şirketin konsolide net kârının yalnızca <strong>%9,4’ünü</strong> üretti."),
+                new("Kök Neden (Agresif İskonto ve Primler):", "Pazar payı koruma refleksiyle bu iki üründe liste fiyatı üzerinden ortalama <strong>%24,8 iskonto</strong> verilmesi ve satıcılara ciro bazlı prim ödenmesi kârlılığı eritti."),
+                new("Gizli Yıldız:", "Satış adedinde 4. sırada yer alan “Kompakt Kontrol Ünitesi”, düşük pazarlama bütçesine karşın <strong>%51,2 net kâr marjıyla</strong> şirketin en yüksek serbest nakit akışını sağladı."),
+                new("Pazar Stratejisi Önerisi:", "Prim sistemi cirodan brüt kâra endekslenmeli; hacim lideri ilk iki ürüne maksimum <strong>%12 iskonto tavanı</strong> getirilmeli ve yüksek kârlı ürünlerle çapraz paketlenmeli.")
+            ]),
+        new(
+            "favok-maliyet",
+            "#4",
+            "FAVÖK & Maliyet Trendi",
+            "Agent Modu",
+            "Finansal Muhasebe Asistanı · GPT-5.6 Sol · Logo Tiger Entegrasyonu",
+            "Asistan 2 SQL Çalıştırdı",
+            "Son 12 ayın aylık net satış cirosu, satılan malın maliyeti (SMM), faaliyet giderleri ve FAVÖK marjı trendini kök nedenleriyle gösterir misin?",
+            "Son 12 Aylık SMM, Faaliyet Giderleri ve FAVÖK Trend Analizi",
+            "FİNANSAL KÂRLILIK & KÖK NEDEN RAPORU",
+            [
+                new("FAVÖK Marjında Daralma:", "Son 12 ayda konsolide net ciro <strong>312M ₺</strong> gerçekleşirken, FAVÖK marjı ilk çeyrekteki <strong>%23,4</strong> seviyesinden son çeyrekte <strong>%14,1’e geriledi</strong>."),
+                new("Kök Neden (SMM Baskısı):", "Satılan malın maliyetinin (SMM) ciro içindeki payı <strong>%52,1’den %61,8’e yükseldi</strong>; kök neden enerji ve ithal hammadde artışlarının satış fiyatlarına 60 gün gecikmeyle yansıtılmasıdır."),
+                new("Kök Neden (Faaliyet Gideri Sızıntısı):", "Lojistik ve depolama giderleri ciro büyümesinin <strong>1,8 katı hızla artarak</strong> toplam faaliyet giderlerini <strong>48,6M ₺</strong> seviyesine çıkardı."),
+                new("Finansal İyileştirme Önerisi:", "Navlun ve ambalaj sözleşmeleri konsolide ihale modeline geçirilmeli; SMM artışlarını otomatik karşılayan dinamik endeksli fiyat revizyonu devreye alınmalıdır.")
+            ]),
+        new(
+            "sube-katki",
+            "#5",
+            "Şube & Katkı Marjı",
+            "Agent Modu",
+            "Yönetim Muhasebesi Asistanı · GPT-5.6 Sol · Mikro ERP Entegrasyonu",
+            "Asistan 2 SQL Çalıştırdı",
+            "Tüm şubelerimizin ve satış bölgelerimizin ürettiği ciro, doğrudan giderleri ve net katkı marjı dağılımını kök nedenleriyle karşılaştırır mısın?",
+            "Şube ve Satış Bölgeleri: Ciro, Doğrudan Gider ve Net Katkı Marjı Dağılımı",
+            "YÖNETİM MUHASEBESİ & PERFORMANS RAPORU",
+            [
+                new("Yanıltıcı Ciro Dağılımı:", "6 bölge şubesi arasında Marmara Bölgesi toplam cironun <strong>%41,2’sini (118M ₺)</strong> üretirken, net katkı marjı payı yalnızca <strong>%11,6’da kaldı</strong>."),
+                new("Kök Neden (Doğrudan Operasyonel Maliyetler):", "Marmara şubesinde kentsel dağıtım navlunu, yüksek depo kirası ve teslimat gecikmelerinden doğan ceza bedelleri doğrudan giderleri <strong>cironun %33,4’üne fırlattı</strong>."),
+                new("Yüksek Katkılı Bölge:", "İç Anadolu ve Ege şubeleri toplam cironun sadece <strong>%27’sini</strong> üretmelerine karşın, düşük doğrudan maliyet yapısıyla şirketin toplam katkı marjının <strong>%58,4’ünü</strong> sağladı."),
+                new("Bölgesel Aksiyon Kararı:", "Marmara şubesinde mikro-depolama modeline geçilerek dağıtım rotaları optimize edilmeli; şube prim hedefleri salt cirodan “Doğrudan Katkı Marjı”na dönüştürülmelidir.")
+            ])
+    ];
+
+    private static readonly ScenarioItem[] EnScenarios =
+    [
+        new(
+            "q1-revenue",
+            "#1",
+            "Q1 Revenue Forecast",
+            "Agent Mode",
+            "Financial Forecasting Assistant · GPT-5.6 Sol · ERP Cross-Model",
+            "Assistant executed 2 SQLs",
+            "Based on 2024 and 2025 sales trends, can you forecast 2026 Q1 net revenue and analyze underlying volume contraction and collection risks?",
+            "2026 Q1 Net Revenue Forecast & Trend Root Cause Assessment",
+            "FORECAST & ROOT CAUSE REPORT",
+            [
+                new("Q1 Revenue Projection:", "Anchored on 2024 (58.4M TRY) and 2025 (81.2M TRY) actuals, 2026 Q1 net revenue is projected at <strong>104.3M TRY (+28.5% nominal growth)</strong>."),
+                new("Root Cause (Price Inflation vs. Volume Drag):", "<strong>86%</strong> of headline revenue growth is propelled by price list adjustments; physical delivery tonnage contracted by <strong>5.8%</strong> year-over-year."),
+                new("Cash Conversion Lag:", "Average receivable payment terms widened from 48 to <strong>76 days</strong>, pushing cash conversion out by <strong>45 days</strong> and increasing short-term financing costs."),
+                new("Executive Action Plan:", "Replace pure price hikes with volume-linked rebate tiers and activate a <strong>3% early cash-settlement discount</strong> to protect Q1 working capital.")
+            ]),
+        new(
+            "stock-risk",
+            "#2",
+            "Stock Valuation & Risk",
+            "Agent Mode",
+            "Supply & Inventory Assistant · GPT-5.6 Sol · SQL Data Layer",
+            "Assistant executed 2 SQLs",
+            "Can you summarize our projected inventory valuation over the next 6 months, supply risks, and required actions for items at critical stock thresholds?",
+            "6-Month Inventory Valuation Projection & Supply Chain Risk Audit",
+            "ROOT CAUSE & SUPPLY ACTION",
+            [
+                new("Inventory Bloat Projection:", "If current open purchase commitments persist, total inventory value will expand from <strong>16.8M TRY to 26.4M TRY</strong>, locking up critical working capital."),
+                new("Root Cause (Structural Imbalance):", "<strong>38%</strong> of tied capital sits in dormant spare parts with zero turnover in 180+ days, while 8 fast-moving core items dropped to a <strong>4-day safety threshold</strong>."),
+                new("Supplier Lead-Time Vulnerability:", "Primary supplier delivery lead-time widened from <strong>21 to 44 days</strong>; without immediate PO placement, production halts threaten <strong>8.2M TRY in Q4 orders</strong>."),
+                new("Supplier Action & PO Dispatch:", "An urgent purchase order RFQ draft and penalty clause have been prepared for the 8 critical parts; consignment return initiated for dormant stock.")
+            ]),
+        new(
+            "product-margin",
+            "#3",
+            "Product Margin & Portfolio",
+            "Agent Mode",
+            "Revenue & Portfolio Assistant · GPT-5.6 Sol · Logo Wings Integration",
+            "Assistant executed 1 SQL",
+            "Can you analyze the gross and net margins of our top 5 best-selling products and propose a market strategy based on revenue vs. profit divergence?",
+            "Top 5 Best-Selling Products: Profitability Divergence & Portfolio Optimization",
+            "ROOT CAUSE & PORTFOLIO DECISION",
+            [
+                new("Revenue Trap Identified:", "The top 2 volume leaders accounted for <strong>46%</strong> of total turnover, yet contributed only <strong>9.4%</strong> of consolidated operating net profit."),
+                new("Root Cause (Discounts & Incentives):", "Chasing market share triggered discretionary average discounts of <strong>24.8%</strong>, while sales commissions rewarded gross revenue rather than realized profit."),
+                new("Hidden Champion:", "Ranked #4 in volume, the “Compact Control Unit” delivered an exceptional <strong>51.2% net margin</strong> with minimal marketing spend and top free cash flow."),
+                new("Market Strategy Action:", "Index sales incentives to gross margin; cap maximum discounts on top 2 items at <strong>12%</strong> and bundle deliveries with high-margin control units.")
+            ]),
+        new(
+            "ebitda-cost",
+            "#4",
+            "EBITDA & Cost Trend",
+            "Agent Mode",
+            "Financial Accounting Assistant · GPT-5.6 Sol · Logo Tiger Integration",
+            "Assistant executed 2 SQLs",
+            "Can you display the monthly net sales revenue, COGS, operating expenses, and EBITDA margin trend over the last 12 months with root causes?",
+            "12-Month COGS, OpEx & EBITDA Trend Analysis",
+            "FINANCIAL PROFITABILITY & ROOT CAUSE REPORT",
+            [
+                new("EBITDA Margin Contraction:", "While 12-month net revenue reached <strong>312M TRY</strong>, EBITDA margin slipped from <strong>23.4%</strong> in Q1 down to <strong>14.1%</strong> in Q4."),
+                new("Root Cause (COGS Pressure):", "COGS as a share of revenue climbed from <strong>52.1% to 61.8%</strong> due to a 60-day lag in passing energy and imported raw material costs into price lists."),
+                new("Root Cause (OpEx Escalation):", "Outbound logistics and warehousing grew at <strong>1.8x the rate of revenue</strong>, inflating total operating expenses to <strong>48.6M TRY</strong>."),
+                new("Financial Action Plan:", "Consolidate freight and packaging contracts under a unified tender and enable dynamic index pricing to offset raw material shifts immediately.")
+            ]),
+        new(
+            "branch-margin",
+            "#5",
+            "Branch & Margin Contribution",
+            "Agent Mode",
+            "Management Accounting Assistant · GPT-5.6 Sol · Mikro ERP Integration",
+            "Assistant executed 2 SQLs",
+            "Can you compare the revenue, direct operating expenses, and net contribution margin distribution across all our branches and sales regions with root causes?",
+            "Branch & Regional Performance: Revenue, Direct Expenses & Net Contribution Margin",
+            "MANAGEMENT ACCOUNTING & PERFORMANCE REPORT",
+            [
+                new("Deceptive Revenue Ranking:", "Across 6 regional branches, Marmara generated <strong>41.2% (118M TRY)</strong> of company revenue, but contributed merely <strong>11.6%</strong> of net contribution margin."),
+                new("Root Cause (Direct Expense Bloat):", "In Marmara, urban last-mile freight, high warehouse leases, and delivery delay penalties pushed direct expenses to <strong>33.4% of branch revenue</strong>."),
+                new("High-Contribution Benchmark:", "Central Anatolia and Aegean accounted for just <strong>27%</strong> of turnover, yet generated <strong>58.4%</strong> of total net contribution margin via lean operations."),
+                new("Regional Management Action:", "Shift Marmara to micro-fulfillment hubs to optimize routes and align branch manager KPIs strictly with Net Contribution Margin.")
+            ])
+    ];
+}
+

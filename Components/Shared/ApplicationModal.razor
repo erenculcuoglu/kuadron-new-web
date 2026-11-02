@@ -1,0 +1,174 @@
+<dialog id="@DialogId" closedby="any" aria-labelledby="@($"{DialogId}-title")" class="k-dialog">
+    <div class="p-6 sm:p-8">
+        <div class="flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
+            <div>
+                <h2 id="@($"{DialogId}-title")" class="text-xl font-extrabold text-[var(--text-primary)]">
+                    @Title
+                </h2>
+                <p class="mt-1 text-sm text-[var(--text-secondary)]">@Subtitle</p>
+            </div>
+            <form method="dialog">
+                <button type="submit"
+                        class="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] hover:border-[var(--brand-amber)]"
+                        aria-label="@CloseLabel">
+                    <Icon Name="close" Class="h-5 w-5" />
+                </button>
+            </form>
+        </div>
+
+        <form action="@(string.IsNullOrEmpty(Endpoint) ? $"mailto:{FallbackEmail}" : Endpoint)"
+              method="POST"
+              data-kuadron-form
+              data-endpoint="@Endpoint"
+              data-fallback-email="@FallbackEmail"
+              data-submitting-text="@SubmittingLabel"
+              data-submit-text="@SubmitLabel"
+              data-success-text="@SuccessLabel"
+              data-fallback-text="@FallbackLabel"
+              class="mt-5 space-y-4">
+            <div class="visually-hidden" aria-hidden="true">
+                <label for="@($"{DialogId}-hp")">Website</label>
+                <input type="text" id="@($"{DialogId}-hp")" name="_gotcha" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div>
+                <label for="@($"{DialogId}-name")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                    @NameLabel <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+                </label>
+                <input type="text"
+                       id="@($"{DialogId}-name")"
+                       name="name"
+                       required
+                       minlength="2"
+                       autocomplete="name"
+                       placeholder="@NamePlaceholder"
+                       aria-errormessage="@($"{DialogId}-name-err")"
+                       class="k-input" />
+                <div id="@($"{DialogId}-name-err")" class="k-error-msg">
+                    <Icon Name="alert" Class="h-4 w-4 shrink-0" />
+                    <span>@NameErr</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                    <label for="@($"{DialogId}-email")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                        @EmailLabel <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+                    </label>
+                    <input type="email"
+                           id="@($"{DialogId}-email")"
+                           name="email"
+                           required
+                           autocomplete="email"
+                           autocorrect="off"
+                           autocapitalize="off"
+                           spellcheck="false"
+                           placeholder="@EmailPlaceholder"
+                           aria-errormessage="@($"{DialogId}-email-err")"
+                           class="k-input" />
+                    <div id="@($"{DialogId}-email-err")" class="k-error-msg">
+                        <Icon Name="alert" Class="h-4 w-4 shrink-0" />
+                        <span>@EmailErr</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="@($"{DialogId}-phone")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                        @PhoneLabel
+                    </label>
+                    <input type="tel"
+                           id="@($"{DialogId}-phone")"
+                           name="phone"
+                           autocomplete="tel"
+                           inputmode="tel"
+                           placeholder="@PhonePlaceholder"
+                           class="k-input" />
+                </div>
+            </div>
+
+            <div>
+                <label for="@($"{DialogId}-extra")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                    @ExtraFieldLabel <span class="text-[var(--status-error)]" aria-hidden="true">*</span>
+                </label>
+                <input type="text"
+                       id="@($"{DialogId}-extra")"
+                       name="@ExtraFieldName"
+                       required
+                       placeholder="@ExtraFieldPlaceholder"
+                       aria-errormessage="@($"{DialogId}-extra-err")"
+                       class="k-input" />
+                <div id="@($"{DialogId}-extra-err")" class="k-error-msg">
+                    <Icon Name="alert" Class="h-4 w-4 shrink-0" />
+                    <span>@(Lang == "tr" ? $"{ExtraFieldLabel} alanını doldurun." : $"Enter {ExtraFieldLabel.ToLowerInvariant()}.")</span>
+                </div>
+            </div>
+
+            <div>
+                <label for="@($"{DialogId}-notes")" class="mb-1.5 block text-sm font-semibold text-[var(--text-primary)]">
+                    @NotesLabel
+                </label>
+                <textarea id="@($"{DialogId}-notes")"
+                          name="message"
+                          rows="3"
+                          placeholder="@NotesPlaceholder"
+                          class="k-input resize-y"></textarea>
+            </div>
+
+            <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                <button type="submit" class="k-btn-primary">
+                    <span data-submit-label>@SubmitLabel</span>
+                    <Icon Name="arrow-right" Class="h-4 w-4" />
+                </button>
+
+                <a href="@JotformUrl"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-[var(--brand-sky)] hover:underline">
+                    <span>@JotformBtn</span>
+                    <Icon Name="external" Class="h-3.5 w-3.5" />
+                </a>
+            </div>
+
+            <div data-form-feedback
+                 aria-live="polite"
+                 class="hidden rounded-xl border border-[var(--status-success)] bg-[var(--status-success-bg)] px-4 py-3 text-sm font-medium text-[var(--status-success)]"></div>
+        </form>
+    </div>
+</dialog>
+
+@code {
+    [Parameter, EditorRequired] public string DialogId { get; set; } = "";
+    [Parameter] public string Lang { get; set; } = "tr";
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter, EditorRequired] public string Subtitle { get; set; } = "";
+    [Parameter] public string Endpoint { get; set; } = "";
+    [Parameter, EditorRequired] public string FallbackEmail { get; set; } = "";
+    [Parameter, EditorRequired] public string JotformUrl { get; set; } = "";
+    [Parameter, EditorRequired] public string ExtraFieldLabel { get; set; } = "";
+    [Parameter, EditorRequired] public string ExtraFieldName { get; set; } = "";
+    [Parameter, EditorRequired] public string ExtraFieldPlaceholder { get; set; } = "";
+
+    private string CloseLabel => Lang == "tr" ? "Pencereyi kapat" : "Close modal";
+    private string NameLabel => Lang == "tr" ? "İsim ve Soyisim" : "Full Name";
+    private string NamePlaceholder => Lang == "tr" ? "Adınız Soyadınız" : "Your Full Name";
+    private string NameErr => Lang == "tr" ? "Lütfen adınızı ve soyadınızı girin." : "Please enter your full name.";
+    private string EmailLabel => Lang == "tr" ? "E-posta Adresi" : "Email Address";
+    private string EmailPlaceholder => Lang == "tr" ? "ornek@sirketiniz.com" : "you@company.com";
+    private string EmailErr => Lang == "tr" ? "Lütfen geçerli bir e-posta adresi girin." : "Please enter a valid email address.";
+    private string PhoneLabel => Lang == "tr" ? "Telefon" : "Phone Number";
+    private string PhonePlaceholder => Lang == "tr" ? "05XX XXX XX XX" : "+90 5XX XXX XX XX";
+    private string NotesLabel => Lang == "tr" ? "Notunuz / Özet Bilgi" : "Message / Details";
+    private string NotesPlaceholder => Lang == "tr"
+        ? "Eklemek istediğiniz detaylar veya LinkedIn / özgeçmiş bağlantınız..."
+        : "Share relevant details or your LinkedIn / portfolio link...";
+    private string SubmitLabel => Lang == "tr" ? "Başvuruyu Gönder" : "Submit Application";
+    private string SubmittingLabel => Lang == "tr" ? "Gönderiliyor..." : "Submitting...";
+    private string SuccessLabel => Lang == "tr"
+        ? "Başvurunuz alındı! Ekibimiz en kısa sürede sizinle iletişime geçecektir."
+        : "Your application has been received! Our team will contact you shortly.";
+    private string FallbackLabel => Lang == "tr"
+        ? "Başvuru henüz gönderilmedi. E-posta uygulamanızdan gönderin veya aşağıdaki başvuru formunu açın."
+        : "Your application has not been sent. Send it from your email app or open the application form below.";
+    private string JotformBtn => Lang == "tr" ? "Resmi Jotform Başvuru Ekranını Aç" : "Open Official Jotform Application";
+}
+

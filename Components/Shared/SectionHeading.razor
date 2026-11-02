@@ -1,0 +1,26 @@
+<div class="section-heading">
+    <div class="max-w-2xl">
+        <p class="section-label">@Eyebrow</p>
+        <h2>@Title</h2>
+        @if (!string.IsNullOrWhiteSpace(Description))
+        {
+            <p class="section-description">@Description</p>
+        }
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Href) && !string.IsNullOrWhiteSpace(LinkLabel))
+    {
+        <a href="@Href" class="editorial-link">
+            @LinkLabel
+            <Icon Name="arrow-right" Class="h-4 w-4" />
+        </a>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Eyebrow { get; set; } = "";
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string? Href { get; set; }
+    [Parameter] public string? LinkLabel { get; set; }
+}
+

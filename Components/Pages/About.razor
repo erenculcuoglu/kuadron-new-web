@@ -1,0 +1,95 @@
+@page "/hakkimizda"
+@page "/en/about-us"
+@inject SiteDataService SiteData
+@inject NavigationManager Navigation
+
+<PageMeta Title="@A.MetaTitle" Description="@A.MetaDescription" />
+
+<PageHero Lang="@Lang" Eyebrow="@A.Eyebrow" Title="@A.Title" Lead="@A.ValuesDescription" />
+
+<!-- Core Values & Principles -->
+<section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
+            <div class="lg:col-span-5">
+                <h2 class="text-2xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+                    @A.ValuesTitle
+                </h2>
+                <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
+                    @A.ValuesDescription
+                </p>
+
+                <ul class="mt-8 space-y-3.5">
+                    @foreach (var pr in A.Principles)
+                    {
+                        <li class="flex items-start gap-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4">
+                            <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                                <Icon Name="check" Class="h-3.5 w-3.5" />
+                            </span>
+                            <span class="text-sm font-semibold text-[var(--text-primary)] sm:text-base">@pr</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="space-y-5 lg:col-span-7">
+                @for (int idx = 0; idx < A.ValueCards.Count; idx++)
+                {
+                    var card = A.ValueCards[idx];
+                    <article class="@($"k-card k-card-hover flex flex-col gap-4 p-6 sm:flex-row sm:items-start sm:p-8{(idx == 0 ? " border-[var(--brand-amber)]" : "")}")">
+                        <span class="inline-flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-[var(--brand-amber-bg)] text-[var(--brand-amber-text)]">
+                            <Icon Name="@card.Icon" Class="h-6 w-6" />
+                        </span>
+                        <div>
+                            <h3 class="text-xl font-bold text-[var(--text-primary)]">@card.Title</h3>
+                            <p class="mt-2 text-base leading-relaxed text-[var(--text-secondary)]">
+                                @card.Description
+                            </p>
+                        </div>
+                    </article>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Culture Editorial Split Blocks -->
+<section class="border-y border-[var(--border-subtle)] bg-[var(--bg-subtle)] py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl space-y-12 px-4 sm:px-6 lg:px-8">
+        @for (int idx = 0; idx < A.CultureBlocks.Count; idx++)
+        {
+            var blk = A.CultureBlocks[idx];
+            var isOdd = idx % 2 == 1;
+            <div class="k-card overflow-hidden p-5 sm:p-8 lg:p-10">
+                <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+                    <div class="@($"lg:col-span-6{(isOdd ? " lg:order-2" : "")}")">
+                        <img src="@blk.Image"
+                             alt="@blk.Title"
+                             loading="lazy"
+                             width="680"
+                             height="440"
+                             class="aspect-[16/10] w-full rounded-xl border border-[var(--border-subtle)] object-cover" />
+                    </div>
+                    <div class="@($"lg:col-span-6{(isOdd ? " lg:order-1" : "")}")">
+                        <h2 class="text-2xl font-extrabold leading-snug text-[var(--text-primary)] sm:text-3xl">
+                            @blk.Title
+                        </h2>
+                        <p class="mt-4 text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
+                            @blk.Description
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<FeaturedNewsSection Lang="@Lang" />
+<ContactSection Lang="@Lang" />
+
+@code {
+    private string CurrentPath => new Uri(Navigation.Uri).AbsolutePath;
+    private string Lang => SiteData.DetectLocale(CurrentPath);
+    private AboutContent A => SiteData.GetLocale(Lang).About;
+}
+

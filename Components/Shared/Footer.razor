@@ -1,0 +1,137 @@
+@inject SiteDataService SiteData
+@{
+    var content = SiteData.GetLocale(Lang);
+    var company = SiteData.Company;
+    var homeHref = Lang == "tr" ? "/" : "/en/";
+}
+
+<footer class="mt-auto border-t border-[#1e2f4a] bg-[#0b1424] text-slate-300">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-12">
+            <div class="lg:col-span-4">
+                <a href="@homeHref" class="inline-block text-white" aria-label="@content.SiteName">
+                    <KuadronLogo Class="h-9 w-auto" />
+                </a>
+                <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
+                    @content.Footer.Summary
+                </p>
+                <div class="mt-5 inline-flex items-center gap-2 font-mono text-xs text-[#FBB040]">
+                    <span class="h-2 w-2 rounded-full bg-[#FBB040]"></span>
+                    <span>@(Lang == "tr" ? company.CampusLabelTR : company.CampusLabelEN)</span>
+                </div>
+
+                <div class="mt-6 flex items-center gap-2.5">
+                    @foreach (var soc in company.Social)
+                    {
+                        <a href="@soc.Href" target="_blank" rel="noopener noreferrer" aria-label="@soc.Name" class="inline-flex h-10 w-10 items-center justify-center rounded border border-slate-700/80 bg-slate-900/60 text-slate-300 transition-colors hover:border-[#FBB040] hover:text-[#FBB040]">
+                            <Icon Name="@soc.Icon" Class="h-4.5 w-4.5" />
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <h2 class="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+                    @content.Footer.CorporateTitle
+                </h2>
+                <ul class="mt-4 space-y-2.5 text-sm">
+                    @foreach (var item in content.Footer.CorporateLinks)
+                    {
+                        <li>
+                            <a href="@item.Href" class="text-slate-400 transition-colors hover:text-[#FBB040]">
+                                @item.Label
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="lg:col-span-3">
+                <h2 class="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+                    @content.Footer.ServicesTitle
+                </h2>
+                <ul class="mt-4 space-y-2.5 text-sm">
+                    @foreach (var item in content.Footer.ServicesLinks)
+                    {
+                        <li>
+                            <a href="@item.Href" class="text-slate-400 transition-colors hover:text-[#FBB040]">
+                                @item.Label
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+                <h2 class="mt-7 font-mono text-xs font-semibold uppercase tracking-wider text-white">
+                    @content.Footer.CompletedProjectsTitle
+                </h2>
+                <ul class="mt-3 space-y-2 text-sm">
+                    @foreach (var prj in content.Footer.CompletedProjects)
+                    {
+                        <li>
+                            <a href="@prj.Href" target="_blank" rel="noopener noreferrer nofollow" class="inline-flex items-center gap-1 text-slate-400 transition-colors hover:text-[#FBB040]">
+                                <span>@prj.Label</span>
+                                <Icon Name="external" Class="h-3.5 w-3.5 opacity-70" />
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="lg:col-span-3">
+                <h2 class="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+                    @content.Footer.ContactTitle
+                </h2>
+                <div class="mt-4 space-y-3.5 text-sm text-slate-400">
+                    <a href="@company.MapsUrl" target="_blank" rel="noopener noreferrer" class="flex items-start gap-2.5 transition-colors hover:text-white">
+                        <Icon Name="map-pin" Class="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#FBB040]" />
+                        <span>
+                            @for (var i = 0; i < company.AddressLines.Count; i++)
+                            {
+                                @company.AddressLines[i]
+                                if (i < company.AddressLines.Count - 1)
+                                {
+                                    <br />
+                                }
+                            }
+                        </span>
+                    </a>
+                    <a href="mailto:@company.Email" class="flex items-center gap-2.5 transition-colors hover:text-white">
+                        <Icon Name="mail" Class="h-4.5 w-4.5 shrink-0 text-[#FBB040]" />
+                        <span>@company.Email</span>
+                    </a>
+                    <a href="@company.PhoneHref" class="flex items-center gap-2.5 transition-colors hover:text-white">
+                        <Icon Name="phone" Class="h-4.5 w-4.5 shrink-0 text-[#FBB040]" />
+                        <span>@company.PhoneDisplay</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800/90 pt-8 text-xs text-slate-400 sm:flex-row">
+            <p>@content.Footer.Copyright</p>
+            <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                <a href="@content.CookieBanner.LinkHref" class="transition-colors hover:text-[#FBB040]">
+                    @(Lang == "tr" ? "Çerez Politikası" : "Cookie Policy")
+                </a>
+                <button type="button" data-cookie-settings class="min-h-11 cursor-pointer text-slate-300 underline underline-offset-4 transition-colors hover:text-[#FBB040]">
+                    @(Lang == "tr" ? "Çerez tercihlerini değiştir" : "Change cookie preferences")
+                </button>
+                <span aria-hidden="true">•</span>
+                <a href="https://www.ozbiapp.com.tr/" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#FBB040]">OzBI</a>
+                <span aria-hidden="true">•</span>
+                <a href="https://www.klinitra.com/" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#FBB040]">Klinitra</a>
+                <span aria-hidden="true">•</span>
+                <a href="@($"{homeHref}#strife")" class="transition-colors hover:text-[#FBB040]">Strife</a>
+                <span aria-hidden="true">•</span>
+                <a href="https://torkapp.com" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#FBB040]">TORK</a>
+                <span aria-hidden="true">•</span>
+                <a href="https://www.reportql.com/" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#FBB040]">Reportql</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+@code {
+    [Parameter] public string Lang { get; set; } = "tr";
+}
+

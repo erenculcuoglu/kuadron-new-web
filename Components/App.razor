@@ -1,0 +1,42 @@
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var path = HttpContextAccessor.HttpContext?.Request.Path.Value ?? "/";
+    var lang = path.Equals("/en", StringComparison.OrdinalIgnoreCase) || path.StartsWith("/en/", StringComparison.OrdinalIgnoreCase)
+        ? "en"
+        : "tr";
+}
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        try {
+            var meta = document.querySelector('meta[name="color-scheme"]');
+            if (meta) {
+                var saved = localStorage.getItem('color-scheme');
+                if (saved === 'light' || saved === 'dark') {
+                    meta.content = saved;
+                    document.documentElement.dataset.theme = saved;
+                }
+            }
+        } catch (e) {}
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-icon-180x180.png">
+    <link rel="manifest" href="assets/icons/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+    <link rel="stylesheet" href="css/site.css?v=20261102a">
+    <HeadOutlet />
+</head>
+<body>
+    <Routes />
+    <script src="js/kuadron-site.js?v=20261102a" defer></script>
+</body>
+</html>
+

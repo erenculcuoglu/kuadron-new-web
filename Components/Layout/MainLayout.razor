@@ -1,0 +1,19 @@
+@inherits LayoutComponentBase
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var path = HttpContextAccessor.HttpContext?.Request.Path.Value ?? "/";
+    var lang = path.Equals("/en", StringComparison.OrdinalIgnoreCase) || path.StartsWith("/en/", StringComparison.OrdinalIgnoreCase)
+        ? "en"
+        : "tr";
+}
+
+<a class="skip-link" href="#main-content">@(lang == "tr" ? "Ana içeriğe geç" : "Skip to content")</a>
+<Header Lang="@lang" CurrentPath="@path" />
+
+<main id="main-content" class="flex-1">
+    @Body
+</main>
+
+<CookieBanner Lang="@lang" />
+<Footer Lang="@lang" />
+

@@ -1,0 +1,32 @@
+<section class="workflow-section py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">@Title</h2>
+            <p class="mt-4 text-[var(--text-secondary)]">@Subtitle</p>
+        </div>
+        <ol class="workflow-list" role="list">
+            @for (var i = 0; i < Steps.Count; i++)
+            {
+                var step = Steps[i];
+                <li class="workflow-step">
+                    <div class="workflow-node">
+                        <span class="workflow-number">@step.Number</span>
+                        @if (i < Steps.Count - 1)
+                        {
+                            <Icon Name="arrow-right" Class="workflow-arrow h-5 w-5" />
+                        }
+                    </div>
+                    <h3>@step.Title</h3>
+                    <p>@step.Description</p>
+                </li>
+            }
+        </ol>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter, EditorRequired] public string Subtitle { get; set; } = "";
+    [Parameter, EditorRequired] public IReadOnlyList<WorkflowStep> Steps { get; set; } = [];
+}
+
